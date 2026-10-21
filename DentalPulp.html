@@ -1,0 +1,479 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Dental Pulp Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'Pulp overview and cavity'},
+ {k:'B',n:'Apical foramen and lateral canals'},
+ {k:'C',n:'Functions of the pulp'},
+ {k:'D',n:'Odontoblasts and dentinal fluid'},
+ {k:'E',n:'Fibroblasts, stem and inflammatory cells'},
+ {k:'F',n:'Fibers and ground substance'},
+ {k:'G',n:'Histological layers'},
+ {k:'H',n:'Blood and lymphatic circulation'},
+ {k:'I',n:'Innervation'},
+ {k:'J',n:'Aging and pulp stones'}
+];
+const RAW=[
+/* A. Pulp overview and cavity */
+['A',"Which statement best describes the dental pulp?","It is the only soft tissue of the tooth: a highly vascularized and innervated connective tissue that supports the dentin physically and nutritively","It is a mineralized tissue that surrounds the dentin and is covered by enamel","It is an epithelial tissue that lines the pulp chamber and is supplied only by the periodontal ligament","It is a soft tissue without nerves that only fills the root canal","The pulp is the single soft tissue of the tooth. It is formed by highly vascularized and innervated connective tissue and supports the dentin both physically and nutritively.",1],
+['A',"What is the approximate composition of the dental pulp?","75% water and 25% organic matter","25% water and 75% organic matter","50% water and 50% organic matter","90% water and 10% organic matter","The pulp is about 75% water and 25% organic matter. Do not invert the two figures.",1],
+['A',"The organic matter of the pulp consists of…","an extracellular matrix (ground substance and fibers) and cells","odontoblasts and predentin only","collagen fibers and hydroxyapatite crystals","ground substance and mineral salts","The 25% organic fraction is made of the extracellular matrix (ground substance plus fibers) and the cells.",2],
+['A',"The pulp cavity is divided into…","a coronal portion (pulp chamber) and a root portion (root canal)","a cervical chamber and an apical chamber","pulp horns and pulp stones","a pulp chamber and the dentinal tubules","The coronal portion is the pulp chamber and the root portion is the root canal.",1],
+['A',"What shape does the pulp chamber take?","The general shape of the anatomical crown","The shape of the root, regardless of the crown","A round shape in every tooth","A flat shape in every tooth","The pulp chamber follows the general shape of the anatomical crown.",1],
+['A',"Pulp horns are…","extensions of the chamber below the cusps, especially prominent below the vestibular cusp of premolars and the mesiovestibular cusp of molars","extensions of the root canal toward the apical foramen","lateral connections between the pulp and the periodontal tissues","extensions below the palatal cusp of every molar","Pulp horns are the chamber extensions under the cusps. They are most prominent under the vestibular cusp of premolars and the mesiovestibular cusp of molars.",2],
+
+/* B. Apical foramen and lateral canals */
+['B',"Where do the major nerves and vessels enter and exit the tooth?","At the apical foramen, where the pulp and the periodontal ligament meet","Through the pulp horns","Through the dentinal tubules","Through the cell-free zone of Weil","The root canal ends at the apical foramen, where the pulp and PDL meet and the major nerves and vessels enter and exit.",1],
+['B',"How does the apical foramen differ between developing and developed teeth?","It is wide and central in developing teeth, and smaller and eccentric in developed teeth","It is small and central in developing teeth, and wide and eccentric in developed teeth","It is wide and eccentric in both","It is the same size and position in both","Developing teeth have a wide, central foramen. In developed teeth it becomes smaller and eccentric.",2],
+['B',"The size of the apical foramen in developed teeth is…","0.3 to 0.6 mm","0.03 to 0.06 mm","1 to 2 mm","3 to 6 mm","The foramen measures 0.3 to 0.6 mm.",1],
+['B',"Which roots have the largest apical foramen diameter?","The palatal root of maxillary molars and the distal root of mandibular molars","The mesiobuccal root of maxillary molars and the mesial root of mandibular molars","The roots of maxillary incisors and mandibular canines","The roots of premolars in both arches","The larger diameters occur in the palatal root of maxillary molars and the distal root of mandibular molars.",3],
+['B',"Where is the apical foramen usually located?","At the anatomical apex, or slightly more occlusal (0.5 to 0.75 mm) from it","Exactly at the anatomical apex, never displaced","2 to 3 mm occlusal to the apex","In the cervical third of the root","It lies at the root end (anatomical apex) or slightly more occlusal, 0.5 to 0.75 mm from the apex.",2],
+['B',"If a root has more than one foramen, how are they named?","The largest is the apical foramen and the others are accessory foramina","The first one found is the apical foramen and the others are lateral canals","All of them are called apical foramina","The smallest is the apical foramen and the others are accessory foramina","The largest one is designated the apical foramen. The others are accessory foramina.",2],
+['B',"Lateral canals are…","connections between the pulp and the periodontal tissues along the lateral surface of the root","channels connecting the odontoblast processes to the enamel","extensions of the pulp horns","vascular channels between enamel and dentin","Lateral canals link pulp and periodontal tissues along the lateral surface. They can act as pathways for the spread of disease.",1],
+['B',"Through lateral canals, which direction of disease spread is more common?","Pulp disease causing changes in the periodontal tissues","Periodontal disease causing changes in the pulp","Both directions are equally common","Neither, because lateral canals are closed","Diseases of the pulp can lead to periodontal changes. More rarely, periodontal diseases affect the pulp.",3],
+
+/* C. Functions */
+['C',"What does the inductive function of the pulp mean?","Dentin deposition is necessary for enamel synthesis to occur","The pulp nourishes the dentin through the odontoblastic extensions","The pulp transmits pain to the brain","The pulp forms tertiary dentin after injury","Inductive: the dentin deposited by the pulp is needed for enamel synthesis.",2],
+['C',"The formative function of the pulp is…","being essential for the formation and preservation of dentin","inducing enamel synthesis","nourishing the dentin","forming the periodontal ligament","Formative: the pulp is essential for forming and preserving dentin.",1],
+['C',"How does the pulp nourish the dentin (nutritive function)?","Through the odontoblastic extensions","Through the enamel prisms","Through the periodontal ligament","Through the cementum","The nutritive function is carried out through the odontoblastic extensions.",1],
+['C',"Which statement about the sensitive function is correct?","The pulp is the only tissue of the tooth with nerve fibers; dentin pain is acute while pulp pain is dull and throbbing","Dentin pain is dull and throbbing while pulp pain is acute and sharp","Enamel and pulp are the two tissues of the tooth with nerve fibers","Pulp pain is always acute and well localized","The pulp is the only tooth tissue with nerve fibers. Dentin pain is acute; pulp pain is dull and throbbing.",3],
+['C',"Which repair responses are listed for the defense and repair function?","Peritubular dentin formation and tertiary dentin formation","Primary dentin and mantle dentin formation","Enamel and cementum formation","Hertwig's sheath formation and root resorption","Repair occurs through peritubular dentin and tertiary dentin formation.",2],
+['C',"Which of the following is NOT a listed function of the pulp?","Absorptive function (resorption of dentin)","Inductive function","Nutritive function","Defense and repair function","The listed functions are inductive, formative, nutritive, sensitive, and defense and repair.",3],
+
+/* D. Odontoblasts and dentinal fluid */
+['D',"Odontoblasts are…","the specific cells of the pulp, forming a peripheral layer whose processes extend toward the dentin","the main cells of the pulp in the crown","the reserve cells that differentiate according to the stimulus","inflammatory cells that remove dead cells","Odontoblasts are the specific cells of the pulp. They form a layer at the periphery and extend a process toward the dentin.",1],
+['D',"Once they have differentiated, odontoblasts…","cannot undergo further cell division","divide continuously throughout life","divide only in the root","divide to replace dead fibroblasts","Differentiated odontoblasts cannot divide. Replacement must come from reserve cells.",1],
+['D',"Which describes the shape of odontoblasts along the tooth?","Columnar (about 50 µm high) in the crown, cuboid in the middle part, flattened in the apical part","Flattened in the crown, cuboid in the middle, columnar in the apical part","Cuboid everywhere","Columnar in the root and flattened in the crown","Crown odontoblasts are columnar (about 50 µm high), the middle ones cuboid and the apical ones flattened.",2],
+['D',"Which statement about the number and size of odontoblasts is correct?","Their number varies with the type of tooth and location, and crown odontoblasts are larger than root odontoblasts","Their number is the same in all teeth","Root odontoblasts are larger than crown odontoblasts","Their number does not vary with location in the pulp space","Number varies with tooth type and location, and crown odontoblasts are larger than root ones.",2],
+['D',"Which features characterize an active (secretory) odontoblast?","Elongated cell with a basal nucleus, basophilic cytoplasm, prominent Golgi zone, many mitochondria and secretory granules","Apical nucleus, small cytoplasm with tubular and filamentous structures and few secretory granules","Flattened cell without organelles","Rounded cell with abundant lysosomes and no Golgi zone","The morphology oscillates between an active synthetic phase and a quiescent phase. The active cell has a basal nucleus and a prominent Golgi zone.",2],
+['D',"Which features characterize an aged (quiescent) odontoblast?","Nucleus more apical, small cytoplasm with tubular and filamentous structures, absent or few secretory granules","Basal nucleus with a prominent Golgi zone and many secretory granules","Abundant rough endoplasmic reticulum and numerous mitochondria","Elongated cell with basophilic cytoplasm","The aged cell has a more apical nucleus, little cytoplasm and few or no secretory granules.",2],
+['D',"Which feature describes the odontoblastic process?","It lacks major organelles but is rich in microtubules and filaments arranged linearly, with granules reflecting pinocytotic activity","It has a prominent Golgi zone and rough endoplasmic reticulum like the cell body","It contains the nucleus and the mitochondria","It is a mineralized rod without cytoplasm","The process is a cytoplasmic extension that forms dentin. It lacks major organelles and shows many microtubules and filaments.",2],
+['D',"Where is the dentinal fluid found?","In the space between the odontoblastic process and the wall of the dentinal tubule","Inside the cell body of the odontoblast","Between the predentin and the pulp core","Inside the apical foramen","Dentinal fluid fills the space between the process and the tubule wall. It contains proteoglycans, tenascin, fibronectin, serum albumin proteins, HS glycoprotein and transferrin.",2],
+['D',"What is true about the odontoblastic process inside the dentinal tubules?","Most dentinal tubules show the odontoblastic process along their entire length","The process is found only in the inner third of the tubule","The tubules are empty after dentin formation","The tubules contain only mineral","The tubules and their contents give dentin its vitality and ability to respond to stimuli. Most contain the process along their entire length.",2],
+
+/* E. Fibroblasts, stem and inflammatory cells */
+['E',"Which are the main cells of the pulp, especially in the crown?","Fibroblasts","Odontoblasts","Dendritic cells","Macrophages","Fibroblasts are the main cells of the pulp, particularly in the crown. Odontoblasts are the specific cells.",1],
+['E',"Which statement about pulp fibroblasts is correct?","They secrete precursors of collagen, reticular and elastic fibers and the ground substance, and they can also degrade collagen","They only secrete ground substance","They form dentin","They cannot degrade collagen","Fibroblasts form, maintain and regulate replacement of the fibrillar and amorphous matrix. They are multifunctional and can degrade collagen.",2],
+['E',"Which features describe fibroblasts of young pulps?","Increased matrix synthesis, rounded cytoplasm, many organelles for synthesis and secretion, and long plasma extensions","Decreased matrix synthesis, fewer organelles and flattened cells","Flattened cells that transform into fibrocytes","Cells with no organelles and no extensions","Young fibroblasts are active: more synthesis, rounded cytoplasm, increased organelles and long extensions.",2],
+['E',"In aged pulps, fibroblasts typically…","decrease matrix synthesis and organelles, become flattened and transform into fibrocytes","increase matrix synthesis and become rounded","become odontoblasts","become macrophages","With age, fibroblasts synthesize less matrix, lose organelles, flatten and become fibrocytes.",2],
+['E',"Ectomesenchymal cells of the pulp are also called…","undifferentiated mesenchymal cells, although they derive from the ectoderm of the neural crests","mature fibroblasts of mesodermal origin","odontoblasts of endodermal origin","monocytes of bone marrow origin","They are called undifferentiated mesenchymal cells, but they come from the ectoderm of the neural crests.",1],
+['E',"Why are ectomesenchymal cells called the pulp reserve population?","They can differentiate according to the stimulus, and their number decreases with age, reducing pulp defense","They store collagen precursors for the fibroblasts","They are fully differentiated cells that replace dead odontoblasts without changing","They are the cells that form the von Korff plexus","They can differentiate into different cell types depending on the stimulus. Fewer cells with age means less pulp defense.",2],
+['E',"Where are ectomesenchymal cells usually located?","In the subodontoblastic region or near blood capillaries (perivascular cells or pericytes)","Inside the dentinal tubules","Within the odontoblastic layer","In the enamel organ","They are found in the subodontoblastic region, near capillaries, along the cell-rich zone and in the core of the pulp.",2],
+['E',"Ectomesenchymal pulp cells can differentiate into…","fibroblasts, osteoblasts, cementoblasts and odontoblasts","fibroblasts, ameloblasts, osteoclasts and macrophages","odontoblasts only","ameloblasts, cementoblasts, B lymphocytes and neutrophils","They can give fibroblasts, osteoblasts, cementoblasts and odontoblasts. They are morphologically very similar to fibroblasts.",2],
+['E',"Which description fits pulp macrophages?","Blood-derived cells located throughout the pulp center that remove dead cells","Cells that form predentin","Cells found only in the odontoblastic layer that present antigen","Cells that secrete the ground substance","Macrophages derive from blood, lie throughout the pulp center and remove dead cells.",1],
+['E',"Which statement about pulp inflammatory cells is correct?","T lymphocytes are present while B lymphocytes are scarce, and neutrophils and eosinophils increase substantially during infection","B lymphocytes are abundant while T lymphocytes are scarce","Neutrophils are always abundant in healthy pulp","Eosinophils disappear during infection","T cells are present and B cells are scarce. Leukocytes (neutrophils and eosinophils) rise substantially during infection.",2],
+['E',"Pulp dendritic cells…","possess MHC II and capture and present foreign antigen to T cells, starting the primary immune response","synthesize collagen and ground substance","differentiate into odontoblasts","phagocytose dead cells and lack MHC II","Dendritic cells have MHC II and present antigen to T cells. They lie around the odontoblast layer in unerupted teeth and below it in erupted teeth.",2],
+
+/* F. Fibers and ground substance */
+['F',"How is type I collagen arranged in the pulp?","Few and irregularly arranged in the coronal pulp, parallel and in greater concentration in the root region","Abundant and parallel in the coronal pulp, scarce in the root","Equally dense and parallel in crown and root","Found only in the odontoblastic layer","Type I collagen is sparse and irregular in the coronal pulp, and parallel and more concentrated in the root.",2],
+['F',"How does collagen change with age in the pulp?","Fiber density and diameter increase, so collagen content rises","Collagen content decreases","Fiber diameter decreases while density increases","Collagen content stays constant","With age, density and diameter of the fibers increase and collagen content goes up.",1],
+['F',"Where is the concentration of collagen generally highest in the pulp?","In the most apical portion of the pulp","In the pulp horns","In the odontoblastic layer","In the cell-free zone","Types I and III are made by fibroblasts and their ratio remains stable. The highest concentration is apical.",2],
+['F',"In the odontoblastic region, type III collagen fibers interweave with the odontoblasts and form the…","von Korff plexus","Raschkow plexus","subodontoblastic capillary plexus","Weil plexus","The von Korff plexus is made of type III collagen. Raschkow's plexus is a nerve plexus, a classic trap.",3],
+['F',"Which description fits type III collagen (reticulin) in the pulp?","Thin fibrils associated with fibronectin, abundant in the mesenchymal tissue and more present in the pulp than in the dentin","Thick parallel fibers abundant in dentin and scarce in the pulp","Elastin-rich fibers around the vessels","Immature elastic fibers","Type III collagen is more present in the pulp than in dentin and is abundant in its mesenchymal tissue.",2],
+['F',"Which description fits elastic fibers in the pulp?","Very scarce, located around the afferent blood vessels and composed of elastin","Abundant in the cell-rich zone and composed of collagen","Located around the odontoblasts","Abundant in the coronal pulp and composed of reticulin","Elastic fibers are very scarce, surround the afferent vessels and are composed of elastin.",2],
+['F',"Oxytalan fibers are…","immature elastic fibers","mature type I collagen fibers","reticular fibers","proteoglycans of the ground substance","Oxytalan fibers are immature elastic fibers.",1],
+['F',"What is the main role of the pulp ground substance?","It is the medium for transporting nutrients from the vasculature to the cells and waste metabolites back to the vasculature","It provides the mineral for dentin formation","It synthesizes the dentin matrix","It produces antibodies","The ground substance carries nutrients to the cells and waste from the cells to the vasculature.",1],
+['F',"Which set lists glycosaminoglycans (GAGs) of the pulp?","Chondroitin sulfate, dermatan sulfate, hyaluronic acid and keratan sulfate","Versican, decorin and biglycan","Collagen, elastin and reticulin","Tenascin, fibronectin and transferrin","Those four are GAGs. Versican, decorin and biglycan are the proteoglycans.",2],
+['F',"What do GAGs contribute to the ground substance?","Viscosity, giving the matrix a gelatinous character","Mineralization of the matrix","Tensile strength like collagen","Contractility","GAGs make the matrix viscous and gelatinous.",2],
+['F',"How does the ground substance change with age?","It decreases, and alterations in its composition are linked to reduced cellular function and irregular mineral deposition","It increases and the pulp becomes more gelatinous","It stays unchanged","It is replaced by elastic fibers","The ground substance decreases with age. Changes in its composition go with metabolic changes, reduced cellular function and irregular mineralization.",2],
+
+/* G. Histological layers */
+['G',"What is the correct order of the pulp layers from the periphery to the center?","Odontoblastic zone → cell-free zone of Weil → cell-rich zone → pulp core","Cell-rich zone → cell-free zone of Weil → odontoblastic zone → pulp core","Odontoblastic zone → cell-rich zone → cell-free zone of Weil → pulp core","Pulp core → cell-rich zone → cell-free zone of Weil → odontoblastic zone","From outside in: odontoblastic zone, Weil's cell-free zone, cell-rich zone and pulp core.",1],
+['G',"In which part of the pulp are the cell-free and cell-rich zones more prominent?","In the coronal pulp","In the root pulp","They are equally prominent in both","Only at the apex","Both zones are more prominent in the coronal pulp than in the root pulp.",2],
+['G',"Which junction predominates in the lateral regions of the odontoblastic layer?","Gap junctions, which regulate the exchange of low-molecular-weight metabolites","Desmosomes only, forming a mechanical seal","Hemidesmosomes anchoring the cells to the predentin","Tight junctions sealing the dentinal fluid","Odontoblasts are joined by several types of junctions. In the lateral regions gap junctions predominate, and they increase as odontoblasts mature.",2],
+['G',"Which structure is found in Weil's cell-free zone?","Raschkow's nerve plexus, together with fibroblasts and dendritic cells","The von Korff plexus","The main vessels and nerve trunks","A high density of mesenchymal cells","Weil's zone is poor in cells but contains Raschkow's plexus, fibroblasts and dendritic cells. The main trunks lie in the core.",2],
+['G',"Which cells make up the cell-rich zone?","Mainly mesenchymal cells and fibroblasts, which give rise to von Korff fibers","Odontoblasts and dendritic cells","Mostly macrophages and neutrophils","Few cells and many nerve fibers","The cell-rich zone has high cell density: mesenchymal cells and fibroblasts that give rise to von Korff fibers.",2],
+['G',"Which layer contains the main vessels and nerves of the pulp?","The pulp core (central zone)","The cell-rich zone","The odontoblastic zone","Weil's cell-free zone","The central zone has few fibers but is rich in vessels and nerves. Its main cells are fibroblasts, macrophages, perivascular ectomesenchymal cells and dendritic cells.",1],
+['G',"Which statement about the odontoblastic layer is correct?","Some nerve endings pass through the layer and extend into the odontoblastic processes","No nerve endings reach the layer","Its cells cannot undergo apoptosis","Its cells secrete enamel matrix","The layer secretes predentin and dentin. Its cells can undergo apoptosis and some nerve endings reach the processes.",2],
+['G',"How does the cell-rich zone change with aging?","It is very prominent in adult teeth, but its number of cells decreases with aging","Its number of cells increases with aging","It becomes the odontoblastic layer","It is replaced by Weil's zone","The cell-rich zone is very prominent in adult teeth and loses cells with age.",2],
+
+/* H. Blood and lymphatic circulation */
+['H',"Blood vessels enter the pulp together with…","sensory and autonomic nerve fibers","lymphatic vessels only","odontoblast processes","periodontal ligament fibers","Vessels enter with sensory and autonomic nerve fibers.",1],
+['H',"The smooth muscle of pulp vessels has…","alpha and beta adrenergic receptors (vasoconstriction)","only cholinergic receptors","no receptors","only histamine receptors","Vessel smooth muscle carries alpha and beta adrenergic receptors, linked to vasoconstriction.",2],
+['H',"What forms when the vessels branch and decrease in caliber in the coronal region?","The subodontoblastic capillary plexus","Raschkow's plexus","The von Korff plexus","The periodontal plexus","Coronal vessels form the subodontoblastic capillary plexus. Raschkow's is a nerve plexus and von Korff's is made of collagen.",2],
+['H',"How does blood flow to the crown compare with the root?","The blood reaching the crown is almost twice that of the root","The blood reaching the crown is half that of the root","They are equal","The crown receives ten times more blood","The crown receives almost twice as much blood as the root region.",2],
+['H',"Which statement about the capillary network is correct?","It nourishes the odontoblasts, and its capillaries can be continuous or fenestrated","It is exclusively fenestrated","It nourishes the enamel","It lacks pericytes","The capillary network nourishes the odontoblasts. Capillaries can be continuous or fenestrated (higher porosity).",2],
+['H',"What do pericytes do in the pulp vessels?","They wrap around the endothelial wall to regulate its stability, can differentiate into macrophages and help maintain the basal lamina","They line the lumen and secrete dentin","They are nerve endings that control vasodilation","They differentiate only into odontoblasts","Pericytes wrap the capillary wall and keep it stable. They can become macrophages, and dendritic cells lie next to them.",2],
+['H',"How do metabolites cross continuous capillary endothelium?","By transcytosis mediated by pinocytic vesicles","Through pores in the wall","Through gap junctions with odontoblasts","By diffusion through the basal lamina only","Fenestrated capillaries use pores; continuous capillaries use transcytosis with pinocytic vesicles.",3],
+['H',"Lymph from the pulp of the anterior lower teeth drains to the…","submental lymph nodes","submandibular and deep cervical lymph nodes","parotid lymph nodes","retropharyngeal lymph nodes","Anterior lower teeth drain to the submental nodes. Anterior and posterior upper teeth drain to the submandibular and deep cervical nodes.",3],
+
+/* I. Innervation */
+['I',"Which nerve fibers are unmyelinated and of small caliber?","C fibers","A fibers","B fibers","A-delta fibers","A fibers are myelinated and large (fastest), B fibers are myelinated and medium, and C fibers are unmyelinated and small.",1],
+['I',"How do the pulp nerves run?","Along the afferent vessels, as large bundles that arborize peripherally while extending occlusally through the pulp core","As a single trunk that ends in the cell-rich zone","Horizontally from the periodontal ligament","Only along the lateral canals","The nerves follow the same path as the afferent vessels, starting as large bundles that arborize peripherally.",2],
+['I',"What happens to the nerves in the root pulp?","There is no plexus; branches leave the ascending trunks and arborize, each supplying its own territory","They form a Raschkow plexus","They form a von Korff plexus","There are no nerves in the root","The plexus exists only in the crown. In the root, branches leave the ascending trunks and each supplies its territory.",3],
+['I',"The plexus of Raschkow is…","a nerve plexus in the cell-free zone, just below the odontoblast bodies, in the crown","a capillary plexus below the odontoblasts","a collagen plexus among the odontoblasts","a nerve plexus located in the root","Raschkow's subodontoblastic plexus is an extensive nerve plexus in the crown.",2],
+['I',"Which statement about sympathetic innervation is correct?","Sympathetic C fibers from the superior cervical ganglion control arteriolar caliber (vasomotor function) and release noradrenaline","Sympathetic fibers release acetylcholine and VIP","Sympathetic A-delta fibers conduct pain","Sympathetic fibers originate in the trigeminal ganglion and cause vasodilation","Sympathetic C fibers are efferent, slow, vasomotor and use catecholamine (noradrenaline).",3],
+['I',"Which autonomic fibers contain acetylcholine and VIP and contribute to vasodilation through nitric oxide release?","Parasympathetic C-type fibers","Sympathetic C fibers","A-delta fibers","A myelinated fibers","Parasympathetic C-type fibers with acetylcholine and VIP cause vasodilation by nitric oxide release.",2],
+['I',"Which sensory fibers are fast, lie in the peripheral zone of the pulp and respond to hydrodynamic, tactile, osmotic or thermal stimuli?","Type A myelinated fibers","C unmyelinated fibers","Sympathetic C fibers","B fibers","Type A fibers can enter the odontoblast prolongations. They transmit acute, well-localized pain.",2],
+['I',"Pain that is poorly localized and prolonged, as in inflammatory processes, is carried by…","C unmyelinated fibers in the internal zone of the pulp","type A myelinated fibers in the peripheral zone","sympathetic fibers","A-delta fibers responding to hydrodynamic stimuli","C fibers are slow, respond to bradykinin and histamine and not to hydrodynamic stimuli.",2],
+['I',"Why can the lack of pulp response in an immature tooth not be taken as proof of pulp death?","Because A-delta fibers mature only after 4 or 5 years of occlusion","Because C fibers do not exist until root closure","Because immature teeth have no dentinal tubules","Because sympathetic fibers mask the response","A-delta fibers are responsible for pain conduction, but they mature after 4 or 5 years of occlusion.",3],
+
+/* J. Aging and pulp stones */
+['J',"Which change does NOT occur in the pulp with aging?","An increase in pulp volume and vascular supply","Pulp volume reduction","A decrease in irrigation and innervation","A gradual decrease of the cell population","With age the pulp volume, blood supply, innervation and cell numbers all decrease.",2],
+['J',"How does the pulp connective tissue change with aging?","Lax connective tissue becomes semi-dense, with more collagen and less amorphous ground substance","Semi-dense tissue becomes lax, with less collagen and more ground substance","It becomes mineralized throughout","Its collagen is replaced by elastic fibers","The pulp changes from lax to semi-dense connective tissue because collagen rises and ground substance falls.",2],
+['J',"Which statement about irregular centers of mineralization (pulp stones) is correct?","They are common in adult pulp, increase with age, and can be true (with dentinal tubules) or false (formed by layers)","They are rare, decrease with age and are all true stones with dentinal tubules","They form in the odontoblastic layer of young pulps only","They are made of elastin and contain tubules","They form by precipitation of mineral salts on the center of the collagen matrix in the central pulp.",2],
+['J',"What is the overall effect of the age-related changes on the pulp?","A decrease in biological response capacity","An increase in biological response capacity","No change in response capacity, only in volume","An increase in sensitivity to stimuli","The changes in the pulp tissue and cavity decrease the biological response capacity.",1]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+
+<script>
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Odontoblastic zone','periphery'],['Cell-free zone','of Weil'],['Cell-rich zone','next layer in'],['Pulp core','vessels and nerves']];
+const KEY='dental-pulp-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Dental Tissues I · Lesson 4</p>
+ <h1>Dental Pulp Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Lesson 4 slides: pulp structure and functions, cells, fibers and ground substance, histological layers, circulation, innervation and age-related changes.</p>
+ <div class="ribbon" aria-label="Pulp layers">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The four pulp layers from the periphery to the center, as taught in the lesson. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>
