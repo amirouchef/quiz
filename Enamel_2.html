@@ -1,0 +1,479 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Enamel Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'General characteristics and limits'},
+ {k:'B',n:'Physical properties'},
+ {k:'C',n:'Composition'},
+ {k:'D',n:'Ameloblast and amelogenesis overview'},
+ {k:'E',n:'Presecretory stage'},
+ {k:'F',n:'Secretory stage'},
+ {k:'G',n:'Maturation, protection and desmolysis'},
+ {k:'H',n:'Prismatic and aprismatic enamel'},
+ {k:'I',n:'Secondary structural units'},
+ {k:'J',n:'Surface covers, amelogenesis imperfecta and aging'}
+];
+const RAW=[
+/* A. General characteristics and limits */
+['A',"Which statement about enamel is correct?","It is the outermost layer of the crown and the hardest tissue of the body, and it is acellular, avascular and without innervation","It is the innermost layer of the crown and contains odontoblastic processes","It is a vascularized tissue that can regenerate through its own cells","It is an innervated tissue formed by ectomesenchymal cells","Enamel covers the crown, is the hardest tissue in the body, and has no cells, vessels or nerves.",1],
+['A',"Why can enamel not regenerate?","The ameloblasts that formed it are lost when the tooth erupts into the oral cavity","Because it contains too much collagen","Because it is constantly renewed by odontoblasts","Because the pulp stops supplying it at birth","Ameloblasts are lost at eruption, and enamel has no cells, so it cannot regenerate or repair itself.",2],
+['A',"What is the embryonic origin of enamel?","Ectodermal","Ectomesenchymal","Endodermal","Mesodermal from the somites","Enamel is of ectodermal origin (enamel organ). Dentin and pulp, in contrast, are ectomesenchymal.",1],
+['A',"By which structure is enamel associated internally with dentin?","The amelodentinal connection (ADC), also called the dentino-enamel junction","The cemento-enamel junction","The dentogingival junction","The predentin layer","The inner side of enamel meets dentin at the ADC. The cemento-enamel and dentogingival junctions relate enamel to cementum and gingiva.",1],
+['A',"Why is enamel itself insensitive to stimuli?","Because it has no innervation (and no cells or vessels)","Because it is much thicker than dentin","Because its tubules are filled with fluoride","Because the nerves stop at the cementum","Enamel is acellular, avascular and not innervated. Sensitivity of the tooth is related to dentin and pulp.",2],
+
+/* B. Physical properties */
+['B',"How can the elasticity of enamel be described?","Low: it is brittle and at risk of fracture under occlusal load","High: it deforms easily without breaking","Higher than that of dentin","Dependent only on the dentinal tubules","Enamel has low elasticity and is brittle, and it relies on the underlying dentin for support. When masticatory forces exceed its adaptability, abfractions (deep wedge-shaped cracks near the gum line) appear.",2],
+['B',"Why is the permeability of enamel extremely low?","It has no extension of dentinal tubules and its composition is predominantly inorganic","It is full of dentinal tubules that are sealed","It contains mainly water","It is covered by a thick layer of pulp","Enamel lacks tubules and is mostly mineral, so substances barely cross it. This property is important for reducing caries.",2],
+['B',"How does enamel permeability change with age?","It decreases, because pores diminish as crystals increase in size","It increases, because enamel loses minerals","It does not change","It increases, because new tubules appear","Old teeth have lower permeability, because the pores decrease as the crystals grow. This helps reduce the incidence of caries.",2],
+['B',"How does the thickness of enamel influence the color of the tooth?","Thicker areas look gray and thinner areas look yellowish-white","Thicker areas look yellow and thinner areas look gray","Thickness has no effect on color","Thicker areas look pink because of the pulp","Enamel is translucent. Color comes mostly from the dentin below: thick enamel gives a gray tone, thin enamel lets the yellowish dentin show through.",3],
+['B',"How does mineralization influence the translucency of enamel?","Higher mineralization leads to higher translucency","Higher mineralization leads to lower translucency","Mineralization does not influence it","Only water content influences it","The more mineralized the enamel, the more translucent it is. A demineralized area scatters and absorbs visible light, so it looks dark with transillumination (optical fiber) compared with healthy enamel.",3],
+['B',"What is the radiopacity of enamel?","Very high: it is the most radiopaque tissue of the tooth","Low: it is more radiolucent than dentin","Equal to that of the pulp","Variable and always lower than dentin","Enamel is very mineralized, so it is the most radiopaque tissue. Changes in its radiopacity help detect caries.",1],
+
+/* C. Composition */
+['C',"What is the composition of enamel?","95% inorganic matrix, 4% organic matrix and 1% water","70% inorganic matrix, 18% organic matrix and 12% water","60% inorganic matrix, 30% organic matrix and 10% water","75% inorganic matrix, 20% organic matrix and 5% water","Enamel is 95% mineral, 4% organic matrix and 1% water. The 70, 18 and 12% figures are for dentin.",1],
+['C',"What is the main mineral of enamel?","Hydroxyapatite, Ca10(PO4)6(OH)2, with phosphate and calcium carbonate salts","Calcium sulfate","Amorphous silica","Magnesium chloride","The inorganic matrix is made of hydroxyapatite crystals with phosphate and carbonate salts, as in bone, dentin and cementum.",1],
+['C',"Which enamel protein is abundant in immature enamel and is also described as a signal molecule in epithelial-mesenchymal interactions?","Amelogenin","Enamelin","Tuftelin","Serum albumin","Amelogenins are abundant in immature enamel. They are the most important organic proteins of the matrix and are removed during maturation.",2],
+['C',"Which protein is a surface (coat) protein of the crystals, represents 2 to 3% of the organic matrix and promotes crystal elongation?","Enamelin","Amelogenin","Tuftelin","Ameloblastin","Enamelins coat the crystals, are the major organic component of mature enamel, and act as modulators of de novo mineral formation and crystal elongation.",2],
+['C',"Which protein represents about 5% of the organic matrix, lies in the most superficial layer and is synthesized by ameloblasts?","Ameloblastin (together with amelin)","Tuftelin","Amelogenin","Enamelin","Ameloblastin and amelin account for about 5% of the organic content. They are in the most superficial layer and are thought to help keep ameloblasts attached to the enamel surface.",3],
+['C',"Which statement about tuftelin is correct?","It is located at the dentinoenamel junction, is the first protein secreted, and acts as a focal point for the onset of crystal formation","It is the main protein of mature enamel and covers the crystals","It represents most of the organic matrix and is removed at maturation","It is a serum protein that enters after eruption","Tuftelin (1 to 2% of the organic component) is secreted first, at the DEJ zone, at the beginning of enamel formation, and seems to initiate crystal formation.",2],
+['C',"What happens when F- ions replace OH- ions in the apatite crystal?","Fluorapatite forms, which is more resistant to acids and caries","The crystals dissolve more easily","The enamel becomes more permeable","The enamel loses its inorganic matrix","Fluoride substitution forms fluorapatite, which resists acid attack better. Excess fluoride during formation, however, causes fluorosis.",1],
+['C',"How do calcium and phosphate vary across enamel thickness?","Their concentration decreases toward the amelodentinal junction","Their concentration increases toward the amelodentinal junction","They are evenly distributed","They are only present at the cusps","Calcium (33 to 39%) and phosphate (16 to 18%) are higher near the surface and decrease toward the ADC.",2],
+['C',"Which pair of elements increases from the surface toward the amelodentinal junction?","Carbonate and magnesium","Calcium and phosphate","Chlorine and calcium","Chlorine and phosphate","Carbonate and magnesium increase toward the dentin. Chlorine, like calcium and phosphate, decreases toward the ADC.",3],
+['C',"How do enamel crystals look on sections?","Elongated hexagons on perpendicular sections and rectangles on parallel sections","Round on both sections","Triangles on perpendicular sections and squares on parallel sections","Needles on both sections","The crystals form elongated hexagons in perpendicular section and rectangles in parallel section. They are built from unit cells of calcium and phosphate ions.",2],
+['C',"Which statement about water in enamel is correct?","It is a very scarce component that decreases with age and lies at the periphery of the crystal (absorbed water layer)","It is the main component of enamel","It increases with age","It is located in dentinal tubules","Water is only about 1%, located as a layer around the crystals, and it diminishes progressively with age.",1],
+
+/* D. Ameloblast and amelogenesis overview */
+['D',"What is the ameloblastic process (Tomes process)?","An extension of the ameloblast used to secrete enamel, which disappears as enamel is formed","A nerve process entering the enamel","The extension of an odontoblast in a tubule","A fiber of the periodontal ligament","Ameloblasts have an apical extension (Tomes process) through which they secrete enamel. It disappears when enamel formation is finished.",1],
+['D',"What does the apical part of the ameloblast secrete?","Prisms (rods) and interprisms (interrods)","Only dentin","Only collagen","Predentin","The apical part secretes the substances that form prisms and interprisms. These give permeability to the enamel and have organic material and water.",2],
+['D',"Which are the two major stages of enamel formation?","Elaboration of an organic matrix, followed by almost immediate mineralization","Mineralization, followed by organic matrix elaboration","Cuticle formation, followed by prism resorption","Crystal formation, followed by dentin formation","First the organic matrix is elaborated, then mineralization occurs almost immediately: crystal formation, nucleation and elongation, and later removal of organic matrix and crystal maturation. Both processes are closely linked.",1],
+['D',"What is required for ameloblast differentiation and enamel formation?","The presence of dentin","The absence of dentin","Eruption of the tooth","Hertwig epithelial root sheath","Differentiation of ameloblasts requires dentin. Enamel can only be formed once dentin is present.",2],
+['D',"What determines the extent of enamel apposition?","The cervical loop of the enamel organ","The apical foramen","The dentinal tubules","The gingival margin","Differentiation starts at the incisal edge or cusp and proceeds toward the cervical loops, whose end determines how far enamel is deposited.",3],
+['D',"How does calcium reach the enamel during mineralization?","Through ameloblasts (transcellular), through intercellular spaces (extracellular), and via calcium channels and transport proteins","Only through dentinal tubules from the pulp","Only from saliva after eruption","Only by collagen fibers","Calcium and phosphate are mainly obtained from ameloblasts, with some salts from other sources. Calcium diffuses by transcellular and extracellular pathways, using calcium channels and transport proteins.",2],
+
+/* E. Presecretory stage */
+['E',"Which are the three stages of amelogenesis?","Presecretory, secretory (formative) and maturation","Morphogenic, protective and desmolytic","Differentiation, apposition and calcification","Initial, intermediate and final secretion","The three stages are presecretory, secretory and maturation. Protective and desmolytic are phases within maturation.",1],
+['E',"Which two phases form the presecretory stage?","Morphogenic (preameloblast) and differentiation (young ameloblast)","Protective and desmolytic","Initial and final secretion","Ruffle-ended and smooth-ended","The presecretory stage includes the morphogenic phase and the differentiation phase.",1],
+['E',"What characterizes the morphogenic phase?","In the bell stage, the inner enamel epithelium and papilla interact to determine the shape of the ADC and crown, and preameloblasts still divide","Ameloblasts have lost the ability to divide and secrete enamel","The enamel organ is replaced by the reduced enamel epithelium","The Tomes process is fully developed","Preameloblasts are small cylindrical cells that still divide by mitosis and secrete tuftelin. Their interaction with papilla cells defines the crown shape.",2],
+['E',"Which statement about preameloblasts and preodontoblasts is correct?","Preameloblasts form before preodontoblasts, but enamel can only form after dentin","Preodontoblasts form first, and enamel forms before dentin","They form at the same time and enamel forms first","Preameloblasts form after eruption","The preameloblast appears before the preodontoblast, yet dentin must always be present for enamel to form.",3],
+['E',"What marks the differentiation phase of the young ameloblast?","A change in polarity, with dentin secretion beginning and amelogenin becoming detectable","The loss of the Tomes process","Apoptosis of the cell","Fusion with the buccal epithelium","In the differentiation phase the ameloblast changes polarity as odontoblasts start secreting dentin and change the source of nutrition. The cell prepares for the secretory phase.",2],
+['E',"After polarity change in the young ameloblast, where are the nucleus and the secretory organelles?","Nucleus in the distal zone and secretory organelles in the proximal zone","Nucleus in the proximal zone and secretory organelles in the distal zone","Nucleus and organelles both in the proximal pole","The cell has no organelles","The young ameloblast reorganizes: nucleus distal and secretory organelles proximal, ready to secrete toward the dentin.",3],
+
+/* F. Secretory stage */
+['F',"What is characteristic of the secretory ameloblast?","It is a differentiated cell that has lost the ability to divide by mitosis","It still divides actively","It has no organelles","It is a stem cell of the pulp","The secretory ameloblast is specialized and cannot divide. Preameloblasts, in contrast, still divide.",1],
+['F',"Which features describe the secretory ameloblast?","Cylindrical cell with basophilic cytoplasm, large nucleolus, distal nucleus, abundant Golgi, mitochondria and RER","Flat cell with pale cytoplasm and no nucleolus","Cuboidal cell without Golgi apparatus","Stellate cell with long dentinal processes","It is a cylindrical, protein-secreting cell with basophilic cytoplasm. Its cytoplasm contains secretory (adamantine) granules that form the organic matrix.",2],
+['F',"Where are enamel matrix substances synthesized and concentrated in the ameloblast?","Synthesized in the RER and concentrated in the Golgi apparatus","Synthesized in the Golgi apparatus and concentrated in the RER","Synthesized in the nucleus and concentrated in lysosomes","Synthesized and concentrated in mitochondria","Low-molecular-weight substances are made in the RER, concentrated in the Golgi, packed in secretory granules and secreted by exocytosis.",2],
+['F',"How are enamel matrix proteins released by the ameloblast?","By exocytosis, and granules are not stored for long periods","By cell lysis","By phagocytosis","Stored for a long time and released at eruption","Secretion is by exocytosis from adamantine bodies and apical vesicles. The granules are not stored for long periods.",3],
+['F',"What forms the first layer of enamel during initial secretion?","An initial partially mineralized layer (about 30%) with crystals interlocked with those of dentin, forming aprismatic enamel","A fully mineralized prismatic layer","A layer of Nasmyth membrane","A layer of predentin","Ameloblasts begin to secrete proteins and ions that accumulate to form a partially mineralized layer. The first crystals form an amorphous, aprismatic enamel.",2],
+['F',"What gives rise to enamel prisms?","The ameloblasts move away from dentin, forming the Tomes process","The fusion of odontoblast processes","The proliferation of the dental follicle","The secretion of Nasmyth membrane","As ameloblasts move away from the dentin, the Tomes process appears and gives rise to enamel prisms (rods), the basic structural unit.",2],
+['F',"How does one ameloblast form a prism?","Through two secretory poles: one forms the head of the prism and the other forms the tail","Through one pole that forms the head only","Through the nucleus that forms the tail","It does not take part in forming prisms","The ameloblasts have two secretory poles at the Tomes process: one forms the enamel of the head and the other the tail of the prism.",3],
+['F',"Why does the last enamel layer not contain prisms?","The ameloblasts lose their distal portion (the Tomes process)","The ameloblasts are dead by then","The dentin is absent","The reduced enamel epithelium prevents it","At the end of the secretory stage, ameloblasts become shorter and lose the distal part. The final enamel is aprismatic, like the first layer.",2],
+['F',"Do ameloblasts secrete the mineral crystals of enamel?","No: they secrete matrix proteins that create and maintain an extracellular environment, and the crystals grow thicker as organic matter is replaced","Yes: they secrete the apatite crystals directly","No: odontoblasts secrete the crystals","Yes: only at the maturation stage","Ameloblasts do not secrete crystals. The first enamel is partially mineralized (30%), then organic matter and water are lost and mineral is added up to 95%.",3],
+
+/* G. Maturation, protection and desmolysis */
+['G',"When does the maturation stage begin?","After most of the thickness of the enamel has formed in the occlusal or incisal area, while secretion continues in the cervical parts","Before any enamel is formed","Only after eruption of the tooth","Only in the cervical region","Maturation starts once most enamel thickness is formed in the occlusal or incisal region, while the cervical part is still being secreted.",2],
+['G',"What proportion of ameloblasts dies by apoptosis during the transition and maturation stages?","25% at the transition and another 25% during maturation (50% in total)","10% in total","75% at the transition only","100% at the transition","25% die in the transition from secretory to maturation and another 25% during the maturation stage. Death is by apoptosis (programmed cell death).",3],
+['G',"Which statement about the two types of maturation ameloblasts is correct?","Ruffle-ended ameloblasts pump calcium ions for crystal growth, and smooth-ended (absorptive) ameloblasts filter small proteins and resorb matrix proteins","Smooth-ended ameloblasts pump calcium and ruffle-ended ameloblasts resorb proteins","Both types secrete amelogenin","Both types only appear after eruption","Cells alternate between a rough border (microvilli) and a smooth border. The rough border favors Ca2+ transport and the smooth one absorbs and degrades organic matrix.",3],
+['G',"Which proteins are fully removed during maturation, leaving the enamelins on the crystal surface?","Amelogenins","Enamelins","Tuftelin","Serum proteins only","Elimination of organic matter is selective: all amelogenins are removed, only enamelins remain, and then ameloblastins join them strongly.",3],
+['G',"What happens to the mineral content of enamel from the beginning to the end of the process?","It goes from about 30% to about 95%","It goes from 95% to 30%","It stays at 70%","It goes from 0% to 50%","Initial enamel is partially mineralized (30%). Progressive replacement of water and organic matter brings mature enamel to 95%.",1],
+['G',"What happens to the ameloblast in the protective stage?","It enters a state of regression, losing height, volume and organelle content, after secreting the primary cuticle (Nasmyth membrane)","It becomes a secretory ameloblast","It differentiates into an odontoblast","It forms the Tomes process","Once enamel is fully mineralized the ameloblast regresses. Its final secretion product is the primary enamel cuticle (Nasmyth membrane).",2],
+['G',"What forms the reduced enamel epithelium?","The ameloblasts and the papillary layer, formed by the stratum intermedium, stellate reticulum and outer enamel epithelium","The odontoblasts and the pulp","The cementoblasts and the periodontal ligament","The buccal epithelium alone","After enamel is mature, the layers of the enamel organ fuse. The reduced enamel epithelium protects mature enamel during eruption.",2],
+['G',"What happens in the desmolytic stage?","The reduced enamel epithelium proliferates and produces enzymes that destroy the connective tissue separating it from the buccal epithelium","The ameloblasts secrete new prisms","The Nasmyth membrane is formed","The dentin is resorbed","Desmolysis is destruction of connective tissue: the reduced enamel epithelium and buccal epithelium fuse, which facilitates the eruption of the tooth.",3],
+['G',"What happens if the reduced enamel epithelium degenerates prematurely?","There may be no eruption","The tooth erupts earlier","The enamel becomes thicker","Nothing happens","The reduced enamel epithelium must remain until the tooth erupts. Premature degeneration may prevent eruption.",3],
+['G',"What becomes of the reduced enamel epithelium as the tooth passes through the oral epithelium?","The incisal part is destroyed and the cervical part joins the oral epithelium to form the junctional epithelium","All of it is lost and no junctional epithelium forms","It becomes the cementum","It becomes the dentin","The part located incisally is destroyed, while the part more cervical interacts with the oral epithelium to form the junctional epithelium.",3],
+
+/* H. Prismatic and aprismatic enamel */
+['H',"Which are the basic structural units of enamel?","Aprismatic enamel and prismatic enamel","Striae of Retzius and perikymata","Enamel tufts and lamellae","Hunter-Schreger bands and gnarled enamel","The BSUs are aprismatic and prismatic enamel. The other structures are secondary structural units.",1],
+['H',"How are the crystals of aprismatic enamel arranged?","Parallel to each other and perpendicular to the external surface","Randomly, without orientation","Crisscrossing as in gnarled enamel","Parallel to the surface only","Aprismatic enamel has no prisms, and its hydroxyapatite crystals are parallel to each other and perpendicular to the outer surface.",2],
+['H',"Which enamel layers are aprismatic?","The first layer formed next to dentin and the last layer on the surface","Only the layer in the middle of the thickness","Only the cusps","Only the cervical enamel","Both the initial and the final enamel are formed without Tomes process, so no prisms are formed.",2],
+['H',"Which statement about enamel prisms is correct?","They are about 4 µm thick, longitudinal structures running from the ADC to the enamel surface","They are 40 µm thick and cross the dentin","They are horizontal and cover the surface only","They are only present in the cervical region","Prisms are about 4 µm in diameter and run from the dentinoenamel junction to the surface.",1],
+['H',"What is the function of the head and the tail of the prisms?","The head withstands the shocks of mastication, and the tails distribute and dissipate them","The tail withstands shocks and the head dissipates them","Both only store water","They carry nerves","Prisms have a head and a tail. Their meshing, with heads packed between tails of the prisms above, gives the enamel greater resistance.",3],
+['H',"How are the crystals of interprismatic enamel oriented compared with those of the rod?","In a different direction from the crystals that make the rod","In the same direction as the rod","Perpendicular to the dentin only","They have no crystals","The interprismatic enamel is a sheath around each rod with crystals oriented differently from the rod crystals, while rod crystals run along the long axis of the rod.",2],
+['H',"What can be observed in some areas of prismatic enamel?","Rod and interprismatic enamel that are not separated and are confluent","Rods separated by large spaces always","A complete absence of interprismatic enamel in all areas","Rods made of collagen","In prismatic enamel two zones are always seen, but in some areas rod and interrod enamel are confluent.",3],
+
+/* I. Secondary structural units */
+['I',"Which of the following is NOT a secondary structural unit of enamel?","Prismatic enamel","Striae of Retzius","Hunter-Schreger bands","Enamel tufts","Prismatic and aprismatic enamel are the basic structural units. The others are secondary units.",1],
+['I',"Which secondary units are grouped as changes of direction?","Hunter-Schreger bands and gnarled enamel","Striae of Retzius and enamel tufts","Perikymata and lamellae","Fissures and microcracks","Hunter-Schreger bands and gnarled enamel reflect changes in direction of prisms. Striae, tufts and perikymata reflect different degrees of mineralization.",2],
+['I',"What are the striae of Retzius?","Incremental growth lines indicating apposition of enamel layers during crown formation","Lines produced by optical phenomena","Cracks that run from surface to dentin","Folds of the Nasmyth membrane","They are incremental lines marking the layered apposition of enamel during formation of the crown.",1],
+['I',"Which statement about perikymata is correct?","They are more visible in recently erupted permanent teeth and tend to disappear with age due to physiological wear","They are more visible in old teeth","They are deep fissures in the cusp","They are located inside the dentin","Perikymata (surface grooves related to the striae of Retzius, imbrication lines) are seen in newly erupted teeth. With wear the enamel surface becomes smooth in older people.",2],
+['I',"Where are enamel tufts located and what is their composition?","In the inner third of enamel, unfolding from the ADC, made of poorly mineralized amorphous and granular tissue rich in enamel proteins","In the outer third, made of fully mineralized crystals","In the dentin, made of collagen","On the surface, made of salivary proteins","Tufts (Linderer tufts) start at the DEJ and extend into the inner third. They arise from changes in direction of prisms and from poorly mineralized material.",2],
+['I',"Which statement about enamel tufts and caries is correct?","They do not appear to be involved in caries dissemination","They are the main route of spread of caries","They prevent any caries","They are formed only after caries","Despite being poorly mineralized, tufts do not seem to take part in the progression of caries.",3],
+['I',"What are the Hunter-Schreger bands?","An optical phenomenon produced by the different curvature of prisms, whose appearance changes with the direction of incident light","Cracks produced by trauma","Growth lines of the Nasmyth membrane","Bands of dentin in the pulp","They are of unknown origin but believed to be an optical phenomenon, produced by different prism curvature, present in all permanent teeth.",2],
+['I',"Which description of parazones and diazones is correct?","Parazones are clear zones and diazones are dark zones","Parazones are dark zones and diazones are clear zones","Both are always dark","Both are cracks","In Hunter-Schreger bands, parazones are the clear bands and diazones the dark ones.",3],
+['I',"Which description fits gnarled enamel?","A unique area of prismatic enamel in the cusps, with crisscrossing adamantine prisms that give greater resistance in areas exposed to mastication","A thin layer of aprismatic enamel in the cervical area","A group of cracks that appear after eruption","The layer between enamel and dentin","Gnarled enamel is found in the cusps. Its complex interlacing of prisms makes it more resistant and it forms due to the movement of ameloblasts toward the periphery.",2],
+['I',"What does the amelodentinal junction (ADC) indicate?","The location of the basal lamina between odontoblasts and ameloblasts before the respective mineralization begins","The place where the cementum meets the gingiva","The border between pulp and predentin","The surface of the enamel","The ADC is the area of relationship between enamel and dentin, important for enamel retention. It looks like a dark line because of the different embryonic origin of the two tissues.",3],
+['I',"Which fissure type has a constant width along the invagination?","Type I","Type V","Type Y","Type X","Type V has a wide entrance that narrows toward the base. Type I has constant width, and type Y narrows from the entrance. Fissures result from incomplete coalescence of cuspid lobes.",3],
+['I',"Which type of lamella has no enamel, contains organic remains and is introduced after eruption?","Type C","Type A","Type B","None of them","Type A are hypomineralized and form before eruption, more in the cervical zone. Type B have degenerated cells and form before eruption. Type C contain organic remains introduced after eruption.",3],
+
+/* J. Surface covers, amelogenesis imperfecta and aging */
+['J',"Which statement about the Nasmyth membrane is correct?","It is the primary cuticle covering the entire crown of a newly erupted tooth and it disappears after occlusion by brushing or chewing","It is a permanent layer that is thicker with age","It is formed by salivary proteins","It is formed by bacteria","The Nasmyth membrane is the last ameloblastic secretion. It adheres strongly to enamel but is lost by mechanical action, though it may persist in protected gingival areas.",2],
+['J',"What is the secondary (acquired) film?","A clear, acellular, bacteria-free precipitate of salivary proteins and inorganic elements that reappears a few hours after cleaning","A layer secreted by ameloblasts","A mature plaque with many bacteria","A layer of dentin","The acquired film forms from saliva and is free of bacteria. If it is not removed, plaque or biofilm builds up.",2],
+['J',"Which statement describes the oral biofilm?","A structure formed by microorganisms with non-homogeneous architecture and channels for flow of water and nutrients, potentially pathogenic","A homogeneous layer without channels","A layer secreted by the enamel","A sterile film","Biofilm has temporal continuity and a non-homogeneous structure with channels. It is a key factor in caries, mucositis and peri-implantitis.",2],
+['J',"What favors colonization by S. mutans and lactobacilli?","An imbalance of the biofilm due to excessive carbohydrate consumption","Brushing after every meal","High salivary flow","Fluoride in toothpaste","Excess carbohydrates unbalance the biofilm, favoring S. mutans and lactobacilli, which are linked to caries.",2],
+['J',"Which description fits non-syndromic amelogenesis imperfecta?","A dental disease in which enamel does not develop properly, with aplasia or hypoplasia, hypomineralization or hypomaturation, affecting about 1 in 700 to 1 in 4,000 people","A disease of the dentin only","A disease of the cementum","A disease caused by tetracycline","AI shows a broad spectrum of enamel defects and teeth may be white, yellow-orange or brown.",1],
+['J',"Which gene is most frequently affected in the most common type of amelogenesis imperfecta?","ENAM, the enamelin gene (4q21), in an autosomal dominant pattern","DSPP, in an autosomal dominant pattern","COL1A1, in an X-linked pattern","DMP-1, in a recessive pattern","The most common AI type is autosomal dominant with ENAM mutations, associated with hypoplastic, pitted enamel. DSPP and DMP-1 relate to dentinogenesis imperfecta.",3],
+['J',"Which changes occur in enamel with age?","Wear, decrease in water content and reduced permeability","Increase in water content and permeability","Increase in the number of ameloblasts","Regeneration of prisms","Enamel wears, loses water, and becomes less permeable as crystals grow. Pores decrease, which reduces the incidence of caries.",2],
+['J',"What maximum fluoride concentration of commercial toothpaste does the lesson give for Europe in relation to fluorosis?","Not more than 1500 ppm","Not more than 150 ppm","Not more than 15000 ppm","There is no limit","Excess fluoride causes fluorosis (hypomaturation of enamel). In Europe it is forbidden to commercialize toothpastes with more than 1500 ppm fluorine.",3]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+
+<script>
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Presecretory','morphogenesis and differentiation'],['Secretory','Tomes process, prisms'],['Maturation','protective and desmolytic']];
+const KEY='dental-enamel-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Dental Tissues II · Lesson 6</p>
+ <h1>Enamel Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Lesson 6 slides: properties, composition, amelogenesis stage by stage, prisms, secondary structural units, surface covers, amelogenesis imperfecta and aging.</p>
+ <div class="ribbon" aria-label="Amelogenesis stages">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The three stages of amelogenesis, as taught in the lesson. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>
