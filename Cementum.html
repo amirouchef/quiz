@@ -1,0 +1,485 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cementum Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'Introduction: the periodontium'},
+ {k:'B',n:'Cementum: features and properties'},
+ {k:'C',n:'Cementum: functions'},
+ {k:'D',n:'Cementum: components and cells'},
+ {k:'E',n:'Cementum: collagen and fibers'},
+ {k:'F',n:'Cementum junctions (CDJ and CEJ)'},
+ {k:'G',n:'Cementogenesis'},
+ {k:'H',n:'Types of cementum'},
+ {k:'I',n:'Alveolar process'},
+ {k:'J',n:'Periodontal ligament: features and cells'},
+ {k:'K',n:'Periodontal ligament: fibers, vessels and nerves'},
+ {k:'L',n:'Dentogingival union'}
+];
+const RAW=[
+/* A. Introduction */
+['A',"What is the embryonic origin of the tissues that support and line the tooth (cementum, PDL, alveolar bone)?","Ectomesenchymal, from cells of the dental sac","Ectodermal, from the enamel organ","Endodermal, from the pharyngeal pouches","Mesodermal, from the somites only","The supporting tissues derive from the ectomesenchymal cells of the dental sac (follicle). Enamel, in contrast, is ectodermal.",1],
+['A',"Which set of tissues makes up the support and protection organ of the tooth (periodontium)?","Cementum, periodontal ligament, alveolar bone and the gingiva in contact with the tooth","Enamel, dentin, pulp and cementum","Cementum, dentin, alveolar bone and tongue mucosa","Periodontal ligament, pulp, enamel and gingiva","The lesson lists four components: cementum, PDL, alveolar bone and gingiva in contact with the tooth.",1],
+['A',"Which tissue is NOT part of the periodontium?","Dentin","Cementum","Periodontal ligament","Alveolar bone","Dentin belongs to the tooth itself (it is covered by cementum in the root). The other three support and protect the tooth.",2],
+['A',"How is the joint between the root and the alveolar socket named in the lesson's figure?","Gomphotic joint (gomphosis)","Synovial joint","Symphysis","Synchondrosis","The periodontal ligament anchors the root in the socket like a peg in a hole, a gomphosis, also called the alveolodental joint.",2],
+
+/* B. Cementum: features and properties */
+['B',"Which description of cementum is correct?","An avascular, non-innervated hard tissue that covers the dentin of the root, from the root collar to the apex","A vascularized tissue that covers the crown","An innervated tissue that forms the inner wall of the pulp chamber","A soft connective tissue between the root and the bone","Cementum coats and protects the root dentin, from the cervical region to the apex, and has neither vessels nor nerves.",1],
+['B',"On which criterion is cementum classified?","The presence or absence of cells in its matrix","The thickness of the layer","The color of the tissue","The type of tooth where it is found","Cementum is classified as cellular or acellular according to whether cells are present in its matrix.",1],
+['B',"From which cells is cementum derived?","The cellular layer of the ectomesenchyma of the dental sac (follicle) around the tooth germ","The inner enamel epithelium","The odontoblasts of the pulp","The osteoblasts of the alveolar bone","Cementoblasts come from ectomesenchymal cells of the dental sac. Epithelial cells of Hertwig's sheath only help to induce the process.",2],
+['B',"When does the functional stage of cementum begin?","When the tooth reaches occlusion; it then continues throughout life","During formation of the root","At the bell stage of odontogenesis","At birth","The prefunctional stage takes place during root formation. The functional stage starts once the tooth is in occlusion and continues for life.",2],
+['B',"How does cementum compare with dentin and enamel?","It is white, opaque, without gloss, slightly lighter than dentin and softer than dentin because it has less inorganic matrix","It is shiny like enamel and harder than dentin","It is dark yellow and harder than enamel","It is translucent and as hard as dentin","Unlike enamel, cementum has no gloss. It is softer than dentin because its percentage of inorganic matrix is lower.",2],
+
+/* C. Cementum: functions */
+['C',"Which is the basic function of cementum within the alveolodental articulation?","Retention and anchorage of the collagen fibers of the PDL that fix the tooth to the alveolar bone","Production of enamel proteins","Detection of pain from the root surface","Storage of calcium for the whole body","Cementum anchors the PDL fibers, so it is part of the articulation that attaches the tooth to the bone.",1],
+['C',"How does cementum control the width of the periodontal space?","By being continuously deposited, which compensates for displacement and wear of the tooth during life","By resorbing continuously","By secreting fluid into the space","By stopping its formation after eruption","Continuous cementum deposition keeps the periodontal space at its normal width despite tooth movement and wear.",2],
+['C',"What happens when occlusal forces are transmitted to cementum through the periodontal membrane?","They impinge on the cementum and result in lamellar cementogenesis","They stop cementoblast activity","They destroy the cementoid","They cause enamel to form on the root","Cementum transmits occlusal forces to the PDL, and these forces promote deposition of lamellar cementum.",3],
+['C',"Which cells provide the reserve for repair of the root surface?","Reserve cells of the apical periodontium","Ameloblasts","Odontoblasts of the crown","Keratinocytes of the gingiva","Healthy cementum can undergo resorption, and it is repaired from reserve cells of the apical periodontium.",3],
+['C',"Which of the following is NOT a function of cementum?","Detecting pain through free nerve endings","Anchoring PDL fibers","Repairing the root surface","Controlling periodontal space width","Cementum is not innervated. The sensory role belongs to the periodontal ligament.",2],
+
+/* D. Cementum: components and cells */
+['D',"Which are the cellular components of cementum?","Cementoblasts, cementocytes and other cells (cementoclasts and epithelial cells)","Ameloblasts, odontoblasts and osteoblasts","Fibroblasts only","Keratinocytes and Langerhans cells","The lesson lists cementoblasts, cementocytes, and other cells such as cementoclasts and epithelial cells.",1],
+['D',"Which composition of the extracellular matrix of cementum is given in the lesson?","Inorganic matrix 46 to 50% (hydroxyapatite), water 32%, organic matrix 22%","Inorganic matrix 95%, organic 4%, water 1%","Inorganic matrix 70%, organic 20%, water 10%","Inorganic matrix 20%, organic 70%, water 10%","Cementum has a lower inorganic percentage than dentin or enamel. The 95/4/1 figures are for enamel.",2],
+['D',"Where are cementoblasts found in a functional tooth?","Lining the periodontal ligament, in contact with the cementum surface","Inside the pulp chamber","In the enamel organ","Inside the lacunae of cementum","In a functional tooth cementoblasts are part of the PDL. They may be active or inactive.",1],
+['D',"What are features of cementoblasts?","They have many mitochondria and synthesize tropocollagen, proteoglycans and glycosaminoglycans","They are small cells with no organelles","They synthesize enamel proteins","They are multinucleated cells that resorb matrix","Cementoblasts are active secretory cells with many mitochondria that produce collagen precursors and ground substance.",2],
+['D',"What is a difference between cementoblasts and osteoblasts according to the lesson?","Cementoblasts show no alkaline phosphatase activity, unlike osteoblasts","Cementoblasts have more alkaline phosphatase","Cementoblasts do not synthesize collagen","Cementoblasts are of epithelial origin","The lesson specifically says cementoblasts have no alkaline phosphatase activity, unlike osteoblasts.",3],
+['D',"What are cementocytes?","Cementoblasts included in the mineralized cementum and housed in lacunae","Cells that resorb cementum","Epithelial cells from Malassez rests","Fibroblasts of the PDL","Cementocytes are cementoblasts trapped in the matrix, living in lacunae and extending cytoplasmic processes to other cementocytes or to the periodontium.",1],
+['D',"In which situations are cementoclasts found?","Only in certain pathologies and in root resorption of deciduous teeth or excessive orthodontic movement","In every healthy adult root","Only during amelogenesis","Only in the pulp","Cementoclasts resorb cementum and are not present in normal healthy conditions.",2],
+['D',"What do cementocyte cytoplasmic extensions do?","Establish junctions with other cementocytes or with the periodontium","Secrete enamel","Anchor the cell to the pulp","Store lipid droplets","These processes connect neighboring cementocytes and link them to the periodontal side.",2],
+
+/* E. Cementum: collagen and fibers */
+['E',"Which collagen represents about 90% of the organic components of cellular cementum?","Type I, whose fibers accommodate mineral deposition","Type II","Type IV","Type X","Type I collagen is the main collagen of cementum, and mineral deposits on its fibers.",1],
+['E',"How does type III collagen behave in cementum?","It increases during development and repair and decreases during maturation","It is the main collagen of mature cementum","It is absent from cementum","It increases only with age","Type III is a developmental and repair collagen, and it decreases when the tissue matures.",2],
+['E',"What is the role of type XII collagen in cementum?","It binds to type I collagen and non-collagenous proteins","It forms the main fibrils","It is the cementoid collagen only","It mineralizes the matrix","Type XII is an associated collagen that links type I fibers with non-collagenous proteins.",3],
+['E',"Which collagen types appear as contaminants from the PDL region?","Types V, VI and XIV","Types I and III","Types II and IV","Types X and XI","These types are present at the PDL side and are not true constituents of the cementum matrix.",3],
+['E',"What characterizes the extrinsic fibers of cementum?","They are PDL derivatives formed by fibroblasts, with the same direction as the main PDL fibers (perpendicular and oblique to the root)","They are formed by cementoblasts and run parallel to the root surface","They are formed by osteoblasts","They are elastic fibers","Extrinsic fibers come from the PDL and are the continuation of Sharpey fibers into cementum.",2],
+['E',"What characterizes the intrinsic fibers of cementum?","They are formed by cementoblasts and run parallel to the root surface, at right angles to the extrinsic fibers","They are formed by fibroblasts and run perpendicular to the root","They are derived from the PDL","They are formed by cementocytes only","Intrinsic fibers are cementum derivatives made by cementoblasts and become part of the cementum.",3],
+
+/* F. Cementum junctions */
+['F',"What is the main function of the cementum-dentin junction?","To firmly bond dentin and cementum","To seal the oral cavity","To produce saliva","To allow the passage of nutrients from cementum to dentin","The CDJ unites both tissues, and it acts as a barrier that prevents diffusion.",1],
+['F',"Which statement about the dentin-cementum interface is correct?","It is an important barrier that prevents diffusion and lies near the granular layer of Tomes","It allows free diffusion between dentin and cementum","It lies between enamel and cementum","It is formed by odontoblasts only","The interface prevents diffusion and is located close to the granular layer of Tomes in the root.",2],
+['F',"Which cells deposit the thin radiopaque layer of the CDJ according to the lesson?","Epithelial cells of Hertwig's sheath","Fibroblasts of the PDL","Osteoclasts","Odontoblasts of the pulp","The lesson describes this layer as deposited by cells of Hertwig's epithelial root sheath.",3],
+['F',"Why is the cemento-enamel junction (CEJ) clinically important?","It is usually the place where the gingiva is attached to a healthy tooth by gingival fibers","It is where the pulp enters the tooth","It is where the PDL ends","It is the apex of the root","The CEJ joins cementum and enamel and is the usual site of gingival attachment in health.",1],
+['F',"What does active gingival recession reveal?","The CEJ, and it is usually a pathologic sign","The apical foramen","The pulp chamber","The alveolar crest, which is normal","When the gingiva recedes the CEJ becomes visible, which is usually a sign of pathology.",2],
+
+/* G. Cementogenesis */
+['G',"Cementogenesis takes place during which period, and from which cells do cementoblasts derive?","Formation of the root and periodontium; ectomesenchymal cells of the dental sac (follicle)","Crown formation; the inner enamel epithelium","After eruption only; odontoblasts","Bud stage; the enamel knot","Cementum forms during root and periodontium formation. Cementoblasts derive from dental sac cells.",1],
+['G',"What happens to Hertwig's epithelial root sheath shortly after dentinogenesis begins?","It degenerates progressively until it is no longer continuous, leaving the Malassez segments","It thickens and covers the whole root","It becomes the alveolar bone","It forms enamel on the crown","The sheath fragments, and the remnants stay in the PDL as the epithelial cell rests of Malassez.",2],
+['G',"What is the sequence of events when follicle cells contact the root dentin?","Differentiation into cementoblasts, then cementoid, then cementum","Cementum, then cementoid, then cementoblasts","Cementoid, then enamel, then cementum","Cementocytes, then cementoblasts, then cementoid","Cementoblasts secrete the matrix (cementoid), and it later mineralizes into cementum.",2],
+['G',"What is the enamel-like material produced by root sheath cells on newly formed dentin called?","Enameloid or intermediate cementum","Predentin","Cementoid","Interglobular dentin","Root sheath cells deposit an enamel-like layer called enameloid, also known as intermediate cementum.",3],
+['G',"Which are the two stages cementoblasts carry out?","Formation of an organic matrix and its mineralization","Resorption and repair","Proliferation and apoptosis","Induction and eruption","Cementoblasts first make the organic matrix and then it calcifies with hydroxyapatite crystals.",1],
+['G',"Which is the correct route followed by the collagen made by cementoblasts?","Synthesis in the RER, modification in the Golgi, transport in secretory vesicles and release by exocytosis","Synthesis in the nucleus, release by phagocytosis","Synthesis in lysosomes, release by endocytosis","Synthesis in mitochondria, release by diffusion","This is the classical secretory pathway: RER, Golgi, secretory vesicles, exocytosis.",2],
+['G',"What is cementoid?","The first deposit of cementoblasts, a matrix not yet mineralized, which becomes cementum when calcified","Mature, fully mineralized cementum","A type of enamel","A fiber of the PDL","Cementoid is the first, uncalcified matrix. It calcifies by dissemination of hydroxyapatite from the root dentin and becomes cementum.",2],
+['G',"What is the difference between cementum and bone regarding remodeling?","Cementum, unlike bone, does not resorb or remodel, but can be repaired by adding new cementum","Cementum remodels constantly like bone","Bone does not remodel but cementum does","Both are unable to repair","The lesson states cementum does not remodel like bone, and repair is by new deposition.",3],
+
+/* H. Types of cementum */
+['H',"Which cementum is also called primary and is formed by cementoblasts that differentiate near the root margin?","Acellular fibrillar cementum","Cellular fibrillar cementum","Acellular afibrillar cementum","Intermediate cementum","Acellular (primary) fibrillar cementum forms during root development.",1],
+['H',"How are dentin and cementum linked in acellular fibrillar cementum?","Cementoblasts deposit collagen fibrils into unmineralized dentin, so dentin and cementum fibrils intermingle","The two tissues are separated by a cell layer","Enamel lies between them","The link is made by elastic fibers","Collagen of both tissues intermingles, then mineralization consolidates the junction.",2],
+['H',"What does the cementum-dentin junction consist of?","A mineralized layer with a short strip of collagen fibers perpendicular to the root surface and non-collagenous proteins","A layer of soft connective tissue","A layer of enamel","A space filled with fluid","The CDJ is mineralized and includes short perpendicular collagen fibers and non-collagenous matrix proteins.",3],
+['H',"Which cementum lacks both cells and collagen and plays no role in tooth insertion?","Acellular afibrillar cementum","Acellular fibrillar cementum","Cellular fibrillar cementum","Primary cementum","Without collagen there is no anchorage of PDL fibers.",1],
+['H',"Where is acellular afibrillar cementum deposited?","On enamel and dentin near the cemento-enamel junction, often at the neck of the tooth","At the apex of the root","In the furcation only","Inside the pulp canal","It is found in the cervical area, close to the CEJ.",2],
+['H',"What are the features of cellular (secondary) fibrillar cementum?","Synthesized faster, less mineralized, compensates for wear and movement of the teeth","Synthesized slowly and highly mineralized","Has no cells","Forms only before eruption","It is formed rapidly and continuously throughout life to compensate for wear.",2],
+['H',"What are cementocytes of cellular cementum?","Cementoblasts trapped in their matrix, with reduced secretory activity, which communicate through canaliculi without reaching the surface","Cells that resorb cementum","Free cells of the PDL","Epithelial cells","The communication through canaliculi does not extend to the surface.",3],
+['H',"How are collagen fibril bundles arranged in cellular cementum?","Parallel to the root surface","Perpendicular to the root surface","Randomly in the pulp","Radially from the apex","In the lesson, collagen bundles of secondary cementum are oriented parallel to the root.",2],
+['H',"Where is secondary cementum mainly located?","In the apical and interradicular regions of the tooth, forming throughout life","In the cervical third only","On the crown","Next to the CEJ only","Secondary cementum is limited to the apical and interradicular regions and is formed throughout life.",1],
+['H',"What is true of the thickness of cementum in an adult tooth?","It is greater at the apex and interradicular zone, and it can even be deposited inside the root canal","It is thickest at the cervical area","It is uniform","It decreases with age","Continuous deposition thickens the apex and furcation, and may extend into the canal.",3],
+
+/* I. Alveolar process */
+['I',"What is the main function of the alveolar bone?","To provide sockets for the teeth and attach them through periodontal fibers","To produce enamel","To secrete saliva","To form the pulp","The alveolar process houses the roots and anchors them via the PDL fibers.",1],
+['I',"Why is the alveolodental joint important?","It resists forces generated by contact during chewing, phonation and swallowing","It produces dentin","It secretes cementoid","It makes gingival fluid","The tooth in the socket forms a real joint able to resist functional forces.",2],
+['I',"Which functions of the alveolar process are mentioned in the lesson?","Protection of vessels and nerves to the PDL, and control of calcemia","Production of enamel and dentin","Production of saliva and mucus","Sensation of taste","It protects neurovascular elements and participates in calcium regulation.",2],
+['I',"What activity does the bone marrow of the alveolar spongy zone perform during infancy?","Hematopoietic activity","Enamel formation","Secretion of gingival fluid","Cementum resorption","During childhood the marrow of the alveolar spongy bone participates in blood cell formation.",3],
+
+/* J. PDL features and cells */
+['J',"How is the periodontal ligament defined?","A soft, specialized connective tissue covering the root of the tooth and the bone that forms the socket wall","A hard mineralized tissue of the root","An epithelial layer of the gingiva","A layer of enamel","The PDL lies between cementum and alveolar bone, and it is soft connective tissue.",1],
+['J',"What is the thickness of the PDL?","From 0.15 to 0.38 mm, thinnest around the middle third of the root","From 1.5 to 3.8 mm, thickest at the middle third","About 5 mm everywhere","Less than 0.01 mm","The PDL is thin and is narrowest at the middle of the root.",2],
+['J',"What is the main function of the PDL?","To support the teeth in their sockets and bear chewing forces by dampening occlusal forces","To form enamel","To produce dentin","To seal the oral cavity","The PDL supports the tooth and absorbs occlusal loads.",1],
+['J',"Which role does the PDL have as a sensory receptor?","It is necessary for the correct positioning of the jaws during normal function","It senses taste","It sees light","It gives pulpal pain","PDL mechanoreceptors inform about the forces applied to the teeth.",2],
+['J',"What is functional adaptation of the PDL, including orthodontic response, related to?","The high degree of remodeling of its collagen fibers","Continuous mineralization","Production of enamel","Absence of cells","The PDL adapts to physiologic and orthodontic demands through intense collagen remodeling. Its width decreases with age.",2],
+['J',"Which are the main cells of the PDL?","Fibroblasts, which synthesize a very high rate of collagen","Osteoclasts","Ameloblasts","Odontoblasts","Fibroblasts are the main cells, and they have a high turnover of collagen.",1],
+['J',"What cell features do PDL fibroblasts have?","Large cytoplasm with RER, Golgi, many secretory granules and a well-developed actin cytoskeleton","Small cell with few organelles","Multiple nuclei and ruffled border","Pigment granules","They are active protein-secreting and remodeling cells.",2],
+['J',"What are the epithelial cell rests of Malassez?","Remnants of Hertwig's epithelial root sheath, grouped in clusters near the cementum","Remnants of the enamel knot","Clusters of osteoblasts","Remnants of the dental lamina in the gingiva only","Some believe they form a network around the roots that may connect with the junctional epithelium.",2],
+['J',"Which cell is NOT listed among the cellular components of the PDL?","Odontoblasts","Macrophages","Undifferentiated mesenchymal cells","Cementoblasts","The PDL contains osteoblasts, osteoclasts, fibroblasts, epithelial cells, macrophages, mesenchymal and stem cells and cementoblasts. Odontoblasts belong to the pulp.",3],
+
+/* K. PDL fibers, vessels and nerves */
+['K',"Which collagen types are found in the PDL fibers?","Type I (mostly), III and XII","Type II only","Type IV only","Type X only","The PDL collagen is mostly type I with III and XII.",1],
+['K',"Which fiber group attaches to the cementum just below the CEJ and runs downward and outward to the edge of the alveolus?","Alveolar crest group","Horizontal group","Apical group","Interradicular group","The alveolar crest fibers go from cervical cementum to the alveolar crest.",2],
+['K',"Which fiber group belongs to the cervical third of the root and goes horizontally between cementum and alveolar bone?","Horizontal group","Oblique group","Apical group","Interradicular group","Horizontal fibers run perpendicular to the long axis of the tooth.",2],
+['K',"Which is the most numerous group of PDL fibers, in the middle and apical two thirds of the root?","Oblique group","Alveolar crest group","Horizontal group","Interradicular group","Oblique fibers carry the occlusal load and run from cementum obliquely to the bone.",2],
+['K',"Which fiber group is found only in teeth with more than one root?","Interradicular group","Apical group","Horizontal group","Oblique group","They run from cementum to the bone of the interradicular septum.",2],
+['K',"What are Sharpey's fibers in the PDL?","The ends of the main collagen bundles embedded in cementum or bone","Elastic fibers of the gingiva","Nerve fibers of the apex","Fibers of the pulp","All major bundles end in cementum or bone as Sharpey fibers.",1],
+['K',"How mineralized are Sharpey's fibers?","Completely in primary cementum, but only partially at the periphery in secondary cementum and bone","Completely in bone and not at all in cementum","Never mineralized","Completely mineralized in every tissue","The degree of mineralization differs depending on the tissue.",3],
+['K',"Which elastic fibers exist in the PDL?","Only oxytalan fibers; elaunin fibers appear in the gingival ligament","Elastin and elaunin only","All three types equally","None","The three types are elastin, oxytalan and elaunin, but only oxytalan is found within the PDL.",3],
+['K',"What is the proposed role of oxytalan fibers?","They regulate vascular flow in relation to tooth function, expanding with tension changes of the vessel walls","They anchor the tooth to the bone","They form mineral crystals","They produce enamel","They run from cementum toward the apical vessels and nerves.",3],
+['K',"Which statement about vascular and nerve supply of the PDL is correct?","It is well vascularized with arteriovenous anastomoses, and has free nerve endings and Ruffini corpuscles as mechanoreceptors","It is avascular","It has no nerves","It only has pain receptors","Free endings are nociceptors and mechanoreceptors, and Ruffini corpuscles are mechanoreceptors.",2],
+
+/* L. Dentogingival union */
+['L',"What is the main seal between the oral cavity and underlying tissues?","The junction between epithelium and enamel","The enamel surface","The alveolar bone","The PDL","The epithelium-enamel junction seals the oral cavity from the underlying tissues.",1],
+['L',"What is the depth of the gingival sulcus?","0.5 to 3 mm, averaging 1.8 mm","5 to 8 mm","0.05 to 0.3 mm","10 mm","This is the range given in the lesson for a healthy sulcus.",1],
+['L',"What can be said about gingival fluid?","It is scarce in normal conditions, more abundant in pathology, and comes from the gingival microcirculation","It is abundant in health and absent in disease","It comes from the salivary glands","It has no cells","Its increase is a sign of inflammation.",2],
+['L',"Which features describe the junctional epithelium?","Non-keratinized, high renewal, low adhesion, high intercellular space and permeability","Keratinized, low renewal, high adhesion","Keratinized and impermeable","Non-keratinized with low permeability","It is a less stable barrier, more permeable to water-soluble substances and microbial products.",3],
+['L',"Which features describe the gingival epithelium?","Keratinized or parakeratinized, low renewal rate, high adhesion, low permeability","Non-keratinized, high renewal","Highly permeable","Without adhesion","It forms a stable, impermeable barrier and is poorly innervated.",2],
+['L',"Which marker in gingival fluid is a lysosomal marker?","Acid phosphatase","Alkaline phosphatase","Lysozyme","Immunoglobulin G","Alkaline phosphatase is linked to bacteria in the lesson, and acid phosphatase to lysosomes.",3]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+
+<script>
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Cementum','root coating'],['PDL','fibers and cells'],['Alveolar bone','socket'],['Gingiva','dentogingival seal']];
+const KEY='dental-cementum-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Dental Tissues III · Lesson 7</p>
+ <h1>Cementum and Periodontium Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Lesson 7 slides: cementum, cementogenesis, alveolar process, periodontal ligament and dentogingival union.</p>
+ <div class="ribbon" aria-label="Tissues of the periodontium">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The tissues of the periodontium, as taught in the lesson. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>
