@@ -1,0 +1,485 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Oral Cavity Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'Branchial arches and first arch syndromes'},
+ {k:'B',n:'Oral mucosa: structure'},
+ {k:'C',n:'Lining, masticatory and specialized mucosa'},
+ {k:'D',n:'Tongue: general features and surfaces'},
+ {k:'E',n:'Tongue: embryonic development'},
+ {k:'F',n:'Lingual papillae, taste buds and histology'},
+ {k:'G',n:'Base of the tongue and lingual tonsil'},
+ {k:'H',n:'Lips: zones and mucosa'},
+ {k:'I',n:'Lip skin, sebum and thermoregulation'},
+ {k:'J',n:'Lips: embryology, clefts and lesions'},
+ {k:'K',n:'Palate: anatomy, muscles and functions'},
+ {k:'L',n:'Palate: embryology, hard palate, tonsils and lesions'}
+];
+const RAW=[
+/* A. Branchial arches and first arch syndromes */
+['A',"From which embryonic structure are the organs of the oral cavity derived?","The first branchial (pharyngeal) arch","The second branchial arch","The third branchial arch","The thyroglossal duct","The lesson states that the organs of the oral cavity derive from the first branchial or pharyngeal arch.",1],
+['A',"How are the branchial arches described in the lesson?","Preponderantly mesodermal, cleft-like structures located on both sides of the pharynx","Purely ectodermal tubes inside the brain","Endodermal glands next to the thyroid","Bony plates of the skull base","The arches surround the pharynx and appear during embryonic development, around the first month.",1],
+['A',"Which cranial nerve is associated with the first branchial arch in the lesson's figure?","CN V (trigeminal)","CN VII (facial)","CN IX (glossopharyngeal)","CN X (vagus)","The figure pairs the arches with CN V, VII, IX and X in order (1st, 2nd, 3rd, 4th).",1],
+['A',"Which structure derives from the first arch according to the figure?","Meckel cartilage (with malleus and incus)","Stapes","Styloid process","Thyroid cartilage","Meckel cartilage, malleus and incus come from the first arch. Stapes and styloid process come from the second, and thyroid cartilage from the fourth.",3],
+['A',"What are the features of Pierre-Robin syndrome?","Micrognathia, cleft palate and tongue retraction","Micrognathia with hypoplasia, caused by TCOF-1","Isolated cleft lip with a normal mandible","Macroglossia with normal palate","The small mandible makes the tongue move backwards and downwards, making breathing difficult.",2],
+['A',"Which statement describes Treacher Collins syndrome?","An autosomal dominant condition (TCOF-1 gene) with micrognathia accompanied by hypoplasia","A syndrome with cleft palate and tongue retraction due to a small mandible","An X-linked condition affecting only the lips","A viral infection of the tongue","The lesson presents it as a first branchial arch syndrome linked to the TCOF-1 gene.",2],
+
+/* B. Oral mucosa: structure */
+['B',"How is the oral mucosa described?","A moist membrane lining the oral cavity, continuous with the skin of the lips anteriorly and with the pharyngeal mucosa posteriorly","A dry membrane found only on the palate","A bony layer covering the alveolar process","A glandular layer limited to the tongue","The oral mucosa continues with lip skin in front and with the gastrointestinal mucosa (pharynx) behind.",1],
+['B',"How many structurally and embryologically different tissues form the oral mucosa, separated by a basement membrane?","Two: epithelial tissue and connective tissue","Three: epithelium, muscle and bone","One: epithelium only","Four: epithelium, muscle, bone and cartilage","A basement membrane lies between the epithelium and the connective tissue.",1],
+['B',"Which layer is NOT listed among the components of oral mucosa in the lesson?","Serosa","Basal cell layer","Basement membrane","Submucosa","The lesson lists epithelium, basal cell layer, basement membrane, lamina propria and submucosa.",2],
+['B',"Which layer lies deep to the lamina propria?","Submucosa","Basement membrane","Granular layer","Prickle cell layer","The sequence from surface to deep is epithelium, basement membrane, lamina propria and submucosa.",1],
+['B',"In keratinized oral epithelium, what is the order of layers from the surface to the depth?","Keratinized layer, granular layer, prickle cell layer, basal cell layer","Basal cell layer, prickle cell layer, granular layer, keratinized layer","Granular layer, keratinized layer, basal cell layer, prickle cell layer","Prickle cell layer, keratinized layer, granular layer, basal cell layer","Cells are born in the basal layer and mature toward the keratinized surface.",2],
+
+/* C. Lining, masticatory and specialized mucosa */
+['C',"Into which three groups is the oral mucosa divided according to location and composition?","Lining, masticatory and specialized mucosa","Superficial, deep and intermediate mucosa","Keratinized, parakeratinized and glandular mucosa","Gingival, lingual and labial mucosa","The three groups are lining (rest of cavity), masticatory (mastication) and specialized (taste buds).",1],
+['C',"Which site is covered by lining mucosa?","The soft palate","The hard palate","The marginal gingiva","The dorsal side of the tongue","Lining mucosa covers inner lips, ventral tongue, floor of the mouth, cheeks, alveolar and vestibular mucosa and the soft palate.",1],
+['C',"What are the features of lining mucosa?","Non-keratinized epithelium, smooth interface and elastic fibers in lamina propria and submucosa","Keratinized epithelium and interdigitated interface","Epithelium with taste buds and papillae","No submucosa and attached to bone","Smooth interface and elastic fibers allow it to stretch.",2],
+['C',"Which sites have masticatory mucosa?","Marginal or adherent gingiva and the hard palate","Inner cheeks and floor of the mouth","Ventral tongue and soft palate","Inner lips and vestibular mucosa","These areas bear friction and pressure during chewing.",1],
+['C',"What are the features of masticatory mucosa?","Keratinized epithelium, interdigitated interface and thin submucosa (or none)","Non-keratinized epithelium and smooth interface","Taste buds and papillae","Thick submucosa with salivary glands everywhere","Keratinization and interdigitation help it resist forces and stay firmly attached.",2],
+['C',"Which site is covered by specialized mucosa?","The dorsal side of the tongue","The ventral side of the tongue","The inner cheek","The hard palate","Specialized mucosa has distinct epithelial and connective structures (papillae) and contains taste buds.",1],
+['C',"Which pairing of mucosa and interface is correct?","Lining mucosa has a smooth interface and masticatory mucosa an interdigitated one","Lining mucosa has an interdigitated interface and masticatory mucosa a smooth one","Both have a smooth interface","Both have an interdigitated interface","Interdigitation increases adhesion to the underlying tissue in masticatory areas.",3],
+['C',"Is the epithelium of specialized mucosa uniformly non-keratinized?","No: some regions are keratinized, depending on function and location","Yes, it is always non-keratinized","Yes, it is always keratinized","It has no epithelium","The lesson states that in specialized mucosa some regions are keratinized, depending on function and location.",3],
+
+/* D. Tongue: general features and surfaces */
+['D',"How is the tongue defined?","A very mobile muscular organ covered with mucosa and anchored to the floor of the mouth","A fixed bony organ of the floor of the mouth","A gland with no muscle","A fold of the soft palate","It is essential for taste, chewing, swallowing, sucking and phonation.",1],
+['D',"How is the tongue divided functionally?","An anterior part (2/3) very mobile and a posterior part or base (1/3) less mobile","An anterior third that is fixed and a posterior two thirds that are mobile","Two equal halves left and right only","An upper and a lower half","The two parts are separated by the terminal sulcus.",1],
+['D',"What separates the anterior two thirds from the base of the tongue?","The terminal sulcus, with a V-shaped row of circumvallate papillae","The median sulcus","The frenulum","The palatoglossal fold","The terminal sulcus is a series of V-shaped mucosal elevations known as vallate or circumvallate papillae.",2],
+['D',"What are the features of the specialized mucosa of the tongue?","It accommodates taste buds, has keratinized zones in the epithelium, dense lamina propria and loose submucosa","It is entirely non-keratinized with no papillae","It has a thick submucosa with fat only","It is attached directly to bone","Specialized mucosa combines dense connective tissue in the lamina propria with loose connective tissue in the submucosa.",2],
+['D',"Why is the upper side of the anterior two thirds of the tongue rough?","Because of the presence of numerous lingual papillae","Because of keratin plaques only","Because of taste pores","Because of underlying bone","The anterior two thirds have a conical shape and a mucosa made rough by papillae.",1],
+['D',"What is seen on the inferior (ventral) side of the tongue?","Thin mucosa with visible vessels, the frenulum in the midline and the caruncles of sublingual and submandibular glands","Thick keratinized mucosa with many papillae","Circumvallate papillae and the foramen caecum","The lingual tonsil","The ventral mucosa is thin, so underlying vessels can be seen.",2],
+['D',"Which type of mucosa covers the ventral surface of the tongue?","Lining mucosa","Masticatory mucosa","Specialized mucosa","Skin","Ventral tongue is included in the lining mucosa group, whereas the dorsum is specialized mucosa.",2],
+
+/* E. Tongue: embryonic development */
+['E',"When does tongue development begin?","At the 4th week of intrauterine life","At the 8th week","At the 12th week","After birth","Tongue development begins at week 4 and is formed in two main steps.",1],
+['E',"Which structures appear on the endodermal side of the first branchial arch at the start of tongue formation?","Two lateral lingual swellings and a tuberculum impar (odd tubercle)","Two tuberculum impar and one lateral swelling","Only the foramen caecum","Palatine ridges","The tuberculum impar arises from the lower edge of the arch.",1],
+['E',"What forms the anterior two thirds (body) of the tongue?","The lateral lingual swellings, which move to the center and fuse with each other and with the tuberculum impar","The third arch only","The thyroglossal duct","The palatine shelves","The anterior 2/3 corresponds to the mobile tongue.",2],
+['E',"What is the foramen caecum?","The embryonic remnant of the thyroglossal duct, behind the apex of the terminal sulcus","The opening of the parotid duct","The incisive foramen","The remnant of the tuberculum impar in the palate","It lies behind the apex of the terminal sulcus.",2],
+['E',"Which statement about the origin of tongue swellings is correct?","They arise on the first branchial arch","They arise on the fourth arch only","They arise from the maxillary sinus","They arise from the enamel organ","The lateral lingual swellings and tuberculum impar belong to the first arch, consistent with the first arch origin of oral organs.",3],
+
+/* F. Lingual papillae, taste buds and histology */
+['F',"Which is NOT a type of lingual papilla in the lesson?","Incisive papilla","Fungiform","Foliate","Filiform","The lingual papillae are fungiform, foliate, filiform and circumvallate. The incisive papilla is in the palate.",1],
+['F',"Which papillae are arranged in a V along the terminal sulcus?","Circumvallate (vallate) papillae","Filiform papillae","Foliate papillae","Fungiform papillae","They are the largest papillae and mark the border between body and base.",1],
+['F',"Which cells are shown in the taste bud diagram?","Taste (gustatory) cells, supporting cells and basal cells, with a taste pore","Only fibroblasts","Odontoblasts and ameloblasts","Only keratinocytes","The taste bud has gustatory cells with cilia reaching the pore, supporting cells and basal cells.",2],
+['F',"What is the epithelium of the dorsal and ventral surfaces of the tongue?","Dorsal: stratified squamous (para)keratinized; ventral: non-keratinized","Dorsal: non-keratinized; ventral: keratinized","Both simple columnar","Both keratinized","The histological section labels the dorsal epithelium as keratinized and the ventral as non-keratinized.",2],
+['F',"Which papilla does the lesson's figure NOT mark with taste buds?","Filiform","Circumvallate","Fungiform","Foliate","Taste buds are shown in circumvallate, fungiform and foliate papillae. Filiform papillae are the rough, keratinized ones.",3],
+['F',"Which glands are labeled in the circumvallate papilla section?","Von Ebner salivary glands","Parotid gland","Sebaceous glands","Sublingual glands","The slide labels salivary glands (von Ebner) in the connective tissue beneath circumvallate papillae.",3],
+
+/* G. Base of the tongue and lingual tonsil */
+['G',"What is the position of the base of the tongue?","Relatively fixed, vertical, forming part of the anterior wall of the pharynx","Highly mobile and horizontal","Located in the floor of the mouth","Inside the nasal cavity","The posterior third lies behind the terminal sulcus.",1],
+['G',"What epithelium covers the base of the tongue?","Non-keratinized stratified squamous epithelium that invaginates forming crypts","Keratinized epithelium with filiform papillae","Simple cuboidal epithelium","Pseudostratified ciliated epithelium","The crypts are associated with lymphoid tissue.",2],
+['G',"What is the lingual tonsil?","Prominences formed by accumulations of lymph nodes in the lamina propria of the base of the tongue","A salivary gland","A taste papilla","A muscle of the tongue","These lymphoid accumulations form the lingual tonsil.",1],
+['G',"What is Waldeyer's lymphatic ring?","A ring of lymphoid tissue formed by the lingual, palatine and pharyngeal tonsils, acting as the first barrier against antigens","A ring of muscle around the uvula","A group of vessels in the lips","A bony ring of the palate","It protects against antigens entering by digestive and respiratory routes.",2],
+['G',"Which tissues are seen in a histological section of the body of the tongue?","Skeletal striated muscle, adipose cells and minor salivary glands","Only smooth muscle","Cartilage and bone","Only epithelium","The longitudinal section shows muscle bundles, fat cells and minor glands under the papillae.",2],
+
+/* H. Lips: zones and mucosa */
+['H',"How are the lips described?","The outermost soft and movable parts of the oral cavity, supplied by the external carotid artery together with the tongue","Fixed bony structures supplied by the internal carotid artery","Folds of the palate","Glands of the floor of the mouth","The blood supply to lips and tongue comes from the external carotid artery.",2],
+['H',"What are the three topographic zones of the lip?","Skin of the outer lip, transition zone and lip mucosa","Skin, bone and gingiva","Vestibule, mucosa and tongue","Mucosa, tonsil and palate","The transition zone is the red border (vermilion).",1],
+['H',"Why is the transition zone red?","It has a highly vascularized dermis, and it is thin and poorly keratinized","It is full of melanin","It contains many sebaceous glands","It has a thick keratin layer","Blood vessels show through the thin epithelium.",2],
+['H',"What do the sweat and sebaceous glands do in the transition zone?","They are absent, so the zone is lubricated by saliva, preventing dehydration of the lips","They are very abundant","Only sweat glands are present","Only sebaceous glands are present","Because glands are lacking, saliva keeps the vermilion moist.",2],
+['H',"What is the epithelium of the lip mucosa?","Non-keratinized stratified squamous epithelium","Keratinized stratified squamous epithelium","Simple squamous epithelium","Pseudostratified epithelium","The lip mucosa is lining mucosa.",1],
+['H',"Which structures are found in the submucosa of the lip?","Mixed salivary glands with mucous predominance and lymphoid clusters","Dense bone","Taste buds","Sebaceous glands only","Labial glands are located beneath the lip mucosa.",3],
+['H',"Which muscle lies in the lip according to the histological figures?","Orbicularis oris (orbicular muscle of the lips)","Masseter","Temporalis","Genioglossus","The section shows the orbicularis muscle in the center of the lip.",2],
+
+/* I. Lip skin, sebum and thermoregulation */
+['I',"What does the skin of the outer lip contain?","Hair follicles, sebaceous glands and sweat glands","Taste buds only","Only keratin","Salivary glands and tonsils","It is thin skin with the usual skin appendages.",1],
+['I',"What are Fordyce granules?","Visible sebaceous glands (sebum) in the lip","Taste buds","Cold sores","Tonsil crypts","Sebaceous glands in the dermis can be seen as Fordyce granules.",1],
+['I',"What are the components of sebum listed in the lesson?","Squalene, cholesterol and triglycerides","Collagen, elastin and keratin","Amylase, lipase and mucin","Calcium, phosphate and fluoride","Sebum lubricates and protects the skin surface.",2],
+['I',"Which factor is NOT listed as regulating sebum production?","Dental occlusion","Age and sex","Endocrine factors","Skin temperature","The list includes age and sex (menstrual cycle, pregnancy), endocrine factors, skin temperature, diet, cardiac variation and sweat glands.",3],
+['I',"What happens when body temperature increases?","Vasodilatation, sweating, and decreased metabolic activity and muscle tone","Vasoconstriction and no sweat","Piloerection","Increased metabolic activity","Sweat glands help regulate body temperature.",2],
+['I',"What happens when body temperature decreases?","Vasoconstriction, no sweat, increased metabolic activity and muscle tone, and piloerection","Vasodilatation and sweating","Decreased muscle tone","Decreased metabolic activity","Piloerection is the hair standing on end by micromuscular contraction.",2],
+
+/* J. Lips: embryology, clefts and lesions */
+['J',"What happens to the maxillary prominences during the 6th week?","They grow in a medial direction","They separate laterally","They disappear","They fuse with the tongue","During the 6th week the maxillary processes move toward the midline and compress the medial nasal prominences.",2],
+['J',"What happens to the nasal fossae in lip development?","They appear in the nasal placodes and divide into a medial and a lateral nasal process","They form the tongue","They form the mandible","They fuse with the palate shelves","Each nasal pit separates the medial and lateral nasal processes.",2],
+['J',"What forms the upper lip during the 7th week?","The two nasal processes, which grow medially and join","The mandibular prominences","The tongue swellings","The palatine shelves","The mandibular prominences converge in the midline forming the lower lip.",2],
+['J',"Which processes form the lower lip?","The mandibular prominences converging in the midline","The medial nasal processes","The lateral nasal processes","The maxillary prominences","They join in the midline to form the lower lip.",1],
+['J',"What causes a central cleft lip?","Incorrect fusion of the middle nasal processes","Failure of the lateral nasal and maxillary fusion","Failure of the mandibular fusion","Infection with herpes virus","The cleft forms where the subnasal groove would be.",2],
+['J',"What causes a unilateral cleft lip?","Failure of the middle and lateral nasal processes to fuse correctly with the maxillary process","Failure of the palatine ridges to fuse","Failure of the tuberculum impar","Failure of the mandibular prominences","This is the lesson's explanation for unilateral cleft lip.",3],
+['J',"Which lip clefts are presented in the figure?","Unilateral, bilateral, oblique facial and oblique lower lip clefts","Only central clefts","Only bilateral clefts","Only palatal clefts","These four types appear in the illustration.",3],
+['J',"Which lip lesions are listed in the lesson?","Herpes virus infections (cold sores), aphthae and ulcerations, and tumors (lip cancer)","Only caries","Only cleft lip","Only leukoplakia","The lesson lists infections, aphthas and ulcerations, and tumors.",1],
+
+/* K. Palate: anatomy, muscles and functions */
+['K',"What is the palate?","The roof of the mouth, separating the oral cavity from the nasal cavity","The floor of the mouth","The wall of the cheek","A part of the tongue","It consists of the hard palate and the soft palate.",1],
+['K',"What is true of the soft palate skeleton?","It has no skeletal support and ends in the uvula","It is formed by the maxilla","It is supported by the palatine bone","It is formed by the mandible","The soft palate ends in a fleshy elongated projection called the uvula.",1],
+['K',"What are the features of the palate's masticatory mucosa?","Keratinized or parakeratinized epithelium, semidense lamina propria, attached to bone without stretching","Non-keratinized epithelium and loose lamina propria","Taste buds and papillae","Highly elastic with thick submucosa everywhere","It resists the friction and pressure of mastication.",2],
+['K',"Where is submucosa found in the masticatory mucosa of the hard palate?","It is absent in the gingiva but present in the lateral part of the hard palate with adipose and glandular tissue","It is absent everywhere","It is present only in the gingiva","It is present only at the median raphe","The lesson notes it lacks submucosa in the gingiva but has it laterally.",3],
+['K',"What is the soft palate (palatal velum) made of?","Skeletal muscle covered by oral lining mucosa","Bone covered by masticatory mucosa","Cartilage","Only glands","It has two edges: anterior (hard palate) and posterior (uvula).",1],
+['K',"Which muscle moves the uvula?","Musculus uvulae","Tensor veli palatini","Palatoglossus","Levator veli palatini","The other muscles of the soft palate are involved in swallowing or breathing.",2],
+['K',"What are the functions of the hard palate?","Food handling and chewing, support during suction and saliva secretion","Closure of the pharyngeal velum","Taste","Sound production only","The soft palate, in contrast, closes the velum.",2],
+['K',"What is a function of the soft palate?","Closing the pharyngeal velum to prevent passage of food, liquids and air into the nostrils, and phonation","Chewing","Taste perception","Saliva secretion only","It acts as a mobile, contractile sphincter.",2],
+
+/* L. Palate: embryology, hard palate, tonsils and lesions */
+['L',"Where are the palatine tonsils located?","Bilaterally at the limits of the oral cavity and oral pharynx, between the palatoglossal and palatopharyngeal folds","In the base of the tongue","In the lips","In the hard palate","They protect against antigens of airborne and ingested origin.",2],
+['L',"What is the function of the palatine tonsils?","Protection against antigens of airborne and ingested origin","Production of saliva","Taste perception","Chewing","They are part of the lymphatic ring.",1],
+['L',"When does palate development occur?","It begins in week 6 and ends in week 13, with a critical period from the end of the 6th to the beginning of the 9th week","It begins in week 12 and ends at birth","It begins in week 2 and ends in week 4","It occurs after birth","Disturbances during this period can lead to clefts.",2],
+['L',"What is the primitive palate?","The fusion of the nasal processes, forming the intermaxillary segment","The fusion of palatine ridges above the tongue","The soft palate","The uvula","The secondary palate forms later from the palatine ridges.",2],
+['L',"What happens to the oblique palatine ridges in the secondary palate?","They begin to move in the 6th week until they fuse above the tongue (7th week)","They disappear in week 4","They form the tongue","They form the lips","The anterior part then fuses with the primary palate forming the nasal septum.",3],
+['L',"What forms the hard palate and what forms the soft palate and uvula?","Hard palate: anterior ossified part of the ridges; soft palate and uvula: unossified posterior part","Hard palate: posterior part; soft palate: anterior part","Both are ossified","Both are formed by the tongue","The posterior unossified part extends beyond the nasal septum.",2],
+['L',"Which two bones form the hard palate?","The palatine process of the upper jaw (maxilla) and the horizontal plate of the palatine bone","The mandible and the maxilla","The zygomatic and the nasal bones","The sphenoid and the occipital bones","The incisive canal or fossa is also present.",2],
+['L',"Which nerve is associated with the incisive fossa?","The nasopalatine nerve","The greater palatine nerve","The lesser palatine nerve","The lingual nerve","The greater and lesser palatine nerves exit more posteriorly.",3],
+['L',"Which mucosal lesions of the palate are listed?","Food irritations or burns, aphthous ulcers, infections (candidiasis), leukoplakia and tumors","Only cleft palate","Only caries","Only tonsillitis","The lesson also illustrates afta, candidiasis and tumor.",1]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+
+<script>
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Tongue','papillae and taste'],['Lips','three zones'],['Palate','hard and soft'],['Mucosa','lining, masticatory, specialized']];
+const KEY='dental-oralcavity-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Oral Histology · Lesson 8</p>
+ <h1>Organs of the Oral Cavity Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Lesson 8 slides: branchial arches, oral mucosa, tongue, lips and palate, with their embryology, histology and associated lesions.</p>
+ <div class="ribbon" aria-label="Organs of the oral cavity">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The organs of the oral cavity, as taught in the lesson. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>
