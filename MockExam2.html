@@ -1,0 +1,469 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mock Exam 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Mock exam 2: questions drawn from the Lessons 2 to 8 banks. Row: section(lesson), question, CORRECT, wrong1-3, explanation, level. */
+const SECS=[{"k":"L2","n":"Lesson 2 · Odontogenesis"},{"k":"L3","n":"Lesson 3 · Eruption"},{"k":"L4","n":"Lesson 4 · Pulp"},{"k":"L5","n":"Lesson 5 · Dentin"},{"k":"L6","n":"Lesson 6 · Enamel"},{"k":"L7","n":"Lesson 7 · Cementum and periodontium"},{"k":"L8","n":"Lesson 8 · Oral cavity"}];
+const RAW=[
+["L2","Buds arise from mitotic division of…","stem cells of the basal layer of the epithelium","odontoblasts of the dental papilla","ameloblasts of the inner epithelium","fibroblasts of the dental sac","[Lesson 2 · Odontogenesis · Bud and cap stages] Buds are the future enamel organs and come from stem cells of the epithelial basal layer.",2],
+["L2","The enamel organ derives from the…","oral ectoderm","ectomesenchyme","dental papilla","dental sac","[Lesson 2 · Odontogenesis · Foundations and tissue origins] The enamel organ comes from the oral ectoderm and produces enamel, which is the only ectodermal tissue of the tooth.",1],
+["L2","The dental appositional (follicular) period takes place during the…","5th–6th month of intrauterine life","14th–18th week of intrauterine life","first year after birth","4th–6th week of intrauterine life","[Lesson 2 · Odontogenesis · Timeline and numbers] Hard-tissue secretion starts in the 5th–6th month, after the bell period.",2],
+["L2","Which molecule is the main signal capable of inducing odontogenesis?","BMP4","Lef1","Pax9","EDA","[Lesson 2 · Odontogenesis · Signalling molecules and genes] BMP4 is the main signalling component able to induce odontogenesis. BMPs are expressed during early morphogenesis.",2],
+["L2","Which organ derives from the endoderm?","Pancreas","Kidney","Skeletal muscle","Skin","[Lesson 2 · Odontogenesis · Foundations and tissue origins] Endoderm gives endocrine glands, lungs and airways, the digestive system, liver, pancreas and urinary bladder. Kidneys and muscle are mesodermal; skin is ectodermal.",1],
+["L2","In the early bell stage, how many layers does the enamel organ show?","Four","Two","Three","Five","[Lesson 2 · Odontogenesis · Bell stage and apposition] Four layers: outer enamel epithelium, stellate reticulum, stratum intermedium and inner enamel epithelium (preameloblasts). At the cap there were three.",2],
+["L2","In the bell stage, the dental sac is modified into two layers:","an internal cellulovascular layer and an external layer rich in collagen fibers","an internal fibrous layer and an external cellulovascular layer","an enamel layer and a dentin layer","a stellate layer and an intermediate layer","[Lesson 2 · Odontogenesis · Bell stage and apposition] Internal: cellulovascular. External (superficial): abundant collagen fibers. Do not invert them.",3],
+["L2","The nervous system and the skin derive from which germ layer?","Ectoderm","Mesoderm","Endoderm","Both mesoderm and endoderm","[Lesson 2 · Odontogenesis · Foundations and tissue origins] Ectoderm forms the nervous system and the skin. This is why the oral epithelium that starts odontogenesis is ectodermal.",1],
+["L2","Multi-radicular teeth arise when Hertwig's sheath…","produces 2 or 3 tongue-like extensions at the cervical region, directed toward the axis of the tooth","fails to fragment","fuses with the oral epithelium","lacks an epithelial diaphragm","[Lesson 2 · Odontogenesis · Root formation] The tongue-like extensions delimit the floor of the pulp chamber, then proliferate individually in each root.",2],
+["L2","Which structure arises from the basal layer of the ectodermal oral epithelium and then divides into two laminae?","The primary epithelial band","The enamel knot","Hertwig's sheath","The dental follicle","[Lesson 2 · Odontogenesis · Initiation and induction] The basal layer forms the primary epithelial band, which splits into the vestibular lamina and the dental lamina.",2],
+["L2","The tooth germ (primordium) is formed by…","an aggregation of differentiating cells that will form the future tooth","the fusion of inner and outer enamel epithelium","a layer of mature ameloblasts","the calcification of predentin","[Lesson 2 · Odontogenesis · Initiation and induction] The primordium or tooth germ is an aggregate of differentiating cells.",1],
+["L2","At the cap stage, the inner enamel epithelium consists of…","tall cylindrical cells that surround the dental papilla and will become ameloblasts","flattened stellate cells with large intercellular spaces","cuboidal cells that form Hertwig's sheath","loose collagen fibers","[Lesson 2 · Odontogenesis · Bud and cap stages] Inner epithelium: innermost layer of tall cylindrical cells, later ameloblasts that secrete enamel. The stellate cells describe the reticulum.",2],
+["L2","Hertwig's epithelial root sheath forms at the cervical loop by…","fusion of the inner and outer enamel epithelium, without stellate reticulum","fusion of the stellate reticulum and stratum intermedium","proliferation of the dental papilla","condensation of the dental sac","[Lesson 2 · Odontogenesis · Root formation] Root formation starts after the crown. The absence of stellate reticulum at the fusion is the key detail.",2],
+["L2","Why are FGF4 and Slit-1 considered the best molecular markers of enamel knot formation?","They are the only two genes observed in both primary and secondary enamel knots","They are expressed only in the dental papilla","They are expressed only in Hertwig's sheath","They are inhibitory signals secreted by BMPs","[Lesson 2 · Odontogenesis · Signalling molecules and genes] FGF4 and Slit-1 appear in both primary and secondary knots, which makes them the best markers.",3],
+["L3","How can root growth favor eruption?","The root grows downward, giving an upward thrust through a pressure difference, and increases the length of the tooth","It contracts and pulls the tooth toward the oral epithelium","It replaces the PDL with bone","It fuses the reduced enamel epithelium with the oral epithelium","[Lesson 3 · Eruption · Eruptive stage and root formation] Root growth in the bone increases tooth length and thrusts the tooth upward.",2],
+["L3","Is root formation necessary for a tooth to erupt?","No: rootless teeth erupt, but root growth may influence eruption","Yes: no tooth can erupt without a root","Yes: root growth is the only force behind eruption","No: the root has no influence at all","[Lesson 3 · Eruption · Eruptive stage and root formation] The lesson says root formation is not necessary for eruption (rootless teeth erupt), but it may influence it.",3],
+["L3","The post-eruptive stage starts and ends with…","contact and chewing function of the antagonist; tooth loss","root formation; contact with the antagonist","the gingival break; completion of the root","birth; the eruption of the third molars","[Lesson 3 · Eruption · Post-eruptive stage] It starts when the antagonist makes contact and chews. It ends with tooth loss.",1],
+["L3","The accommodation of jaw growth ends…","toward the end of the second decade (14–18 years), when jaw growth ceases","at 6 years","at 21 years, with the wisdom teeth","at tooth loss","[Lesson 3 · Eruption · Post-eruptive stage] It is related to condylar growth and ends when jaw growth ceases.",2],
+["L3","Which statement best explains why the primary dentition must be replaced?","Teeth cannot increase in size once formed, so the larger adult jaws need a second, larger set","Primary teeth have no roots and cannot function","Primary teeth lack enamel and wear out within a few months","Permanent teeth form from the same germ as primary teeth and push them out","[Lesson 3 · Eruption · Eruption, tooth types and diphyodonty] Replacement is an adaptation: infant jaws accommodate only a few small teeth, adult jaws need more and larger teeth, and formed teeth cannot grow.",2],
+["L3","Which is the correct average eruption sequence of the primary teeth?","Central incisors → lateral incisors → first molars → canines → second molars","Central incisors → lateral incisors → canines → first molars → second molars","Central incisors → first molars → lateral incisors → canines → second molars","Lateral incisors → central incisors → first molars → canines → second molars","[Lesson 3 · Eruption · Primary and mixed dentition] The first molars (13–19 months) come before the canines (16–23 months). This is the classic trap.",3],
+["L3","The remnants of Hertwig's sheath left in the periodontium are called…","Malassez remains, which have a regenerative function","gubernacular remnants","reduced enamel epithelium","junctional epithelium","[Lesson 3 · Eruption · Eruptive stage and root formation] Remnants of the sheath move toward the periphery and persist as Malassez remains.",1],
+["L3","Permanent teeth begin to erupt at about…","6 years and continue for another six years, reaching 21 years for wisdom teeth","12 years and continue until 18 years","3 years and continue until 12 years","6 years and finish at 21 years for all teeth","[Lesson 3 · Eruption · Permanent dentition] Permanent eruption starts at 6 years and lasts another six years (to 12). Wisdom teeth can reach 21 years.",2],
+["L3","Why is exfoliation accelerated by the erupting permanent tooth?","Pressure causes root loss and loss of supporting tissue, so the tooth supports less chewing force","The pressure thickens the PDL","The pressure stimulates cementoblasts","The permanent tooth pulls the primary tooth upward","[Lesson 3 · Eruption · Rhizoclasia and replacement] Less support means less chewing force is tolerated, so exfoliation speeds up.",2],
+["L3","A tooth that cuts, is uniradicular and has flat, sharp coronal edges is a…","incisor","canine","premolar","molar","[Lesson 3 · Eruption · Eruption, tooth types and diphyodonty] Incisors cut; they have a single root and flat, sharp edges. Canines tear, and premolars and molars grind.",1],
+["L3","Which set lists the factors involved in the eruptive stage?","Root formation, periodontal ligament development, gubernacular cord","Crown formation, enamel maturation, dental lamina","Root formation, enamel knot, vestibular lamina","Periodontal ligament, enamel organ, stellate reticulum","[Lesson 3 · Eruption · Eruptive stage and root formation] The three factors discussed: root formation, PDL development and the gubernacular cord.",2],
+["L3","Inclination (tilting or tipping) is…","a movement in the transverse axis, forward or backward","a movement around the tooth's own axis","a horizontal movement along the arch","a movement toward the occlusal plane","[Lesson 3 · Eruption · Movements and stages] Inclination is tilting in the transverse axis. Rotation is the movement around the tooth's own axis.",2],
+["L3","Which statement about the reasons for replacement is INCORRECT?","Once formed, teeth can grow in size to follow the growth of the jaws","An infant's jaws can accommodate only a few small teeth","Larger adult jaws require more and larger teeth","Teeth cannot increase in size once they are formed","[Lesson 3 · Eruption · Eruption, tooth types and diphyodonty] Teeth cannot grow once formed. That is precisely why a second, larger set is needed. The three other statements are the lesson's arguments.",3],
+["L3","First permanent premolars erupt at about…","9–11 years","6–7 years","10–12 years","12–13 years","[Lesson 3 · Eruption · Permanent dentition] First premolars: 9–11 years. Second premolars: 10–12 years.",2],
+["L4","Which cells make up the cell-rich zone?","Mainly mesenchymal cells and fibroblasts, which give rise to von Korff fibers","Odontoblasts and dendritic cells","Mostly macrophages and neutrophils","Few cells and many nerve fibers","[Lesson 4 · Pulp · Histological layers] The cell-rich zone has high cell density: mesenchymal cells and fibroblasts that give rise to von Korff fibers.",2],
+["L4","Which nerve fibers are unmyelinated and of small caliber?","C fibers","A fibers","B fibers","A-delta fibers","[Lesson 4 · Pulp · Innervation] A fibers are myelinated and large (fastest), B fibers are myelinated and medium, and C fibers are unmyelinated and small.",1],
+["L4","Which autonomic fibers contain acetylcholine and VIP and contribute to vasodilation through nitric oxide release?","Parasympathetic C-type fibers","Sympathetic C fibers","A-delta fibers","A myelinated fibers","[Lesson 4 · Pulp · Innervation] Parasympathetic C-type fibers with acetylcholine and VIP cause vasodilation by nitric oxide release.",2],
+["L4","What is true about the odontoblastic process inside the dentinal tubules?","Most dentinal tubules show the odontoblastic process along their entire length","The process is found only in the inner third of the tubule","The tubules are empty after dentin formation","The tubules contain only mineral","[Lesson 4 · Pulp · Odontoblasts and dentinal fluid] The tubules and their contents give dentin its vitality and ability to respond to stimuli. Most contain the process along their entire length.",2],
+["L4","Which set lists glycosaminoglycans (GAGs) of the pulp?","Chondroitin sulfate, dermatan sulfate, hyaluronic acid and keratan sulfate","Versican, decorin and biglycan","Collagen, elastin and reticulin","Tenascin, fibronectin and transferrin","[Lesson 4 · Pulp · Fibers and ground substance] Those four are GAGs. Versican, decorin and biglycan are the proteoglycans.",2],
+["L4","Where do the major nerves and vessels enter and exit the tooth?","At the apical foramen, where the pulp and the periodontal ligament meet","Through the pulp horns","Through the dentinal tubules","Through the cell-free zone of Weil","[Lesson 4 · Pulp · Apical foramen and lateral canals] The root canal ends at the apical foramen, where the pulp and PDL meet and the major nerves and vessels enter and exit.",1],
+["L4","The formative function of the pulp is…","being essential for the formation and preservation of dentin","inducing enamel synthesis","nourishing the dentin","forming the periodontal ligament","[Lesson 4 · Pulp · Functions of the pulp] Formative: the pulp is essential for forming and preserving dentin.",1],
+["L4","How is type I collagen arranged in the pulp?","Few and irregularly arranged in the coronal pulp, parallel and in greater concentration in the root region","Abundant and parallel in the coronal pulp, scarce in the root","Equally dense and parallel in crown and root","Found only in the odontoblastic layer","[Lesson 4 · Pulp · Fibers and ground substance] Type I collagen is sparse and irregular in the coronal pulp, and parallel and more concentrated in the root.",2],
+["L4","Which statement about pulp inflammatory cells is correct?","T lymphocytes are present while B lymphocytes are scarce, and neutrophils and eosinophils increase substantially during infection","B lymphocytes are abundant while T lymphocytes are scarce","Neutrophils are always abundant in healthy pulp","Eosinophils disappear during infection","[Lesson 4 · Pulp · Fibroblasts, stem and inflammatory cells] T cells are present and B cells are scarce. Leukocytes (neutrophils and eosinophils) rise substantially during infection.",2],
+["L4","In the odontoblastic region, type III collagen fibers interweave with the odontoblasts and form the…","von Korff plexus","Raschkow plexus","subodontoblastic capillary plexus","Weil plexus","[Lesson 4 · Pulp · Fibers and ground substance] The von Korff plexus is made of type III collagen. Raschkow's plexus is a nerve plexus, a classic trap.",3],
+["L4","Pulp horns are…","extensions of the chamber below the cusps, especially prominent below the vestibular cusp of premolars and the mesiovestibular cusp of molars","extensions of the root canal toward the apical foramen","lateral connections between the pulp and the periodontal tissues","extensions below the palatal cusp of every molar","[Lesson 4 · Pulp · Pulp overview and cavity] Pulp horns are the chamber extensions under the cusps. They are most prominent under the vestibular cusp of premolars and the mesiovestibular cusp of molars.",2],
+["L4","How does the pulp connective tissue change with aging?","Lax connective tissue becomes semi-dense, with more collagen and less amorphous ground substance","Semi-dense tissue becomes lax, with less collagen and more ground substance","It becomes mineralized throughout","Its collagen is replaced by elastic fibers","[Lesson 4 · Pulp · Aging and pulp stones] The pulp changes from lax to semi-dense connective tissue because collagen rises and ground substance falls.",2],
+["L4","The pulp cavity is divided into…","a coronal portion (pulp chamber) and a root portion (root canal)","a cervical chamber and an apical chamber","pulp horns and pulp stones","a pulp chamber and the dentinal tubules","[Lesson 4 · Pulp · Pulp overview and cavity] The coronal portion is the pulp chamber and the root portion is the root canal.",1],
+["L4","Ectomesenchymal pulp cells can differentiate into…","fibroblasts, osteoblasts, cementoblasts and odontoblasts","fibroblasts, ameloblasts, osteoclasts and macrophages","odontoblasts only","ameloblasts, cementoblasts, B lymphocytes and neutrophils","[Lesson 4 · Pulp · Fibroblasts, stem and inflammatory cells] They can give fibroblasts, osteoblasts, cementoblasts and odontoblasts. They are morphologically very similar to fibroblasts.",2],
+["L5","What is the role of DMP-1 in dentinogenesis?","It inhibits premature mineralization, facilitating predentin formation, and stabilizes calcium phosphate nanoparticles","It forms the collagen scaffold of predentin","It is exclusive to tertiary dentin and promotes mineral loss","It splits into DSP and DPP","[Lesson 5 · Dentin · Dentinogenesis] DMP-1 inhibits premature mineralization and sequesters and stabilizes calcium phosphate nanoparticles. Splitting into DSP and DPP is what DSPP does.",3],
+["L5","Which description of predentin is correct?","It is the first deposit of the odontoblast, an unmineralized matrix made mainly of collagen fibers","It is the outermost, fully mineralized layer under the enamel","It is a layer of epithelial cells covering dentin","It is a hypermineralized layer around the tubules","[Lesson 5 · Dentin · Predentin, coronal and root dentin] Predentin is the first matrix secreted by the odontoblast and is not mineralized. It lies between the odontoblasts and the mineralized dentin.",1],
+["L5","The organic matrix of dentin consists of…","90% collagen fibers and 10% non-collagenous proteins","50% collagen fibers and 50% non-collagenous proteins","90% non-collagenous proteins and 10% collagen fibers","100% type I collagen","[Lesson 5 · Dentin · Composition and matrix proteins] Collagen represents 90% of the organic matrix and non-collagenous proteins about 10%.",1],
+["L5","What do the dentinal tubules contain?","The cytoplasmic extensions of odontoblasts (odontoblastic processes)","The odontoblast cell bodies","Capillaries coming from the pulp","Ameloblast extensions coming from the enamel","[Lesson 5 · Dentin · Introduction and limits] The tubules house the odontoblastic processes (and dentinal fluid). The bodies stay in the pulp, which is a classic trap.",1],
+["L5","What happens to the basal lamina after the first deposition of mantle dentin?","Ameloblasts phagocytize it, leaving an interface of mixed dentin and enamel","It becomes cementum","It is transformed into predentin","It persists as a permanent layer between dentin and enamel","[Lesson 5 · Dentin · Dentinogenesis] After mantle dentin is deposited the ameloblasts phagocytize the basal lamina, leaving a mixed interface of dentin and enamel.",3],
+["L5","Which is NOT an age-related change in dentin?","Increase in permeability","Increase in dead tracts","Increase in sclerotic dentin","Increase in reparative dentin","[Lesson 5 · Dentin · Innervation, aging and dentinogenesis imperfecta] With age, dead tracts, sclerotic dentin and reparative dentin increase, while permeability decreases and fragility increases.",2],
+["L5","Which protein is predominantly detected in peritubular dentin, where it inhibits its growth and so prevents tubule occlusion?","Dentin sialoprotein (DSP), together with DMP-1","Dentin phosphoprotein (DPP) alone","Type III collagen","Osteocalcin","[Lesson 5 · Dentin · Composition and matrix proteins] DSP (synthesized by young odontoblasts) and DMP-1 are found mainly in peritubular dentin and limit its growth, which keeps the tubules open. DPP, on the contrary, acts at the mineralization front.",3],
+["L5","Which dentin types are formed under physiological conditions?","Primary and secondary dentin","Secondary and tertiary dentin","Primary and tertiary dentin","Only primary dentin","[Lesson 5 · Dentin · Types of dentin] Primary and secondary dentin are physiological. Tertiary dentin forms under pathological conditions or after aggression.",1],
+["L5","What is a dead tract?","Empty tubules left when odontoblastic processes retract or disintegrate, usually sealed at the pulpal end by reparative dentin","Tubules filled with hypermineralized dentin","Tubules full of nerve fibers","Tubules of the predentin","[Lesson 5 · Dentin · Tubules, peritubular and sclerotic dentin] When the processes disintegrate or retract, they leave an empty tubule (dead zone). Reparative dentin seals these tracts at their pulpal end and protects the pulp from infection.",3],
+["L5","A gray color of dentin is mainly related to…","low pulp vitality, for example after pulp removal","a high degree of mineralization","a thick layer of predentin","an excess of type III collagen","[Lesson 5 · Dentin · Physical properties] Pulp vitality influences color: a gray tooth suggests low vitality, as after endodontic pulp removal.",2],
+["L5","What happens to DSPP after synthesis by the odontoblast?","It splits into DSP and DPP, which relate to mineralization and the start of mineral nucleation","It becomes type I collagen","It remains unchanged as a cell receptor","It is degraded and plays no role","[Lesson 5 · Dentin · Dentinogenesis] DSPP is elaborated by the odontoblast and splits into DSP and DPP. They take part in mineralization and the beginning of nucleation of mineral.",2],
+["L5","What distinguishes tertiary dentin from primary and secondary dentin regarding its site of formation?","It is formed only by the cells directly affected by the stimulus, at specific sites","It is formed along the entire pulp border","It is formed by cells of the enamel organ","It is formed only in the root","[Lesson 5 · Dentin · Types of dentin] Tertiary dentin is produced only at the sites of the cells directly affected by wear, caries or a restorative procedure, not along the whole pulpo-dentinal border. Its quality and quantity depend on the intensity and duration of the stimulus.",2],
+["L5","What is the role of dentin phosphoprotein (DPP)?","It has a high negative charge, binds large amounts of calcium and initiates hydroxyapatite formation","It prevents premature mineralization of the matrix","It inhibits growth of peritubular dentin","It forms the scaffold of the matrix","[Lesson 5 · Dentin · Composition and matrix proteins] DPP binds calcium and initiates the formation of hydroxyapatite. Proteoglycans, in contrast, prevent premature mineralization. Non-collagenous proteins can act as inhibitors, promoters or stabilizers of mineral deposition.",2],
+["L5","Why does dentin become yellower with age?","Physiological sclerosis of the tubules or reactive deposition of intratubular calcospherites","Loss of the peritubular dentin","Increase in the thickness of predentin","Enlargement of the dentinal tubules","[Lesson 5 · Dentin · Physical properties] With age, sclerosis of the tubules (physiological or reactive, by intratubular calcospherites) makes dentin yellower. Pigments of endogenous or exogenous origin also modify color.",2],
+["L6","How are the crystals of aprismatic enamel arranged?","Parallel to each other and perpendicular to the external surface","Randomly, without orientation","Crisscrossing as in gnarled enamel","Parallel to the surface only","[Lesson 6 · Enamel · Prismatic and aprismatic enamel] Aprismatic enamel has no prisms, and its hydroxyapatite crystals are parallel to each other and perpendicular to the outer surface.",2],
+["L6","What are the Hunter-Schreger bands?","An optical phenomenon produced by the different curvature of prisms, whose appearance changes with the direction of incident light","Cracks produced by trauma","Growth lines of the Nasmyth membrane","Bands of dentin in the pulp","[Lesson 6 · Enamel · Secondary structural units] They are of unknown origin but believed to be an optical phenomenon, produced by different prism curvature, present in all permanent teeth.",2],
+["L6","What is the secondary (acquired) film?","A clear, acellular, bacteria-free precipitate of salivary proteins and inorganic elements that reappears a few hours after cleaning","A layer secreted by ameloblasts","A mature plaque with many bacteria","A layer of dentin","[Lesson 6 · Enamel · Surface covers, amelogenesis imperfecta and aging] The acquired film forms from saliva and is free of bacteria. If it is not removed, plaque or biofilm builds up.",2],
+["L6","Which protein is a surface (coat) protein of the crystals, represents 2 to 3% of the organic matrix and promotes crystal elongation?","Enamelin","Amelogenin","Tuftelin","Ameloblastin","[Lesson 6 · Enamel · Composition] Enamelins coat the crystals, are the major organic component of mature enamel, and act as modulators of de novo mineral formation and crystal elongation.",2],
+["L6","What is required for ameloblast differentiation and enamel formation?","The presence of dentin","The absence of dentin","Eruption of the tooth","Hertwig epithelial root sheath","[Lesson 6 · Enamel · Ameloblast and amelogenesis overview] Differentiation of ameloblasts requires dentin. Enamel can only be formed once dentin is present.",2],
+["L6","Which proteins are fully removed during maturation, leaving the enamelins on the crystal surface?","Amelogenins","Enamelins","Tuftelin","Serum proteins only","[Lesson 6 · Enamel · Maturation, protection and desmolysis] Elimination of organic matter is selective: all amelogenins are removed, only enamelins remain, and then ameloblastins join them strongly.",3],
+["L6","What are the striae of Retzius?","Incremental growth lines indicating apposition of enamel layers during crown formation","Lines produced by optical phenomena","Cracks that run from surface to dentin","Folds of the Nasmyth membrane","[Lesson 6 · Enamel · Secondary structural units] They are incremental lines marking the layered apposition of enamel during formation of the crown.",1],
+["L6","What is the function of the head and the tail of the prisms?","The head withstands the shocks of mastication, and the tails distribute and dissipate them","The tail withstands shocks and the head dissipates them","Both only store water","They carry nerves","[Lesson 6 · Enamel · Prismatic and aprismatic enamel] Prisms have a head and a tail. Their meshing, with heads packed between tails of the prisms above, gives the enamel greater resistance.",3],
+["L6","Which statement about perikymata is correct?","They are more visible in recently erupted permanent teeth and tend to disappear with age due to physiological wear","They are more visible in old teeth","They are deep fissures in the cusp","They are located inside the dentin","[Lesson 6 · Enamel · Secondary structural units] Perikymata (surface grooves related to the striae of Retzius, imbrication lines) are seen in newly erupted teeth. With wear the enamel surface becomes smooth in older people.",2],
+["L6","What happens to the mineral content of enamel from the beginning to the end of the process?","It goes from about 30% to about 95%","It goes from 95% to 30%","It stays at 70%","It goes from 0% to 50%","[Lesson 6 · Enamel · Maturation, protection and desmolysis] Initial enamel is partially mineralized (30%). Progressive replacement of water and organic matter brings mature enamel to 95%.",1],
+["L6","Which changes occur in enamel with age?","Wear, decrease in water content and reduced permeability","Increase in water content and permeability","Increase in the number of ameloblasts","Regeneration of prisms","[Lesson 6 · Enamel · Surface covers, amelogenesis imperfecta and aging] Enamel wears, loses water, and becomes less permeable as crystals grow. Pores decrease, which reduces the incidence of caries.",2],
+["L6","How can the elasticity of enamel be described?","Low: it is brittle and at risk of fracture under occlusal load","High: it deforms easily without breaking","Higher than that of dentin","Dependent only on the dentinal tubules","[Lesson 6 · Enamel · Physical properties] Enamel has low elasticity and is brittle, and it relies on the underlying dentin for support. When masticatory forces exceed its adaptability, abfractions (deep wedge-shaped cracks near the gum line) appear.",2],
+["L6","What happens in the desmolytic stage?","The reduced enamel epithelium proliferates and produces enzymes that destroy the connective tissue separating it from the buccal epithelium","The ameloblasts secrete new prisms","The Nasmyth membrane is formed","The dentin is resorbed","[Lesson 6 · Enamel · Maturation, protection and desmolysis] Desmolysis is destruction of connective tissue: the reduced enamel epithelium and buccal epithelium fuse, which facilitates the eruption of the tooth.",3],
+["L6","How are enamel matrix proteins released by the ameloblast?","By exocytosis, and granules are not stored for long periods","By cell lysis","By phagocytosis","Stored for a long time and released at eruption","[Lesson 6 · Enamel · Secretory stage] Secretion is by exocytosis from adamantine bodies and apical vesicles. The granules are not stored for long periods.",3],
+["L7","How does type III collagen behave in cementum?","It increases during development and repair and decreases during maturation","It is the main collagen of mature cementum","It is absent from cementum","It increases only with age","[Lesson 7 · Cementum and periodontium · Cementum: collagen and fibers] Type III is a developmental and repair collagen, and it decreases when the tissue matures.",2],
+["L7","Which role does the PDL have as a sensory receptor?","It is necessary for the correct positioning of the jaws during normal function","It senses taste","It sees light","It gives pulpal pain","[Lesson 7 · Cementum and periodontium · Periodontal ligament: features and cells] PDL mechanoreceptors inform about the forces applied to the teeth.",2],
+["L7","What is the embryonic origin of the tissues that support and line the tooth (cementum, PDL, alveolar bone)?","Ectomesenchymal, from cells of the dental sac","Ectodermal, from the enamel organ","Endodermal, from the pharyngeal pouches","Mesodermal, from the somites only","[Lesson 7 · Cementum and periodontium · Introduction: the periodontium] The supporting tissues derive from the ectomesenchymal cells of the dental sac (follicle). Enamel, in contrast, is ectodermal.",1],
+["L7","Which collagen types appear as contaminants from the PDL region?","Types V, VI and XIV","Types I and III","Types II and IV","Types X and XI","[Lesson 7 · Cementum and periodontium · Cementum: collagen and fibers] These types are present at the PDL side and are not true constituents of the cementum matrix.",3],
+["L7","What is the enamel-like material produced by root sheath cells on newly formed dentin called?","Enameloid or intermediate cementum","Predentin","Cementoid","Interglobular dentin","[Lesson 7 · Cementum and periodontium · Cementogenesis] Root sheath cells deposit an enamel-like layer called enameloid, also known as intermediate cementum.",3],
+["L7","What cell features do PDL fibroblasts have?","Large cytoplasm with RER, Golgi, many secretory granules and a well-developed actin cytoskeleton","Small cell with few organelles","Multiple nuclei and ruffled border","Pigment granules","[Lesson 7 · Cementum and periodontium · Periodontal ligament: features and cells] They are active protein-secreting and remodeling cells.",2],
+["L7","Which features describe the gingival epithelium?","Keratinized or parakeratinized, low renewal rate, high adhesion, low permeability","Non-keratinized, high renewal","Highly permeable","Without adhesion","[Lesson 7 · Cementum and periodontium · Dentogingival union] It forms a stable, impermeable barrier and is poorly innervated.",2],
+["L7","When does the functional stage of cementum begin?","When the tooth reaches occlusion; it then continues throughout life","During formation of the root","At the bell stage of odontogenesis","At birth","[Lesson 7 · Cementum and periodontium · Cementum: features and properties] The prefunctional stage takes place during root formation. The functional stage starts once the tooth is in occlusion and continues for life.",2],
+["L7","Which is the basic function of cementum within the alveolodental articulation?","Retention and anchorage of the collagen fibers of the PDL that fix the tooth to the alveolar bone","Production of enamel proteins","Detection of pain from the root surface","Storage of calcium for the whole body","[Lesson 7 · Cementum and periodontium · Cementum: functions] Cementum anchors the PDL fibers, so it is part of the articulation that attaches the tooth to the bone.",1],
+["L7","Which of the following is NOT a function of cementum?","Detecting pain through free nerve endings","Anchoring PDL fibers","Repairing the root surface","Controlling periodontal space width","[Lesson 7 · Cementum and periodontium · Cementum: functions] Cementum is not innervated. The sensory role belongs to the periodontal ligament.",2],
+["L7","What is a difference between cementoblasts and osteoblasts according to the lesson?","Cementoblasts show no alkaline phosphatase activity, unlike osteoblasts","Cementoblasts have more alkaline phosphatase","Cementoblasts do not synthesize collagen","Cementoblasts are of epithelial origin","[Lesson 7 · Cementum and periodontium · Cementum: components and cells] The lesson specifically says cementoblasts have no alkaline phosphatase activity, unlike osteoblasts.",3],
+["L7","Cementogenesis takes place during which period, and from which cells do cementoblasts derive?","Formation of the root and periodontium; ectomesenchymal cells of the dental sac (follicle)","Crown formation; the inner enamel epithelium","After eruption only; odontoblasts","Bud stage; the enamel knot","[Lesson 7 · Cementum and periodontium · Cementogenesis] Cementum forms during root and periodontium formation. Cementoblasts derive from dental sac cells.",1],
+["L7","Which statement about the dentin-cementum interface is correct?","It is an important barrier that prevents diffusion and lies near the granular layer of Tomes","It allows free diffusion between dentin and cementum","It lies between enamel and cementum","It is formed by odontoblasts only","[Lesson 7 · Cementum and periodontium · Cementum junctions (CDJ and CEJ)] The interface prevents diffusion and is located close to the granular layer of Tomes in the root.",2],
+["L7","What can be said about gingival fluid?","It is scarce in normal conditions, more abundant in pathology, and comes from the gingival microcirculation","It is abundant in health and absent in disease","It comes from the salivary glands","It has no cells","[Lesson 7 · Cementum and periodontium · Dentogingival union] Its increase is a sign of inflammation.",2],
+["L7","Which fiber group is found only in teeth with more than one root?","Interradicular group","Apical group","Horizontal group","Oblique group","[Lesson 7 · Cementum and periodontium · Periodontal ligament: fibers, vessels and nerves] They run from cementum to the bone of the interradicular septum.",2],
+["L8","How is the tongue divided functionally?","An anterior part (2/3) very mobile and a posterior part or base (1/3) less mobile","An anterior third that is fixed and a posterior two thirds that are mobile","Two equal halves left and right only","An upper and a lower half","[Lesson 8 · Oral cavity · Tongue: general features and surfaces] The two parts are separated by the terminal sulcus.",1],
+["L8","What is the palate?","The roof of the mouth, separating the oral cavity from the nasal cavity","The floor of the mouth","The wall of the cheek","A part of the tongue","[Lesson 8 · Oral cavity · Palate: anatomy, muscles and functions] It consists of the hard palate and the soft palate.",1],
+["L8","Which structures are found in the submucosa of the lip?","Mixed salivary glands with mucous predominance and lymphoid clusters","Dense bone","Taste buds","Sebaceous glands only","[Lesson 8 · Oral cavity · Lips: zones and mucosa] Labial glands are located beneath the lip mucosa.",3],
+["L8","Which layer lies deep to the lamina propria?","Submucosa","Basement membrane","Granular layer","Prickle cell layer","[Lesson 8 · Oral cavity · Oral mucosa: structure] The sequence from surface to deep is epithelium, basement membrane, lamina propria and submucosa.",1],
+["L8","Which sites have masticatory mucosa?","Marginal or adherent gingiva and the hard palate","Inner cheeks and floor of the mouth","Ventral tongue and soft palate","Inner lips and vestibular mucosa","[Lesson 8 · Oral cavity · Lining, masticatory and specialized mucosa] These areas bear friction and pressure during chewing.",1],
+["L8","What is true of the soft palate skeleton?","It has no skeletal support and ends in the uvula","It is formed by the maxilla","It is supported by the palatine bone","It is formed by the mandible","[Lesson 8 · Oral cavity · Palate: anatomy, muscles and functions] The soft palate ends in a fleshy elongated projection called the uvula.",1],
+["L8","When does tongue development begin?","At the 4th week of intrauterine life","At the 8th week","At the 12th week","After birth","[Lesson 8 · Oral cavity · Tongue: embryonic development] Tongue development begins at week 4 and is formed in two main steps.",1],
+["L8","Where is submucosa found in the masticatory mucosa of the hard palate?","It is absent in the gingiva but present in the lateral part of the hard palate with adipose and glandular tissue","It is absent everywhere","It is present only in the gingiva","It is present only at the median raphe","[Lesson 8 · Oral cavity · Palate: anatomy, muscles and functions] The lesson notes it lacks submucosa in the gingiva but has it laterally.",3],
+["L8","What does the skin of the outer lip contain?","Hair follicles, sebaceous glands and sweat glands","Taste buds only","Only keratin","Salivary glands and tonsils","[Lesson 8 · Oral cavity · Lip skin, sebum and thermoregulation] It is thin skin with the usual skin appendages.",1],
+["L8","Which type of mucosa covers the ventral surface of the tongue?","Lining mucosa","Masticatory mucosa","Specialized mucosa","Skin","[Lesson 8 · Oral cavity · Tongue: general features and surfaces] Ventral tongue is included in the lining mucosa group, whereas the dorsum is specialized mucosa.",2],
+["L8","How are the branchial arches described in the lesson?","Preponderantly mesodermal, cleft-like structures located on both sides of the pharynx","Purely ectodermal tubes inside the brain","Endodermal glands next to the thyroid","Bony plates of the skull base","[Lesson 8 · Oral cavity · Branchial arches and first arch syndromes] The arches surround the pharynx and appear during embryonic development, around the first month.",1],
+["L8","What happens to the maxillary prominences during the 6th week?","They grow in a medial direction","They separate laterally","They disappear","They fuse with the tongue","[Lesson 8 · Oral cavity · Lips: embryology, clefts and lesions] During the 6th week the maxillary processes move toward the midline and compress the medial nasal prominences.",2],
+["L8","Which statement about the origin of tongue swellings is correct?","They arise on the first branchial arch","They arise on the fourth arch only","They arise from the maxillary sinus","They arise from the enamel organ","[Lesson 8 · Oral cavity · Tongue: embryonic development] The lateral lingual swellings and tuberculum impar belong to the first arch, consistent with the first arch origin of oral organs.",3],
+["L8","Which processes form the lower lip?","The mandibular prominences converging in the midline","The medial nasal processes","The lateral nasal processes","The maxillary prominences","[Lesson 8 · Oral cavity · Lips: embryology, clefts and lesions] They join in the midline to form the lower lip.",1],
+["L8","Which layer is NOT listed among the components of oral mucosa in the lesson?","Serosa","Basal cell layer","Basement membrane","Submucosa","[Lesson 8 · Oral cavity · Oral mucosa: structure] The lesson lists epithelium, basal cell layer, basement membrane, lamina propria and submucosa.",2]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+
+<script>
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Lessons 2 to 8','all topics'],['Mixed order','no lesson grouping'],['Exam mode','no feedback until the end'],['Review','explanation for each mistake']];
+const KEY='dental-mock2-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Dental Tissues · Lessons 2 to 8</p>
+ <h1>Mock Exam 2</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, drawn evenly from Lessons 2 to 8 (odontogenesis, eruption, pulp, dentin, enamel, cementum and periodontium, oral cavity) and mixed in random order. Choose Exam mode, finish without looking anything up, then read the explanation of every mistake.</p>
+ <div class="ribbon" aria-label="Exam format">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">Pick the Exam mode for real conditions; the results show your score for each lesson. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>
