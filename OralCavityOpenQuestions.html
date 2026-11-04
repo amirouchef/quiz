@@ -1,0 +1,304 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Oral Cavity Open Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Branchial arches and first arch syndromes'},
+ {k:'B',n:'Oral mucosa'},
+ {k:'C',n:'Tongue: anatomy and histology'},
+ {k:'D',n:'Tongue: embryonic development'},
+ {k:'E',n:'Lips: structure and function'},
+ {k:'F',n:'Lips: embryology, clefts and lesions'},
+ {k:'G',n:'Palate: anatomy and function'},
+ {k:'H',n:'Palate: embryology, tonsils and pathology'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+['A',"From which embryonic structure do the organs of the oral cavity derive, and how are the branchial arches described?","The organs of the oral cavity derive from the first branchial (pharyngeal) arch. The branchial arches are preponderantly mesodermal, cleft-like structures located on both sides of the pharynx, surrounding it, and they originate during embryonic development.",["Organs of the oral cavity come from the first branchial (pharyngeal) arch","Arches are preponderantly mesodermal","Cleft-like structures on both sides of the pharynx","They originate during embryonic development"]],
+['A',"Name the cranial nerve linked to each of the first four branchial arches and give examples of structures derived from the first arch.","The first arch is associated with CN V (trigeminal), the second with CN VII (facial), the third with CN IX (glossopharyngeal) and the fourth with CN X (vagus). First arch derivatives in the lesson's figure include Meckel cartilage, malleus and incus, and the muscles of mastication such as temporalis and masseter.",["1st arch: CN V (trigeminal)","2nd arch: CN VII (facial)","3rd arch: CN IX (glossopharyngeal) and 4th arch: CN X (vagus)","First arch derivatives: Meckel cartilage, malleus, incus","Masticatory muscles (temporalis, masseter) belong to the first arch"]],
+['A',"Describe Pierre-Robin syndrome and explain why it makes breathing difficult.","Pierre-Robin syndrome is a first branchial arch syndrome with micrognathia, cleft palate and tongue retraction. The small mandible lets the tongue move backwards and downwards, which obstructs the airway and makes breathing difficult.",["First branchial arch syndrome","Micrognathia (small mandible)","Cleft palate","Tongue retraction: tongue moves backwards and downwards","This makes breathing difficult"]],
+['A',"Compare Pierre-Robin syndrome and Treacher Collins syndrome.","Both are first branchial arch syndromes with micrognathia. Pierre-Robin adds cleft palate and tongue retraction, with breathing difficulty. Treacher Collins is an autosomal dominant condition linked to the TCOF-1 gene, with micrognathia accompanied by hypoplasia.",["Both are first branchial arch syndromes","Both have micrognathia","Pierre-Robin: cleft palate and tongue retraction","Treacher Collins: autosomal dominant, TCOF-1 gene","Treacher Collins: micrognathia accompanied by hypoplasia"]],
+
+['B',"Define the oral mucosa and describe its continuity with neighboring tissues.","The oral mucosa is a moist membrane lining the oral cavity. In the anterior sector it continues with the skin of the lips and in the posterior sector with the gastrointestinal mucosa of the pharynx. It is made of two structurally and embryologically different tissues, epithelium and connective tissue, separated by a basement membrane.",["Moist membrane lining the oral cavity","Continues with the skin of the lips anteriorly","Continues with the pharyngeal (gastrointestinal) mucosa posteriorly","Two tissues: epithelium and connective tissue","Basement membrane between them"]],
+['B',"List the layers of the oral mucosa from the surface to the depth and the layers of a keratinized epithelium.","From the surface: epithelium, basement membrane, lamina propria and submucosa. In a keratinized epithelium the layers from the surface are the keratinized layer, the granular layer, the prickle cell layer and the basal cell layer.",["Epithelium","Basement membrane","Lamina propria","Submucosa","Keratinized, granular, prickle cell and basal cell layers"]],
+['B',"Name the three groups of oral mucosa and give the sites of each.","Lining mucosa covers the inner lips, ventral tongue, floor of the mouth, inner cheeks, alveolar and vestibular mucosa and soft palate. Masticatory mucosa covers the marginal or adherent gingiva and the hard palate. Specialized mucosa covers the dorsal side of the tongue.",["Three groups: lining, masticatory, specialized","Lining: inner lips, ventral tongue, floor of mouth, inner cheeks, alveolar and vestibular mucosa, soft palate","Masticatory: marginal or adherent gingiva and hard palate","Specialized: dorsal side of the tongue"]],
+['B',"Describe the lining mucosa.","Lining mucosa has a non-keratinized epithelium, a smooth interface between epithelium and connective tissue, and elastic fibers in the lamina propria and submucosa, which allow it to stretch.",["Non-keratinized epithelium","Smooth interface","Elastic fibers in lamina propria and submucosa","Covers the mobile, stretching areas of the cavity"]],
+['B',"Describe the masticatory mucosa and explain how it suits its function.","Masticatory mucosa has a keratinized epithelium, an interdigitated interface and a thin submucosa or none. It is attached to the bone without stretching and is directly subjected to intense friction and pressure during mastication.",["Keratinized epithelium","Interdigitated interface","Thin submucosa (or none)","Attached to bone, does not stretch","Resists friction and pressure of mastication"]],
+['B',"Describe the specialized mucosa.","Specialized mucosa covers the dorsal side of the tongue. It has distinct epithelial and connective tissue structures (papillae), contains taste buds in certain areas, and some regions are keratinized depending on function and location. The lamina propria is dense connective tissue and the submucosa is loose.",["Dorsal side of the tongue","Papillae: distinct epithelial and connective structures","Taste buds in certain areas","Some regions keratinized depending on function and location","Dense lamina propria and loose submucosa"]],
+
+['C',"Define the tongue and list its functions.","The tongue is a very mobile muscular organ covered with mucosa and anchored to the floor of the mouth. It is essential for the sense of taste, chewing, swallowing, sucking and phonation.",["Very mobile muscular organ","Covered with mucosa","Anchored to the floor of the mouth","Taste, chewing, swallowing, sucking, phonation"]],
+['C',"How is the tongue divided, and what separates its parts?","The anterior part (two thirds) is very mobile and the posterior part or base (one third) is less mobile. They are separated by the terminal sulcus, formed by a V-shaped row of mucosal elevations called vallate or circumvallate papillae.",["Anterior 2/3 very mobile","Posterior 1/3 (base) less mobile","Separated by the terminal sulcus","V-shaped circumvallate (vallate) papillae"]],
+['C',"Compare the dorsal and ventral surfaces of the anterior two thirds of the tongue.","The dorsal surface is conical and rough because of numerous lingual papillae. The ventral surface has a thinner mucosa through which vessels can be seen. In the midline is the frenulum, and the caruncles of the sublingual and submandibular glands are present.",["Dorsal: rough because of lingual papillae","Ventral: thinner mucosa, vessels visible","Frenulum in the midline","Caruncles of sublingual and submandibular glands"]],
+['C',"Name the types of lingual papillae and say where taste buds are found.","The lingual papillae are fungiform, foliate, filiform and circumvallate. In the lesson's figures, taste buds are shown in the circumvallate, fungiform and foliate papillae.",["Fungiform","Foliate","Filiform","Circumvallate","Taste buds in circumvallate, fungiform and foliate papillae"]],
+['C',"Describe the structure of a taste bud.","A taste bud contains taste (gustatory) cells with cilia reaching a taste pore, supporting cells and basal cells. It lies in the epithelium of certain papillae.",["Taste (gustatory) cells","Supporting cells","Basal cell","Taste pore with gustatory cilia"]],
+['C',"Describe the base of the tongue, including its epithelium.","The posterior third is relatively fixed and normally vertical, forming part of the anterior wall of the pharynx. It extends behind the terminal sulcus, behind whose apex lies the foramen caecum. Its non-keratinized stratified squamous epithelium invaginates to form crypts.",["Relatively fixed, vertical position","Forms part of the anterior wall of the pharynx","Behind the terminal sulcus, with the foramen caecum","Non-keratinized stratified squamous epithelium","Epithelium invaginates forming crypts"]],
+['C',"What is the lingual tonsil and how does it relate to Waldeyer's ring?","The lingual tonsil is formed by prominences due to accumulations of lymph nodes in the lamina propria of the base of the tongue. It is part of Waldeyer's lymphatic ring together with the palatine and pharyngeal tonsils, and it acts as the first defensive barrier against antigens entering by the digestive and respiratory routes.",["Accumulations of lymph nodes in the lamina propria of the base","Part of Waldeyer's lymphatic ring","Ring includes palatine and pharyngeal tonsils","First defensive barrier against antigens","Digestive and respiratory routes"]],
+['C',"What tissues are seen in a histological section of the tongue?","The dorsal side has a stratified squamous epithelium (keratinized) with lingual papillae, and the ventral side a non-keratinized epithelium. Below are bundles of skeletal striated muscle, adipose cells and minor salivary glands. Fungiform papillae show taste buds in a sensory epithelium.",["Dorsal epithelium keratinized with papillae","Ventral epithelium non-keratinized","Skeletal striated muscle","Adipose cells","Minor salivary glands"]],
+
+['D',"When does tongue development begin, and in which two steps is it formed?","It begins in the 4th week of intrauterine life. First, on the endodermal side of the first branchial arch, two lateral lingual swellings and a tuberculum impar appear. Second, the lateral lingual swellings move to the center and fuse with each other and with the tuberculum impar.",["Begins in the 4th week","Two main steps","Step 1: two lateral lingual swellings and a tuberculum impar on the endodermal side of the first arch","Step 2: swellings move to the center and fuse"]],
+['D',"Explain how the anterior two thirds of the tongue are formed.","The two lateral lingual swellings move to the center, fuse with each other and in turn with the tuberculum impar. Together they form the anterior two thirds of the body of the tongue, the mobile tongue.",["Lateral lingual swellings move to the center","Fuse with each other","Fuse with the tuberculum impar","Form the anterior 2/3 (body, mobile tongue)"]],
+['D',"What is the foramen caecum and where is it located?","The foramen caecum is the embryonic remnant of the thyroglossal duct. It is located behind the apex of the terminal sulcus, between the body and the base of the tongue.",["Embryonic remnant of the thyroglossal duct","Behind the apex of the terminal sulcus","Between the body and the base of the tongue"]],
+['D',"What is the tuberculum impar and what is its role in tongue formation?","The tuberculum impar, or odd tubercle, arises from the lower edge of the first branchial arch on its endodermal side. It fuses with the two lateral lingual swellings, which move toward the center, and takes part in forming the body of the tongue.",["Also called odd tubercle","Arises from the lower edge of the first arch","On the endodermal side","Fuses with the lateral lingual swellings"]],
+
+['E',"How are the lips defined, and what is their blood supply?","The lips are the outermost soft and movable parts of the oral cavity. Together with the tongue they play an important role in oral anatomy and physiology. The blood supply to the lips and the tongue comes from the external carotid artery.",["Outermost soft, movable parts of the oral cavity","Important role with the tongue","Blood supply from the external carotid artery"]],
+['E',"Name the three topographic zones of the lip.","The three zones are the skin of the outer lip, the transition zone (red border or vermilion) and the lip mucosa, the inner surface.",["Skin of the outer lip","Transition zone (red zone)","Lip mucosa"]],
+['E',"Describe the skin of the lip and explain what Fordyce granules are.","The lip skin is thin skin containing hair follicles, sebaceous glands in the dermis and sweat glands. Fordyce granules are visible sebaceous glands producing sebum.",["Thin skin on the outer surface","Hair follicles","Sebaceous glands in the dermis","Sweat glands","Fordyce granules = visible sebum-producing glands"]],
+['E',"What is the composition and function of sebum, and which factors regulate it?","Sebum contains squalene, cholesterol and triglycerides, and its function is to lubricate and protect the skin surface. Its production and secretion are regulated by age and sex (menstrual cycle, pregnancy), endocrine factors, skin temperature, diet, cardiac variation and sweat glands.",["Squalene, cholesterol and triglycerides","Lubricates and protects the skin surface","Age and sex, endocrine factors","Skin temperature and diet","Cardiac variation and sweat glands"]],
+['E',"Describe the transition zone of the lip.","It is red because it has a highly vascularized dermis, and it is thin and poorly keratinized. It lacks sweat and sebaceous glands and is lubricated by saliva, which prevents dehydration of the lips.",["Red because of a highly vascularized dermis","Thin and poorly keratinized","No sweat or sebaceous glands","Lubricated by saliva, preventing dehydration"]],
+['E',"Describe the mucosa of the lip (lining mucosa).","It has a non-keratinized stratified squamous epithelium over a connective tissue lamina propria with elastic and collagen fibers. The submucosa is loose and poorly developed, with mixed salivary glands of mucous predominance and lymphoid clusters, and the orbicularis oris muscle lies deeper.",["Non-keratinized stratified squamous epithelium","Lamina propria of connective tissue with elastic and collagen fibers","Loose submucosa","Mixed salivary glands with mucous predominance","Lymphoid clusters"]],
+['E',"How does the skin react to a drop and to a rise in body temperature?","When temperature drops: vasoconstriction, no sweat, increased metabolic activity, increased muscle tone or contraction and piloerection (hair standing on end). When temperature rises: vasodilatation, sweating, and decreased metabolic activity and muscle tone.",["Cold: vasoconstriction and no sweat","Cold: increased metabolic activity and muscle tone","Cold: piloerection","Heat: vasodilatation and sweating","Heat: decreased metabolic activity and muscle tone"]],
+
+['F',"Describe the embryonic development of the lips week by week.","In the 6th week the maxillary prominences grow medially. The nasal fossae appear in the nasal placodes and divide into medial and lateral nasal processes, and the maxillary processes compress the medial nasal prominences toward the midline. In the 7th week the two nasal processes join to form the upper lip, and the mandibular prominences converge in the midline to form the lower lip.",["6th week: maxillary prominences grow medially","Nasal fossae divide into medial and lateral nasal processes","Maxillary processes push the medial nasal prominences to the midline","7th week: nasal processes join, forming the upper lip","Mandibular prominences converge, forming the lower lip"]],
+['F',"How does a central cleft lip form?","If the middle (medial) nasal processes do not fuse properly, a central cleft forms where the subnasal groove would be, giving rise to a central cleft lip.",["Middle nasal processes do not fuse properly","Central cleft where the subnasal groove would be","Result: central cleft lip"]],
+['F',"How does a unilateral cleft lip form?","If the middle and lateral nasal processes do not fuse correctly with the maxillary process on one side, a unilateral cleft lip is formed.",["Failure of fusion of the middle and lateral nasal processes with the maxillary process","One side affected: unilateral cleft lip","Same failure on both sides gives a bilateral cleft"]],
+['F',"List the lip clefts shown in the lesson.","The lesson shows unilateral cleft lip, bilateral cleft lip, oblique facial cleft and oblique lower lip cleft, and also cleft lip with cleft palate.",["Unilateral cleft lip","Bilateral cleft lip","Oblique facial cleft","Oblique lower lip cleft"]],
+['F',"Which skin and mucosal lesions of the lips are mentioned in the lesson?","The lesson mentions infections such as herpes virus (cold sores), aphthae and ulcerations (canker sores), and tumors, such as lip cancer.",["Herpes virus infection (cold sores)","Aphthae (canker sores)","Ulcerations","Tumors (lip cancer)"]],
+
+['G',"Define the palate and its components.","The palate is the roof of the mouth that separates the oral cavity from the nasal cavity. It consists of the hard palate and the soft palate, which has no skeletal support and ends in a fleshy elongated projection called the uvula.",["Roof of the mouth","Separates oral and nasal cavities","Hard palate and soft palate","Soft palate has no skeletal support and ends in the uvula"]],
+['G',"Describe the masticatory mucosa of the palate.","It has a keratinized or parakeratinized epithelium with numerous epithelial ridges and a semidense lamina propria. It lacks submucosa in the gingiva but has one in the lateral hard palate, with adipose and glandular tissue. It is subjected to intense friction and pressure and is attached to the bone, so it does not stretch.",["Keratinized or parakeratinized epithelium with ridges","Semidense lamina propria","No submucosa in the gingiva, present laterally in the hard palate","Adipose and glandular tissue in that submucosa","Attached to bone, does not stretch"]],
+['G',"Describe the anatomy of the hard palate.","The hard palate is formed by two bones, the palatine process of the maxilla and the horizontal plate of the palatine bone. It contains the incisive canal or fossa (nasopalatine nerve) and is covered by salivary glands and masticatory oral mucosa. The greater and lesser palatine vessels and nerves supply it.",["Palatine process of the maxilla","Horizontal plate of the palatine bone","Incisive canal or fossa with the nasopalatine nerve","Covered by masticatory mucosa and salivary glands","Greater and lesser palatine arteries and nerves"]],
+['G',"Describe the soft palate.","The soft palate (palatal velum) has two edges, the hard palate anteriorly and the uvula posteriorly. It is skeletal muscle covered by lining oral mucosa and has no skeletal support.",["Also called palatal velum","Two edges: anterior (hard palate), posterior (uvula)","Skeletal muscle","Covered by oral lining mucosa"]],
+['G',"List the muscles of the soft palate and their functions.","The tensor veli palatini, palatoglossus and levator veli palatini are involved in swallowing, the palatopharyngeus is related to breathing in the lesson, and the musculus uvulae moves the uvula.",["Tensor veli palatini: swallowing","Palatoglossus: swallowing","Levator veli palatini: swallowing","Palatopharyngeus: breathing (as in the lesson)","Musculus uvulae: moves the uvula"]],
+['G',"Compare the functions of the hard and soft palate.","The hard palate handles food and chewing, supports suction and takes part in saliva secretion. The soft palate closes the pharyngeal velum, preventing food, liquids and air from passing into the nostrils, takes part in phonation and acts as a mobile, contractile sphincter.",["Hard: food handling and chewing","Hard: support during suction and saliva secretion","Soft: closes the pharyngeal velum (food, liquids, air do not enter the nostrils)","Soft: phonation","Soft: acts as a sphincter, mobile and contractile"]],
+
+['H',"Where are the palatine tonsils and what is their role?","They are bilateral and lie at the limits of the oral cavity and the oral pharynx, between the palatoglossal and palatopharyngeal folds. They protect against antigens of airborne and ingested origin.",["Bilateral","At the limit of oral cavity and oral pharynx","Between palatoglossal and palatopharyngeal folds","Protect against airborne and ingested antigens"]],
+['H',"When does palate development occur and in how many stages?","It begins in week 6 of intrauterine life and ends in week 13, with a critical period from the end of the 6th week to the beginning of the 9th. It has two stages: the primitive palate and the secondary palate.",["Begins in week 6","Ends in week 13","Critical period: end of week 6 to beginning of week 9","Two stages: primitive and secondary palate"]],
+['H',"What is the primitive palate?","The primitive palate forms by fusion of the nasal processes and gives the intermaxillary segment.",["Fusion of the nasal processes","Gives the intermaxillary segment","First of the two stages"]],
+['H',"Describe the formation of the secondary palate, hard palate, soft palate and uvula.","In the 6th week the oblique palatine ridges begin to move until they fuse above the tongue (7th week). Their anterior part fuses with the primary palate and forms the nasal septum, which grows and unites with the cephalic face of the palate (9th to 12th week). The hard palate is the anterior ossified part of the ridges, and the soft palate and uvula are the unossified posterior part, extending beyond the nasal septum.",["Oblique palatine ridges move in the 6th week","Fuse above the tongue in the 7th week","Anterior part fuses with the primary palate, forming the nasal septum","Hard palate: anterior ossified part","Soft palate and uvula: unossified posterior part"]],
+['H',"Which pathologies of the palate are mentioned in the lesson?","Embryonic defects include unilateral and bilateral cleft lip and palate. Mucosal lesions include food irritations or burns, aphthous ulcers (canker sores), infections such as candidiasis, leukoplakia and tumors (cancer).",["Unilateral and bilateral cleft lip and palate","Food irritations or burns","Aphthous ulcers","Infections (candidiasis), leukoplakia","Tumors (cancer)"]]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='dental-l8-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Oral Histology · Lesson 8</p>
+ <h1>Oral Cavity Open Questions</h1>
+ <p class="lead">${QS.length} open questions on the Lesson 8 slides: branchial arches, oral mucosa, tongue, lips and palate. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>
+
+</body></html>
