@@ -1,0 +1,450 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Anatomy Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'Skull overview and sutures'},
+ {k:'B',n:'Frontal bone'},
+ {k:'C',n:'Ethmoid bone'},
+ {k:'D',n:'Sphenoid bone'},
+ {k:'E',n:'Temporal bone'},
+ {k:'F',n:'Parietal and occipital bones'},
+ {k:'G',n:'Paranasal sinuses, cranial fossae and skull base'},
+ {k:'H',n:'Maxilla'},
+ {k:'I',n:'Lacrimal, palatine, inferior concha, nasal and vomer'},
+ {k:'J',n:'Zygomatic bone and mandible'},
+ {k:'K',n:'Temporal, infratemporal and pterygopalatine fossae'},
+ {k:'L',n:'Orbit, nasal cavity, palate and maxillary sinus'}
+];
+const RAW=[
+['A',"Which of the following is a cranial bone?","Sphenoid","Vomer","Zygomatic","Palatine","The cranial bones are the frontal, temporal, parietal, occipital, sphenoid and ethmoid. Vomer, zygomatic and palatine belong to the facial skeleton.",1],
+['A',"Which suture joins the parietal bone to the occipital bone?","Lambdoid suture","Coronal suture","Squamous suture","Sagittal suture","The lambdoid suture joins the parietal to the occipital. The coronal suture joins it to the frontal, the squamous suture to the temporal and sphenoid, and the sagittal suture to the contralateral parietal.",1],
+['A',"The squamous suture joins the parietal bone to which bones?","The temporal and the sphenoid","The frontal and the ethmoid","The occipital and the temporal","The contralateral parietal and the frontal","The parietal forms four sutures. The squamous suture is the one with the sphenoid and the temporal.",2],
+['A',"Which opening listed on the anterior view of the skull lies on the mandible?","Mental foramen","Infraorbital foramen","Supraorbital foramen","Zygomaticofacial foramen","The mental foramen is on the body of the mandible. The infraorbital foramen is on the maxilla, the supraorbital foramen on the frontal and the zygomaticofacial foramen on the zygomatic bone.",1],
+['A',"Which structure forms the hard palate together with the palatine process of the maxilla?","The horizontal plate of the palatine bone","The vertical plate of the palatine bone","The pterygoid process of the sphenoid","The vomer","The posterior hard palate is made by the horizontal plates of the palatine bones, behind the palatine processes of the maxillae.",2],
+['B',"Which portion of the frontal bone is vertical?","Squamous portion","Orbital portion","Nasal portion","Zygomatic portion","The frontal bone has a squamous (vertical) portion and an orbital or orbitonasal (horizontal) portion.",1],
+['B',"Which landmark is also called the median frontal eminence?","Glabella","Nasion","Superciliary arch","Frontal tuberosity","The slides give glabella or median frontal eminence as one landmark of the external surface.",1],
+['B',"Which landmark is found on the endocranial face of the frontal bone?","Foramen cecum","Supraorbital notch","Glabella","Superciliary arch","The endocranial face has the frontal crest, the ethmoidal notch, the foramen cecum and the frontal fossae. The other three are external landmarks.",2],
+['B',"The ethmoid bone sits in which notch?","Ethmoidal notch of the frontal bone","Supraorbital notch","Nasal notch of the maxilla","Mandibular notch","The ethmoid lies in the ethmoidal notch of the frontal bone.",1],
+['B',"Which canals are listed on the inferior view of the frontal bone?","Anterior and posterior ethmoidal canals","Optic and carotid canals","Mandibular and incisive canals","Palatine and pterygoid canals","The inferior view shows the ethmoid notch, the orbital fossa, the anterior and posterior ethmoidal canals and the frontonasal canal.",2],
+['C',"Which part of the ethmoid carries the olfactory channels?","Cribriform plate","Perpendicular plate","Orbital plate","Uncinate process","The cribriform plate, with the crista galli, is seen on the superior view with its olfactory channels.",1],
+['C',"Which part of the ethmoid forms the orbital face of the lateral portion?","Lamina papyracea","Crista galli","Uncinate process","Perpendicular plate","The orbital face of the lateral portion is the lamina papyracea, which forms the medial wall of the orbit.",2],
+['C',"Which part of the ethmoid forms the upper part of the nasal septum?","Perpendicular plate","Cribriform plate","Crista galli","Ethmoidal bulla","The perpendicular plate forms the upper part of the septum, completed by the vomer and the septal cartilage.",1],
+['C',"Which nasal conchae belong to the ethmoid?","Superior and middle","Middle and inferior","Superior and inferior","Only the inferior","The ethmoid carries the superior and middle conchae. The inferior nasal concha is an independent facial bone.",2],
+['C',"Which process projects from the inferior side of the lateral portion of the ethmoid?","Uncinate process","Crista galli","Coronoid process","Pterygoid hamulus","The uncinate process is on the inferior side of the lateral portion and is seen near the inferior concha on the coronal section.",1],
+['D',"The sphenoid bone is described as being shaped like a:","Butterfly","Horseshoe","Pyramid","Disc","The slides describe the sphenoid as butterfly-shaped, with a body, greater wings, lesser wings and pterygoid processes.",1],
+['D',"Which opening lies in the lesser wing of the sphenoid?","Optic canal","Foramen ovale","Foramen spinosum","Foramen rotundum","The lesser wing carries the optic canal and the superior orbital fissure. Rotundum, ovale and spinosum are in the greater wing.",1],
+['D',"Which foramina are on the temporozygomatic surface of the greater wing?","Foramen ovale and foramen spinosum","Foramen rotundum and optic canal","Optic canal and carotid canal","Stylomastoid and jugular foramina","The temporozygomatic surface has the spine of the sphenoid, the infratemporal crest, the foramen ovale and the foramen spinosum.",2],
+['D',"Which part of the sphenoid articulates with the pyramidal process of the palatine bone?","Pterygoid notch","Scaphoid fossa","Pterygoid hamulus","Pterygoid canal","The pterygoid notch receives the pyramidal process of the palatine bone.",2],
+['D',"Which structure lies between the tuberculum sellae and the dorsum sellae?","Hypophyseal (pituitary) fossa","Jugum sphenoidale","Lingula","Rostrum","The sella turcica is made of the tuberculum sellae, the hypophyseal fossa and the dorsum sellae.",2],
+['D',"The posterior surface of the body of the sphenoid is joined to which bone?","Basilar part of the occipital bone","Petrous part of the temporal bone","Vomer","Ethmoid","The posterior surface of the body is joined to the basilar part of the occipital bone.",2],
+['E',"Which are the four parts of the temporal bone?","Squamous, petrous, mastoid and tympanic","Squamous, basilar, lateral and mastoid","Body, ramus, coronoid and condylar","Orbital, nasal, squamous and zygomatic","The temporal bone is formed by squamous, petrous, mastoid and tympanic portions.",1],
+['E',"Which nerve passes through the stylomastoid foramen?","Facial nerve","Mandibular nerve","Hypoglossal nerve","Maxillary nerve","The stylomastoid foramen, on the inferior surface of the petrous portion, transmits the facial nerve.",1],
+['E',"Which cranial nerves pass through the internal auditory canal?","CN VII and VIII","CN V and VI","CN IX and X","CN XI and XII","The internal auditory canal of the petrous portion carries cranial nerves VII and VIII.",1],
+['E',"The articular tubercle forms which root of the zygomatic process of the temporal bone?","Transverse root","Longitudinal root","Mastoid root","Petrous root","The longitudinal root carries the anterior and posterior zygomatic tubercles. The transverse root is the articular tubercle.",2],
+['E',"Which fissure of the temporal bone is also called Glaser's fissure?","Petrotympanic fissure","Tympanosquamous fissure","Tympanomastoid fissure","Pterygomaxillary fissure","The petrotympanic fissure is also called Glaser's fissure.",2],
+['E',"On which portion of the temporal bone is the mandibular fossa located?","Squamous portion","Petrous portion","Mastoid portion","Tympanic portion","The mandibular fossa (glenoid cavity) is listed with the squamous portion, next to the articular tubercle.",1],
+['F',"Which suture joins the parietal bone to the frontal bone?","Coronal suture","Sagittal suture","Lambdoid suture","Squamous suture","The coronal suture joins the parietal to the frontal bone.",1],
+['F',"Into how many portions is the occipital bone divided?","Four","Two","Three","Five","The occipital bone has a basilar portion, two lateral portions and a squamous portion.",1],
+['F',"Which nuchal line runs towards the mastoid process?","Superior nuchal line","Inferior nuchal line","Internal occipital line","Temporal line","The superior nuchal line runs towards the mastoid process and the inferior nuchal line towards the jugular process.",2],
+['F',"The clivus belongs to which part of the occipital bone?","Basilar portion","Squamous portion","Lateral portion","Jugular process","On the internal surface, the basilar portion forms the clivus.",2],
+['F',"Which structure is on the external surface of the basilar portion of the occipital bone?","Pharyngeal tubercle","Jugular foramen","Occipital condyle","Cruciform eminence","The pharyngeal tubercle is on the basilar portion. The condyles and the jugular foramen belong to the lateral portions, and the cruciform eminence to the squamous portion.",2],
+['G',"Which paranasal sinus lies in the body of the sphenoid?","Sphenoidal sinus","Frontal sinus","Maxillary sinus","Ethmoidal sinus","The sphenoidal sinus is inside the body of the sphenoid bone.",1],
+['G',"Which cranial fossa contains the foramen magnum?","Posterior cranial fossa","Anterior cranial fossa","Middle cranial fossa","Infratemporal fossa","The foramen magnum is related to the posterior cranial fossa. The infratemporal fossa is not a cranial fossa.",1],
+['G',"What closes the foramen lacerum in the figures of the lesson?","Cartilage","Dura mater only","A bony plate","Skeletal muscle","The external skull base figure states that the foramen lacerum is closed by cartilage.",2],
+['G',"Which opening appears on the external view of the skull base but not on the endocranial view?","Stylomastoid foramen","Foramen rotundum","Optic canal","Hypoglossal canal","The stylomastoid foramen is on the inferior surface of the temporal bone, so it is listed with the external view only.",3],
+['G',"Which of the following is NOT a paranasal sinus shown in the lesson?","Parietal sinus","Frontal sinus","Ethmoidal cells","Maxillary sinus","The paranasal sinuses figure shows the frontal, ethmoidal, sphenoidal and maxillary sinuses.",1],
+['H',"The maxilla has four processes. Which are they?","Frontal, zygomatic, palatine and alveolar","Frontal, orbital, palatine and alveolar","Zygomatic, coronoid, palatine and alveolar","Frontal, zygomatic, pterygoid and alveolar","The four processes of the maxilla are frontal, zygomatic, palatine and alveolar.",1],
+['H',"Which part of the maxilla forms the anterior wall of the infratemporal fossa?","Maxillary tuberosity","Alveolar process","Canine fossa","Inferior orbital margin","The maxillary tuberosity forms the anterior wall of the infratemporal fossa.",2],
+['H',"Which nerves enter the alveolar foramina of the maxillary tuberosity?","Posterior superior alveolar nerves","Infraorbital nerve","Nasopalatine nerve","Greater palatine nerve","The alveolar foramina on the tuberosity carry the posterior superior alveolar nerves.",2],
+['H',"Which opening on the medial border of the palatine process carries the nasopalatine nerve?","Incisive foramen","Greater palatine foramen","Infraorbital foramen","Mental foramen","The incisive foramen and canal (nasopalatine) lie on the medial border of the palatine process.",1],
+['H',"Which crest of the maxilla articulates with the middle nasal concha?","Ethmoid crest","Conchal crest","Anterior lacrimal crest","Nasal crest","The ethmoid crest articulates with the middle concha and the conchal crest with the inferior concha.",3],
+['H',"The infraorbital nerve runs in which structure of the maxilla?","Infraorbital groove and canal","Incisive canal","Greater palatine groove","Lacrimal groove","The infraorbital groove and canal on the orbital floor lead to the infraorbital foramen.",2],
+['I',"Which facial bone is L-shaped?","Palatine","Lacrimal","Vomer","Nasal","The palatine is a flat, thin L-shaped plate made of a horizontal and a vertical plate.",1],
+['I',"Which nerve passes through the greater palatine foramen?","Greater palatine nerve","Lesser palatine nerve","Nasopalatine nerve","Infraorbital nerve","The greater palatine foramen, on the lateral border of the horizontal plate, carries the greater palatine nerve.",1],
+['I',"What forms the sphenopalatine foramen?","Sphenopalatine notch of the palatine and the body of the sphenoid","Pterygoid notch of the sphenoid and the maxilla","Ethmoidal notch of the frontal and the ethmoid","Lacrimal groove and the inferior concha","The sphenopalatine foramen leads from the pterygopalatine fossa into the superior meatus.",2],
+['I',"Which bone separates the inferior and middle nasal meatuses?","Inferior nasal concha","Vomer","Perpendicular plate of the palatine","Lacrimal bone","The inferior nasal concha separates the inferior and middle meatuses.",2],
+['I',"Which bone has the nasopalatine groove on its lateral surface?","Vomer","Nasal bone","Lacrimal bone","Palatine bone","The lateral surface of the vomer is crossed by the nasopalatine groove, and its superior border is the wing of the vomer.",1],
+['I',"Which process of the palatine bone occupies the pterygoid notch?","Pyramidal process","Orbital process","Sphenoidal process","Maxillary process","The pyramidal process fits in the pterygoid notch and carries the lesser palatine foramina.",2],
+['J',"Which foramen of the zygomatic bone carries the zygomaticotemporal nerve?","Zygomaticotemporal foramen","Zygomaticoorbital foramen","Zygomaticofacial foramen","Infraorbital foramen","The temporal surface has the zygomaticotemporal foramen for the zygomaticotemporal nerve.",2],
+['J',"Which opening on the ramus of the mandible leads into the mandibular canal?","Mandibular foramen","Mental foramen","Mandibular notch","Pterygoid fovea","The inferior alveolar nerve enters the mandibular canal at the mandibular foramen, on the medial side of the ramus, near the lingula.",3],
+['J',"Which two processes end the superior part of the mandibular ramus?","Coronoid and condylar processes","Coronoid and alveolar processes","Condylar and zygomatic processes","Mental and coronoid processes","The ramus ends in the coronoid process anteriorly and the condylar process posteriorly, separated by the mandibular notch.",1],
+['J',"Which features are on the medial side of the mandibular body?","Mylohyoid line and sublingual fossa","Oblique line and mental foramen","Mental tubercles and mental protuberance","Coronoid process and neck","The medial side has the mental spines, the mylohyoid line and groove, and the submandibular and sublingual fossae.",2],
+['J',"The mental nerve leaves the mandible through which opening?","Mental foramen","Mandibular foramen","Incisive foramen","Infraorbital foramen","The inferior alveolar nerve runs in the mandibular canal and continues as the mental nerve through the mental foramen.",1],
+['J',"Which bone articulates with the mandible at the temporomandibular joint?","Temporal bone","Zygomatic bone","Sphenoid bone","Maxilla","The mandible articulates with the temporal bones at the TMJ.",1],
+['K',"Which muscles contribute to the medial wall of the infratemporal fossa posteriorly?","Tensor and levator veli palatini","Masseter and temporalis","Digastric and mylohyoid","Buccinator and orbicularis oris","The medial wall is formed by the lateral plate of the pterygoid process and, posteriorly, by the pharynx and the tensor and levator veli palatini.",2],
+['K',"Which division of the trigeminal nerve is a major content of the infratemporal fossa?","Mandibular nerve (V3)","Ophthalmic nerve (V1)","Maxillary nerve (V2)","Abducens nerve (VI)","The infratemporal fossa contains the mandibular nerve V3. The maxillary nerve V2 passes through the pterygopalatine fossa.",2],
+['K',"Which opening leads from the pterygopalatine fossa into the nasal cavity?","Sphenopalatine foramen","Pterygomaxillary fissure","Inferior orbital fissure","Palatine canal","The sphenopalatine foramen opens onto the lateral wall of the nasal cavity from the medial wall of the fossa.",1],
+['K',"Which opening links the pterygopalatine fossa to the infratemporal fossa?","Pterygomaxillary fissure","Inferior orbital fissure","Foramen rotundum","Palatovaginal canal","The pterygomaxillary fissure lies between the posterior surface of the maxilla and the pterygoid process of the sphenoid.",1],
+['K',"Which two openings of the pterygopalatine fossa communicate with the middle cranial fossa?","Foramen rotundum and pterygoid canal","Palatovaginal and palatine canals","Sphenopalatine foramen and pterygomaxillary fissure","Inferior orbital fissure and optic canal","The foramen rotundum and the pterygoid canal open onto the posterior wall and communicate with the middle cranial fossa.",2],
+['K',"Where does the palatine canal lead from the pterygopalatine fossa?","Hard palate (roof of the oral cavity)","Nasopharynx","Floor of the orbit","Nasal cavity","The palatine canal opens inferiorly onto the palate. The palatovaginal canal leads to the nasopharynx.",2],
+['K',"Which feature marks the medial part of the inferior margin of the temporal fossa?","Infratemporal crest of the greater wing of the sphenoid","Supramastoid crest","Temporal line of the frontal bone","Zygomatic process of the frontal bone","The inferior margin is the zygomatic arch laterally and the infratemporal crest of the sphenoid medially.",3],
+['L',"Which bone forms the lateral wall of the orbit together with the zygomatic bone?","Greater wing of the sphenoid","Lesser wing of the sphenoid","Ethmoid","Lacrimal bone","The lateral wall is formed by the zygomatic bone and the greater wing of the sphenoid.",1],
+['L',"The floor of the orbit is also the roof of which structure?","Maxillary sinus","Nasal cavity","Oral cavity","Sphenoid sinus","The orbital floor is mainly the orbital surface of the maxilla, which is also the roof of the maxillary sinus.",1],
+['L',"The sphenopalatine foramen opens into which meatus?","Superior meatus","Middle meatus","Inferior meatus","Common meatus","The foramen leads into the posterior part of the superior meatus of the nose.",2],
+['L',"Which cartilage completes the nasal septum anteriorly?","Septal cartilage","Major alar cartilage","Minor alar cartilage","Lateral process of the alar cartilage","The septum is made of the perpendicular plate of the ethmoid, the vomer and the septal cartilage.",1],
+['L',"The maxillary tuberosity forms which wall of the maxillary sinus?","Posterior wall","Lateral wall","Medial wall","Superior wall","The posterior wall is the maxillary tuberosity and the alveolar canals. The lateral wall is the zygomatic process.",2],
+['L',"Which nerve supply is described for the maxillary sinuses?","Infraorbital and alveolar branches of the maxillary nerve (V2)","Branches of the mandibular nerve (V3)","Branches of the ophthalmic nerve (V1)","Branches of the facial nerve (VII)","The maxillary sinuses are innervated by the infraorbital and alveolar branches of V2.",2]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+</script>
+
+<script>
+
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Skull','cranial bones'],['Face','facial bones'],['Fossae','temporal, infratemporal, pterygopalatine'],['Cavities','orbit, nose, palate']];
+const KEY='anat-t3-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 3</p>
+ <h1>Craniofacial Osteology Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Topic 3 slides (parts 1 and 2): cranial bones, facial bones, skull base, fossae, orbit, nasal cavity and palate. A warm-up before the fill-in-the-blank texts and the open questions.</p>
+ <div class="ribbon" aria-label="Regions covered">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The regions covered by Topic 3. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+</script>
+
+</body></html>

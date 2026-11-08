@@ -1,0 +1,440 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Anatomy Fill in the Blanks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* Fill-in-the-blank additions */
+.cloze{font-size:18px;line-height:2.25;margin:14px 0 18px;overflow-wrap:anywhere}
+.blank{font:inherit;font-size:16px;font-family:var(--f-body);color:var(--fg);background:var(--surface);border:0;border-bottom:2px solid var(--hema);border-radius:6px 6px 0 0;padding:2px 8px;margin:0 2px;min-width:84px;min-height:34px;text-align:center;vertical-align:baseline;cursor:pointer;max-width:100%}
+input.blank{cursor:text;min-width:0}
+.blank:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.blank.sel{background:var(--hema-soft);border-bottom-color:var(--eosin)}
+.blank.ok{background:var(--ok-bg);border-bottom-color:var(--ok);color:var(--ok)}
+.blank.bad{background:var(--bad-bg);border-bottom-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.fix{display:inline-block;margin:0 4px 0 2px;padding:1px 8px;border-radius:6px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{font:inherit;font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--hema);background:var(--hema-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--hema)}
+.chip:disabled{opacity:.35;cursor:default}
+.chip:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.wrap-r{flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+</style>
+
+<div class="wrap" id="app"></div>
+<script>
+const SECS=[
+ {k:'A',n:'Skull overview and sutures'},
+ {k:'B',n:'Frontal bone'},
+ {k:'C',n:'Ethmoid bone'},
+ {k:'D',n:'Sphenoid bone'},
+ {k:'E',n:'Temporal bone'},
+ {k:'F',n:'Parietal and occipital bones'},
+ {k:'G',n:'Paranasal sinuses, cranial fossae and skull base'},
+ {k:'H',n:'Maxilla'},
+ {k:'I',n:'Lacrimal, palatine, inferior concha, nasal and vomer'},
+ {k:'J',n:'Zygomatic bone and mandible'},
+ {k:'K',n:'Temporal, infratemporal and pterygopalatine fossae'},
+ {k:'L',n:'Orbit, nasal cavity, palate and maxillary sinus'}
+];
+/* [section, topic, text]. Blank = [[answer|alt]]; interchangeable blanks share a group: [[g1:answer]] */
+const RAW=[
+['A',"Skull bones","The six cranial bones are the [[g1:frontal]], [[g1:temporal]], [[g1:parietal]], [[g1:occipital]], [[g1:sphenoid]] and [[g1:ethmoid]]. The facial skeleton includes the maxilla, lacrimal, palatine, inferior nasal concha, nasal, [[g2:vomer]], [[g2:zygomatic]] and [[g2:mandible]]."],
+['A',"Sutures of the parietal bone","The [[sagittal]] suture joins the parietal to the contralateral parietal; the [[squamous]] suture joins it to the sphenoid and temporal; the [[coronal]] suture joins it to the [[frontal]] bone; the [[lambdoid]] suture joins it to the [[occipital]] bone."],
+['A',"Lateral view of the skull","On the lateral view, the coronal suture separates frontal and parietal, the [[squamous]] suture lies between the parietal and the temporal squama, and the [[lambdoid]] suture lies between parietal and occipital. Other landmarks are the external [[auditory]] meatus, the [[mastoid]] process and the [[styloid]] process."],
+['A',"Zygomatic arch","The zygomatic arch is formed by the [[zygomatic]] process of the temporal bone and the [[temporal]] process of the zygomatic bone. The longitudinal root carries the anterior and posterior zygomatic [[tubercles]] and the transverse root ends at the [[articular]] tubercle."],
+['A',"Anterior view openings","On the anterior view we find the supraorbital [[foramen]], the optic [[canal]], the superior and inferior orbital [[fissures]], the [[infraorbital]] foramen, the [[zygomaticofacial]] foramen and the [[mental]] foramen."],
+['A',"Posterior view","On the posterior view the parietal bones meet at the [[sagittal]] suture, and the occipital bone carries the external occipital [[protuberance]], the superior and inferior [[nuchal]] lines and the foramen [[magnum]]. The hard palate is made by the horizontal plate of the [[palatine]] bone and the palatine process of the [[maxilla]]."],
+['B',"Frontal bone: general","The frontal bone lies in the [[anterosuperior]] area of the skull and contains the frontal [[sinuses]]. It has a [[g1:squamous]] (vertical) portion and an [[g1:orbital]] or orbitonasal (horizontal) portion."],
+['B',"Frontal bone: external surface","On the external surface we find the supraorbital ridge, the [[superciliary]] arch, the frontal [[tuberosity]], the supraorbital notch or foramen, the [[glabella]] (median frontal eminence), the zygomatic process, the nasal spine, the [[nasion]] and the temporal [[line]]."],
+['B',"Frontal bone: inferior view","On the inferior view of the frontal bone we find the [[ethmoid]] notch, the orbital [[fossa]], the anterior and posterior [[ethmoidal]] canals and the [[frontonasal]] canal."],
+['B',"Frontal bone: endocranial face","The endocranial face shows the frontal [[crest]], the ethmoidal [[notch]], the foramen [[cecum]] and the frontal [[fossae]]."],
+['B',"Frontal bone and ethmoid","The ethmoid sits in the [[ethmoidal]] notch of the [[frontal]] bone, visible on its inferior and endocranial views."],
+['B',"Supraorbital margin","The supraorbital margin belongs to the [[frontal]] bone and carries the supraorbital [[notch]] or foramen and the frontal notch or foramen; the [[zygomatic]] process closes it laterally."],
+['B',"Frontal bone and temporal fossa","The [[temporal]] line starts at the [[zygomatic]] process of the frontal bone and forms part of the [[upper]] margin of the temporal fossa."],
+['C',"Ethmoid: general","The ethmoid sits in the ethmoidal notch of the [[frontal]] bone, takes part in the nasal cavities and the [[orbits]], separates the nasal cavity from the [[brain]] and contains the ethmoidal [[sinuses]] (cells)."],
+['C',"Ethmoid: parts","The ethmoid has three parts: the [[g1:perpendicular]] plate, the [[g1:cribriform]] plate and the lateral portions or ethmoidal [[g1:labyrinth]]."],
+['C',"Ethmoid: superior view","On the superior view we see the crista [[galli]], the [[cribriform]] plate with its olfactory [[channels]], the anterior ethmoidal [[foramen]] (internal nasal nerve and artery) and the ethmoidal [[cells]]."],
+['C',"Ethmoid: lateral portion","The orbital face of the ethmoidal labyrinth is the lamina [[papyracea]]. Its internal surface carries the superior and middle nasal [[conchae]], its inferior side the [[uncinate]] process, and its posterior side articulates with the sphenoid and the [[palatine]]."],
+['C',"Cribriform plate","The [[cribriform]] plate separates the nasal cavity from the cranial cavity; the crista [[galli]] rises from its midline and the olfactory [[foramina]] pass through it."],
+['C',"Ethmoid on a coronal section","On a coronal section the [[orbital]] plate of the labyrinth forms the medial wall of the orbit, the [[middle]] concha hangs into the nasal cavity, the [[perpendicular]] plate lies in the midline and the [[uncinate]] process projects towards the inferior concha."],
+['C',"Nasal septum","The [[perpendicular]] plate of the ethmoid forms the upper part of the nasal septum, completed by the [[vomer]] and the septal [[cartilage]]."],
+['D',"Sphenoid: general","The sphenoid lies in the middle of the skull [[base]], between the ethmoid and the [[basilar]] part of the occipital. It is shaped like a [[butterfly]] and contains the sphenoid [[sinus]]."],
+['D',"Sphenoid: parts","The sphenoid is formed by the [[body]], the [[g1:greater]] wings, the [[g1:lesser]] wings and the [[pterygoid]] process."],
+['D',"Sphenoid body: superior view","The superior surface of the body shows the [[tuberculum]] sellae, the sella [[turcica]] with the pituitary [[fossa]], the anterior and posterior [[clinoid]] processes, the [[dorsum]] sellae and the jugum [[sphenoidale]]."],
+['D',"Sphenoid: wing openings","The lesser wing has the optic [[canal]] and the superior orbital [[fissure]]. The greater wing has the foramen [[g1:rotundum]], the foramen [[g1:ovale]] and the foramen [[g1:spinosum]]."],
+['D',"Greater wing","The greater wing has an [[orbital]] face and a [[temporozygomatic]] surface, which carries the [[spine]] of the sphenoid, the [[infratemporal]] crest, the foramen ovale and the foramen spinosum."],
+['D',"Pterygoid process","The pterygoid process has a [[g1:medial]] plate and a [[g1:lateral]] plate separated by the pterygoid [[fossa]]. The pterygoid [[notch]] articulates with the pyramidal process of the [[palatine]] bone."],
+['D',"Sphenoid: inferior and anterior views","The sphenoid sinuses lie inside the [[body]] of the sphenoid. Its anterior view shows the inferior sphenoidal [[crest]] and the peak or [[rostrum]]."],
+['D',"Sphenoid: posterior surface","The posterior surface of the sphenoid body is joined to the [[basilar]] part of the [[occipital]] bone, and the posterior view shows the [[dorsum]] sellae and the posterior [[clinoid]] processes."],
+['D',"Sella turcica","The sella turcica is made of the [[tuberculum]] sellae, the hypophyseal (pituitary) [[fossa]] and the [[dorsum]] sellae."],
+['D',"Sphenoid and the pterygopalatine fossa","Two large foramina open onto the anterosuperior surface of the pterygoid process in the pterygopalatine fossa: the foramen [[rotundum]] and the pterygoid [[canal]], which is the more medial and inferior one."],
+['E',"Temporal bone: general","The temporal bone lies in the [[lower]] and lateral area of the skull. It articulates with the parietal, occipital, sphenoid, zygomatic and [[mandible]] bones and has four parts: [[g1:squamous]], [[g1:petrous]], [[g1:mastoid]] and [[g1:tympanic]]."],
+['E',"Temporal: squamous portion","The squamous portion has the temporal line, the [[mandibular]] fossa (glenoid cavity), the [[petrotympanic]] fissure (Glaser's fissure) and the zygomatic process. The [[longitudinal]] root has the anterior and posterior zygomatic tubercles and the [[transverse]] root is the articular tubercle."],
+['E',"Temporal: lateral landmarks","Mastoid portion: the mastoid [[process]] and the [[digastric]] notch. Tympanic portion: the external auditory [[canal]] and the [[tympanosquamous]] fissure. Petrous portion: the [[styloid]] process and its sheath."],
+['E',"Temporal: inferior surface","On the inferior surface of the petrous portion we find the styloid process, the [[stylomastoid]] foramen, the [[jugular]] fossa and the [[carotid]] canal."],
+['E',"Stylomastoid foramen","The [[facial]] nerve leaves the skull through the [[stylomastoid]] foramen, found on the inferior surface of the [[petrous]] portion."],
+['E',"Petrous portion: inner surface","The inner surface of the petrous portion has the internal [[auditory]] canal, through which cranial nerves [[g1:VII]] and [[g1:VIII]] pass, and the [[arcuate]] eminence."],
+['E',"Temporomandibular joint","The [[mandibular]] fossa and the [[articular]] tubercle of the temporal bone articulate with the [[condylar]] process of the mandible in the temporomandibular joint."],
+['E',"Carotid canal and jugular fossa","The carotid [[canal]] and the jugular [[fossa]] are both found on the inferior surface of the [[petrous]] portion of the temporal bone."],
+['E',"Petrotympanic fissure","The petrotympanic fissure, also called [[Glaser's|Glaser]] fissure, lies behind the mandibular [[fossa]] and in front of the external acoustic [[meatus]]."],
+['F',"Parietal bone: general","The parietal bone is [[g1:flat]] and [[g1:quadrangular]], takes part in the cranial [[vault]] and forms four sutures: sagittal, squamous, coronal and lambdoid."],
+['F',"Parietal bone: surfaces","The external surface of the parietal has the superior and inferior temporal [[lines]] and the parietal [[tuberosity]]. Its internal surface has the parietal [[fossa]] and the grooves of the middle [[meningeal]] artery."],
+['F',"Occipital bone: general","The occipital bone lies in the [[posterior]] and lower portion of the skull and articulates with the parietal, [[sphenoid]] and temporal bones. It has a [[g1:basilar]] portion, two [[g1:lateral]] portions and a [[g1:squamous]] portion."],
+['F',"Occipital: external squamous portion","The external squamous portion has the external occipital [[protuberance]], the external occipital [[crest]], the [[superior]] nuchal line (towards the mastoid process) and the [[inferior]] nuchal line (towards the jugular process)."],
+['F',"Occipital: external basilar and lateral portions","On the external surface the basilar portion has the [[pharyngeal]] tubercle, and the lateral portions carry the occipital [[condyles]], the foramen [[magnum]] and the jugular foramen."],
+['F',"Occipital: internal basilar and lateral portions","Internally the basilar portion forms the [[clivus]], and the lateral portions have the jugular [[tubercle]], the [[hypoglossal]] canal and the jugular foramen."],
+['F',"Occipital: internal squamous portion","Inside the squamous portion we find the grooves for the superior [[sagittal]] sinus and the [[transverse]] sinus, the internal occipital [[crest]] and [[protuberance]], the [[cruciform]] eminence and the cerebral and [[cerebellar]] fossae."],
+['F',"Foramen magnum and jugular foramen","The foramen [[magnum]] lies in the occipital bone, while the jugular foramen lies between the occipital bone and the [[petrous]] portion of the temporal bone."],
+['F',"Occipital: articulations","The occipital articulates with the [[parietal]] bone through the [[lambdoid]] suture, with the temporal bone and with the [[sphenoid]], whose body is joined to the basilar part."],
+['G',"Paranasal sinuses","The [[frontal]] sinus lies in the frontal bone, the [[ethmoidal]] cells in the ethmoid, the [[sphenoidal]] sinus in the body of the sphenoid and the [[maxillary]] sinus in the maxilla."],
+['G',"Cranial fossae","The cranial fossae are the [[g1:anterior]], [[g1:middle]] and [[g1:posterior]] fossae. The anterior fossa is limited by the [[lesser]] wing of the sphenoid, the middle fossa lies behind it up to the dorsum sellae and the [[petrous]] border, and the posterior fossa surrounds the foramen [[magnum]]."],
+['G',"Endocranial skull base","On the endocranial view the anterior part shows the foramen [[cecum]] and the [[cribriform]] plate, then the optic canal, the superior orbital fissure, the foramen [[g1:rotundum]], [[g1:ovale]], [[g1:spinosum]] and [[g1:lacerum]], then the internal acoustic meatus, the [[jugular]] foramen, the [[hypoglossal]] canal and the foramen magnum."],
+['G',"External skull base","On the external view of the skull base we find the [[incisive]] foramen, the greater [[palatine]] foramen, the foramen ovale, foramen spinosum, the carotid [[canal]], the external acoustic [[meatus]], the [[stylomastoid]] foramen, the jugular foramen, the [[condylar]] canal and the foramen magnum."],
+['G',"Foramen lacerum","The foramen lacerum is an opening of the skull [[base]] seen on the endocranial and external views and is closed by [[cartilage]]."],
+['G',"External skull base: bones","From front to back the external skull base shows the [[maxilla]] and palatine (hard palate), the [[vomer]] and pterygoid processes of the sphenoid, the [[temporal]] bone laterally, and the [[occipital]] bone with the condyles and foramen magnum."],
+['H',"Maxilla: general","The maxilla is a [[paired]], irregular, large and [[light]] bone, located above the oral cavity, below the [[orbital]] cavity and lateral to the nasal cavities. It contains the maxillary [[sinus]] and has four processes: [[g1:frontal]], [[g1:zygomatic]], [[g1:palatine]] and [[g1:alveolar]]."],
+['H',"Maxilla: external face","On the lateral face of the maxilla, the inferior border is the [[alveolar]] process and the posterior border is the maxillary [[tuberosity]]. The anterior side has the nasal [[notch]], the anterior nasal [[spine]], the [[infraorbital]] foramen, the canine [[eminence]] and fossa and the [[incisive]] fossa."],
+['H',"Maxillary tuberosity","The maxillary tuberosity forms the anterior wall of the [[infratemporal]] fossa. Its alveolar foramina carry the posterior [[superior]] alveolar nerves, and the infraorbital groove carries the [[infraorbital]] nerve."],
+['H',"Maxilla: frontal process","The frontal process carries the anterior [[lacrimal]] crest and, with the lacrimal bone, forms the [[nasolacrimal]] duct. Its ethmoid crest articulates with the [[middle]] nasal concha and its conchal crest with the [[inferior]] concha."],
+['H',"Maxilla: palatine process","The palatine process articulates posteriorly with the [[palatine]] bone. Its upper surface is the floor of the [[nasal]] cavity and its inferior surface is the roof of the [[oral]] cavity. The medial border has the [[intermaxillary]] suture and the [[incisive]] foramen and canal (nasopalatine)."],
+['H',"Maxilla: nasal portion","The nasal portion of the maxilla shows the maxillary [[hiatus]], the palatine [[fissure]], the [[lacrimal]] groove (nasolacrimal duct) and the greater [[palatine]] groove."],
+['H',"Maxilla and its nerves","The infraorbital nerve runs in the infraorbital [[groove]] and [[canal]] and leaves through the infraorbital [[foramen]]; the posterior superior alveolar nerves enter by the [[alveolar]] foramina on the tuberosity; the [[nasopalatine]] nerve passes through the incisive foramen."],
+['H',"Nasolacrimal duct","The lacrimal groove of the maxilla, bounded by the anterior [[lacrimal]] crest of its frontal process, is closed by the [[lacrimal]] bone to form the nasolacrimal duct."],
+['I',"Lacrimal bone","The lacrimal bone is [[paired]], small and [[flattened]], on the [[medial]] wall of the orbit. With the [[maxilla]] it forms the nasolacrimal duct."],
+['I',"Palatine bone: general","The palatine is a flat, thin, [[L-shaped|L shaped|L]] bone in the posterior nasal cavity between the maxilla and the [[pterygoid]] process. It forms part of the floor and lateral wall of the nose, the roof of the [[oral]] cavity and the floor of the [[orbit]], and has a [[g1:horizontal]] plate and a [[g1:vertical]] plate."],
+['I',"Palatine: horizontal plate","The horizontal plate has a [[nasal]] face (floor of the nasal cavities) above and a [[palatal]] face (hard palate) below. Its posterior border has the posterior nasal [[spine]] and its lateral border the greater palatine [[foramen]], carrying the greater palatine [[nerve]]."],
+['I',"Palatine: vertical plate","The nasal surface of the vertical plate has the [[g1:ethmoid]] crest and the [[g1:conchal]] crest. The [[pyramidal]] process occupies the pterygoid notch and has the [[lesser]] palatine foramina. The orbital and [[sphenoidal]] processes are separated by the [[sphenopalatine]] notch."],
+['I',"Palatine: orbital process","The orbital process of the palatine articulates with the [[maxilla]], the ethmoid [[labyrinth]] and the [[sphenoid]] body, and its orbital surface forms the posterior part of the [[inferior]] wall of the orbit."],
+['I',"Greater palatine canal","The greater palatine canal starts in the [[pterygopalatine]] fossa and ends at the greater palatine [[foramen]]. It is a groove of the [[palatine]] bone closed by the [[maxilla]] and transmits the descending palatine [[vessels]] and the greater and lesser palatine [[nerves]]."],
+['I',"Sphenopalatine foramen","The sphenopalatine foramen is formed by the sphenopalatine [[notch]] of the palatine and the body of the [[sphenoid]]. It leads into the posterior part of the [[superior]] meatus and transmits the sphenopalatine [[artery]] and the [[nasopalatine]] nerve."],
+['I',"Inferior nasal concha","The inferior nasal concha is a flat, [[elongated]] plate on the [[lateral]] wall of the nasal cavity that separates the [[inferior]] and [[middle]] meatuses. Its parts are the lacrimal, [[ethmoid]] and maxillary processes."],
+['I',"Nasal bone and vomer","The nasal bone is a flat [[rhomboid]] plate at the anterosuperior angle of the nasal cavity. The [[vomer]] is flat, thin and [[quadrilateral]], lies in the posteroinferior nasal [[septum]] and has the [[nasopalatine]] groove and the [[ala]] (wing) on its superior border."],
+['J',"Zygomatic bone","The zygomatic bone forms the prominence of the [[cheek]] and part of the lateral wall and floor of the [[orbit]]. Its orbital surface has the [[zygomaticoorbital]] foramen connecting with the zygomaticofacial foramen, and its temporal surface has the [[zygomaticotemporal]] foramen."],
+['J',"Mandible: general","The mandible is a large, flattened, [[U-shaped|U shaped|U]] bone in the lower third of the face that articulates with the [[temporal]] bones at the TMJ. It has a [[g2:body]] and a [[g2:ramus]], which ends in the [[g1:coronoid]] and [[g1:condylar]] processes."],
+['J',"Mandibular body: external face","The external face of the mandibular body shows the mandibular [[symphysis]], the mental [[protuberance]], the mental [[tubercles]], the [[oblique]] line and the mental [[foramen]]."],
+['J',"Mandibular body: medial side","On the medial side of the body we find the superior and inferior mental [[spines]], the [[mylohyoid]] line and groove, the [[g1:submandibular]] and [[g1:sublingual]] fossae. The inferior border has the [[digastric]] fossa and the [[angle]]."],
+['J',"Mandibular ramus","The medial side of the ramus has the mandibular [[foramen]], the [[lingula]] and the mylohyoid groove. Anteriorly it has the temporal crest and the [[buccinator]] crest; superiorly the [[coronoid]] process, the mandibular [[notch]] and the condylar process."],
+['J',"Mandibular canal","The inferior [[alveolar]] nerve enters at the mandibular [[foramen]], runs in the mandibular [[canal]] giving the inferior dental [[plexus]], and leaves through the [[mental]] foramen as the mental nerve."],
+['J',"Angle of the mandible","The [[angle]] lies where the inferior border of the body meets the posterior border of the [[ramus]]. The ramus carries the mandibular foramen and [[lingula]] on its medial side and ends with the coronoid and condylar processes."],
+['K',"Regional osteology","Regional osteology covers the temporal fossa, the [[infratemporal]] fossa, the pterygomaxillary [[fissure]], the [[pterygopalatine]] fossa, the hard and soft [[palate]], the orbit, the nasal cavity and the maxillary [[sinus]]."],
+['K',"Temporal fossa","The temporal fossa is a narrow, [[fan-shaped|fan shaped|fan]] space. Its upper margin is formed by the temporal [[lines]] reaching the supramastoid [[crest]], its lateral margin is the temporal [[fascia]], and its inferior margin is the zygomatic [[arch]] laterally and the infratemporal crest medially."],
+['K',"Temporal and infratemporal fossae","The floor of the temporal fossa is open medially to the [[infratemporal]] fossa and laterally to the region of the [[masseter]] muscle, between the zygomatic arch and the infratemporal [[crest]] of the sphenoid."],
+['K',"Infratemporal fossa: boundaries","The infratemporal fossa lies between the [[ramus]] of the mandible laterally and the wall of the [[pharynx]] medially. Its roof is the greater wing of the [[sphenoid]] and the temporal bone, its lateral wall is the ramus, its medial wall is the lateral plate of the [[pterygoid]] process, and its anterior wall is the posterior surface of the [[maxilla]]."],
+['K',"Infratemporal fossa: contents","The infratemporal fossa contains the [[sphenomandibular]] ligament, the medial and lateral [[pterygoid]] muscles, the maxillary [[artery]], the mandibular nerve [[V3|V-3|3]], branches of the facial nerve and the glossopharyngeal nerve, and the pterygoid [[plexus]] of veins."],
+['K',"Pterygopalatine fossa","The pterygopalatine fossa is an inverted [[teardrop]] shaped space immediately behind the [[maxilla]]. Its medial wall is the vertical plate of the [[palatine]] bone and its posterior wall and roof are formed by the [[sphenoid]]."],
+['K',"Pterygopalatine fossa: openings","The foramen [[rotundum]] and the pterygoid [[canal]] lead to the middle cranial fossa, the palatovaginal canal to the [[nasopharynx]], the palatine canal to the hard [[palate]], the [[sphenopalatine]] foramen to the nasal cavity, the pterygomaxillary fissure to the [[infratemporal]] fossa and the inferior orbital fissure to the [[orbit]]."],
+['K',"Pterygopalatine fossa: contents","The pterygopalatine fossa transmits the [[maxillary]] nerve (V2) and the terminal part of the maxillary [[artery]], which supply all the upper [[teeth]]."],
+['K',"Pterygomaxillary fissure","The pterygomaxillary fissure lies between the posterior surface of the [[maxilla]] and the [[pterygoid]] process of the sphenoid and connects the pterygopalatine fossa with the [[infratemporal]] fossa."],
+['L',"Walls of the orbit","The roof of the orbit is the [[frontal]] bone with the lesser wing of the sphenoid. The medial wall is the maxilla, lacrimal, [[ethmoid]] and sphenoid. The lateral wall is the [[zygomatic]] bone and the greater wing of the sphenoid. The floor is mainly the [[maxilla]], and it is also the roof of the maxillary [[sinus]]."],
+['L',"Openings of the orbit","The orbit has the supraorbital foramen, the anterior and posterior [[ethmoidal]] foramina, the lacrimal fossa, the infraorbital foramen and groove, the optic [[canal]] and the superior and inferior orbital [[fissures]]."],
+['L',"Nasal septum","The nasal septum is made of the [[perpendicular]] plate of the ethmoid, the [[vomer]] and the septal [[cartilage]], with the nasal crest of the maxilla and [[palatine]] bones at its base."],
+['L',"Lateral wall of the nasal cavity","The lateral wall of the nasal cavity is formed by the frontal process of the [[maxilla]], the [[lacrimal]] bone, the superior and middle conchae of the ethmoid, the [[inferior]] concha, the perpendicular plate of the [[palatine]] and the medial pterygoid plate of the sphenoid."],
+['L',"Meatuses","The inferior concha separates the [[g1:inferior]] and [[g1:middle]] meatuses. Around the opening of the maxillary sinus lie the [[uncinate]] process, the ethmoidal [[bulla]], the hiatus semilunaris and the maxillary [[infundibulum]]. The sphenopalatine foramen opens into the [[superior]] meatus."],
+['L',"Hard palate","The hard palate is formed by the palatine processes of the [[maxillae|maxilla]] and the horizontal plates of the [[palatine]] bones, with the [[intermaxillary]] suture in the midline, the incisive foramen in front, the greater and lesser palatine foramina laterally and the posterior nasal [[spine]]."],
+['L',"Soft palate and choanae","The [[tensor]] and levator veli palatini muscles belong to the soft palate. The posterior opening of the nasal cavity is the [[choanae|choana]], limited by the [[vomer]] and the medial pterygoid plates."],
+['L',"Maxillary sinus: walls","The medial wall of the maxillary sinus is the lateral wall of the [[nasal]] cavity; the lateral wall is the [[zygomatic]] process; the posterior wall is the maxillary [[tuberosity]]; the floor and anterior wall are the [[alveolar]] process; and the superior wall is the [[orbital]] surface of the maxilla."],
+['L',"Maxillary sinus: supply","The maxillary sinuses are innervated by the infraorbital and alveolar branches of the [[maxillary]] nerve (V2) and receive blood from the infraorbital and superior [[alveolar]] branches of the maxillary [[artery]]."],
+['L',"Orbit, sinus and pterygopalatine fossa","The floor of the [[orbit]] is also the roof of the maxillary sinus. The pterygopalatine fossa opens into the orbit through the inferior orbital [[fissure]] and lies behind the [[maxilla]]."]
+];
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t3-cloze-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={bank:{},type:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.bank&&o.type)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function parse(text){
+ const parts=[],blanks=[];let last=0,m;const re=/\[\[(.+?)\]\]/g;
+ while((m=re.exec(text))){
+  if(m.index>last)parts.push({t:text.slice(last,m.index)});
+  let inner=m[1],g=null;const gm=/^(g\d+):/.exec(inner);if(gm){g=gm[1];inner=inner.slice(gm[0].length)}
+  const alts=inner.split('|');
+  const b={i:blanks.length,g:g,alts:alts};blanks.push(b);parts.push({b:b});last=m.index+m[0].length;
+ }
+ if(last<text.length)parts.push({t:text.slice(last)});
+ return{parts:parts,blanks:blanks};
+}
+const QS=RAW.map((r,i)=>{const p=parse(r[2]);return{id:i+1,s:r[0],title:r[1],parts:p.parts,blanks:p.blanks}});
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[];for(let j=0;j<=n;j++)p[j]=j;
+ for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function matches(v,alts,tol){const x=norm(v);if(!x)return false;return alts.some(a=>{const y=norm(a);if(x===y)return true;if(!tol)return false;const L=y.length,d=L>=9?2:L>=5?1:0;return d>0&&lev(x,y)<=d})}
+function evaluate(q,vals,tol){
+ const res=q.blanks.map(()=>false),done={};
+ q.blanks.forEach(b=>{if(!b.g){res[b.i]=matches(vals[b.i]||'',b.alts,tol)}});
+ const groups={};q.blanks.forEach(b=>{if(b.g)(groups[b.g]=groups[b.g]||[]).push(b)});
+ Object.keys(groups).forEach(g=>{
+  const slots=groups[g].map(b=>({alts:b.alts,used:false}));
+  groups[g].forEach(b=>{const v=vals[b.i]||'';
+   for(const s of slots){if(!s.used&&matches(v,s.alts,tol)){s.used=true;res[b.i]=true;break}}
+  });
+ });
+ return res;
+}
+const lv=()=>L==='bank'?store.bank:store.type;
+const rec=q=>lv()[q.id];
+const pct=q=>{const r=rec(q);return r?Math.round(r.c/r.t*100):0};
+const weakList=()=>QS.filter(q=>rec(q)&&pct(q)<70);
+let L='bank',scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(q=>rec(q)).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(q=>rec(q)).length;
+  const sum=p.filter(q=>rec(q)).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} texts · ${d} done${d?` · ${avg}% correct`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' texts below 70%':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 3</p>
+ <h1>Fill in the Blanks</h1>
+ <p class="lead">${QS.length} short texts on the Topic 3 slides (parts 1 and 2) with key words removed. Step two of the path: after the multiple-choice warm-up, before the open questions.</p>
+ <p class="sec-title">Level</p>
+ <div class="scopes">
+  <label class="scope"><input type="radio" name="lvl" value="bank" ${L==='bank'?'checked':''}><span class="sc-name">Level 1 · Word bank</span><span class="sc-meta">Pick the missing words from a list that includes a few wrong ones.</span></label>
+  <label class="scope"><input type="radio" name="lvl" value="type" ${L==='type'?'checked':''}><span class="sc-name">Level 2 · Type the words</span><span class="sc-meta">No list. Small spelling slips are accepted, and you can overrule the check.</span></label>
+ </div>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} texts done at this level. Your results stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the texts</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase all results?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function makeBank(q){
+ const own=q.blanks.map(b=>b.alts[0]);
+ const ownN=new Set(q.blanks.flatMap(b=>b.alts.map(norm)));
+ const other=[];QS.forEach(o=>{if(o.s===q.s&&o.id!==q.id)o.blanks.forEach(b=>{const n=norm(b.alts[0]);if(!ownN.has(n)&&!other.some(x=>norm(x)===n))other.push(b.alts[0])})});
+ const extra=shuf(other).slice(0,Math.max(2,Math.min(4,Math.ceil(own.length/2))));
+ return shuf(own.concat(extra));
+}
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,lv:L};
+ load();question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+function load(){
+ const q=cur();
+ S.vals=q.blanks.map(()=>'');S.chipOf=q.blanks.map(()=>-1);S.sel=0;S.checked=false;S.res=null;S.over={};
+ S.bank=L==='bank'?makeBank(q):[];
+}
+function nextEmpty(){const q=cur();for(let k=0;k<q.blanks.length;k++)if(!S.vals[k])return k;return -1}
+function ok(k){return !!(S.res&&(S.res[k]||S.over[k]))}
+function question(){
+ const q=cur(),n=S.list.length,bank=S.lv==='bank';
+ const body=q.parts.map(p=>{
+  if(p.t!==undefined)return esc(p.t);
+  const b=p.b,k=b.i,v=S.vals[k];
+  const cls='blank'+(S.checked?(ok(k)?' ok':' bad'):'')+(!S.checked&&bank&&S.sel===k?' sel':'');
+  if(bank){
+   return `<button type="button" class="${cls}" data-b="${k}" ${S.checked?'disabled':''}>${v?esc(v):'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</button>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+  }
+  const w=Math.max(6,Math.min(18,b.alts[0].length+2));
+  return `<input type="text" class="${cls}" data-b="${k}" value="${esc(v)}" size="${w}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Blank ${k+1}" ${S.checked?'readonly':''}>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+ }).join('');
+ const total=q.blanks.length,good=S.checked?q.blanks.filter((_,k)=>ok(k)).length:0;
+ const chips=bank&&!S.checked?`<div class="chips" role="group" aria-label="Word bank">${S.bank.map((w,k)=>`<button type="button" class="chip" data-chip="${k}" ${S.chipOf.includes(k)?'disabled':''}>${esc(w)}</button>`).join('')}</div>`:'';
+ const wrong=S.checked&&!bank?q.blanks.filter((_,k)=>!S.res[k]).map(b=>`<button type="button" class="btn ghost small" data-over="${b.i}">${S.over[b.i]?'Counted as right':'I was right'} · blank ${b.i+1}</button>`).join(''):'';
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">${bank?'Level 1':'Level 2'} · ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext">${esc(q.title)}</h2>
+ <p class="cloze">${body}</p>
+ ${chips}
+ ${S.checked?`<p class="sc-line" id="scl">${good} of ${total} blanks correct</p>${wrong?`<div class="row wrap-r">${wrong}</div>`:''}`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${S.checked?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next text'}</button>`:`<button type="button" class="btn" data-a="check">Check</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+function record(){
+ const q=cur();const good=q.blanks.filter((_,k)=>ok(k)).length;
+ (S.lv==='bank'?store.bank:store.type)[q.id]={c:good,t:q.blanks.length};save();
+}
+function results(){
+ const store_=S.lv==='bank'?store.bank:store.type;
+ const Ls=S.list.map(id=>QS[id-1]).filter(q=>store_[q.id]);
+ const tot=Ls.reduce((a,q)=>a+store_[q.id].t,0),gt=Ls.reduce((a,q)=>a+store_[q.id].c,0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=Ls.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+store_[q.id].c,0),b=l.reduce((x,q)=>x+store_[q.id].t,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=Ls.filter(q=>Math.round(store_[q.id].c/store_[q.id].t*100)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} blanks correct across ${Ls.length} text${Ls.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No text was completed in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>`<div class="item"><p class="q">${esc(q.title)}</p><p class="ex">${q.parts.map(x=>x.t!==undefined?esc(x.t):'<b>'+esc(x.b.alts[0])+'</b>').join('')}</p></div>`).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the texts to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+function check(){
+ const q=cur();
+ S.res=evaluate(q,S.vals,S.lv==='type');S.checked=true;S.over={};record();question();
+}
+app.addEventListener('input',e=>{
+ const t=e.target;if(t.dataset&&t.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){S.vals[+t.dataset.b]=t.value}
+});
+app.addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){
+  e.preventDefault();const ins=[...app.querySelectorAll('input.blank')];const i=ins.indexOf(e.target);
+  if(i<ins.length-1)ins[i+1].focus();else check();
+ }
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.name==='lvl'){L=t.value;home();return}
+ if(t.id==='shuf'){shuffle=t.checked}
+});
+app.addEventListener('click',e=>{
+ const chip=e.target.closest('[data-chip]');
+ if(chip&&S&&S.lv==='bank'&&!S.checked){
+  const k=+chip.dataset.chip;let tgt=S.sel;
+  if(tgt==null||S.vals[tgt]){const ne=nextEmpty();tgt=ne;}
+  if(tgt<0)return;
+  S.vals[tgt]=S.bank[k];S.chipOf[tgt]=k;
+  const ne=nextEmpty();S.sel=ne<0?null:ne;question();return;
+ }
+ const ov=e.target.closest('[data-over]');
+ if(ov&&S&&S.checked){const k=+ov.dataset.over;S.over[k]=!S.over[k];record();question();return}
+ const bl=e.target.closest('button[data-b]');
+ if(bl&&S&&S.lv==='bank'&&!S.checked){
+  const k=+bl.dataset.b;
+  if(S.vals[k]){S.vals[k]='';S.chipOf[k]=-1}
+  S.sel=k;question();return;
+ }
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='check')check();
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;load();question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;load();question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={bank:{},type:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+</script>
+
+</body></html>

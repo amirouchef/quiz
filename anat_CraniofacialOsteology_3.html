@@ -1,0 +1,362 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Craniofacial Osteology Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+<script>
+const SECS=[
+ {k:'A',n:'Skull overview and sutures'},
+ {k:'B',n:'Frontal bone'},
+ {k:'C',n:'Ethmoid bone'},
+ {k:'D',n:'Sphenoid bone'},
+ {k:'E',n:'Temporal bone'},
+ {k:'F',n:'Parietal and occipital bones'},
+ {k:'G',n:'Paranasal sinuses, cranial fossae and skull base'},
+ {k:'H',n:'Maxilla'},
+ {k:'I',n:'Lacrimal, palatine, inferior concha, nasal and vomer'},
+ {k:'J',n:'Zygomatic bone and mandible'},
+ {k:'K',n:'Temporal, infratemporal and pterygopalatine fossae'},
+ {k:'L',n:'Orbit, nasal cavity, palate and maxillary sinus'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+/* A */
+['A',"List the bones of the skull and divide them into cranial bones and facial bones.","The cranial bones are the frontal, temporal, parietal, occipital, sphenoid and ethmoid. The facial skeleton is made of the maxilla, lacrimal, palatine, inferior nasal concha, nasal, vomer, zygomatic and mandible.",["Cranial bones: frontal, temporal, parietal, occipital, sphenoid, ethmoid","Facial bones: maxilla, lacrimal, palatine, inferior nasal concha","Facial bones: nasal, vomer, zygomatic, mandible","The two groups are correctly separated"]],
+['A',"Name the four sutures formed by the parietal bone and state which bone each one joins it to.","The sagittal suture joins it to the contralateral parietal bone. The squamous suture joins it to the sphenoid and the temporal. The coronal suture joins it to the frontal bone. The lambdoid suture joins it to the occipital bone.",["Sagittal: with the contralateral parietal","Squamous: with the sphenoid and the temporal","Coronal: with the frontal","Lambdoid: with the occipital"]],
+['A',"Which sutures and bony landmarks of the cranium can be identified on a lateral view of the skull?","Three sutures are visible: the coronal suture (between frontal and parietal), the squamous suture (between parietal and temporal squama) and the lambdoid suture (between parietal and occipital). Landmarks include the temporal squama, the zygomatic process and zygomatic arch, the mandibular fossa and articular tubercle, the external auditory meatus, the mastoid process, the styloid process and the external occipital protuberance.",["Coronal, squamous and lambdoid sutures","Temporal squama and zygomatic process of the temporal","Zygomatic arch, mandibular fossa and articular tubercle","External auditory meatus, mastoid process and styloid process","External occipital protuberance"]],
+['A',"On the lateral view of the skull, which structures make up the zygomatic arch?","The zygomatic arch is formed by the zygomatic process of the temporal bone and the temporal process of the zygomatic bone. On the temporal bone the zygomatic process has a longitudinal root (anterior and posterior zygomatic tubercles) and a transverse root (articular tubercle), and its free anterior segment forms the arch.",["Zygomatic process of the temporal bone","Temporal process of the zygomatic bone","Longitudinal root with anterior and posterior zygomatic tubercles","Transverse root ending at the articular tubercle"]],
+['A',"Name the foramina and fissures labelled on the anterior view of the skull.","The anterior view shows the supraorbital notch or foramen, the optic foramen (canal), the superior orbital fissure, the inferior orbital fissure, the infraorbital foramen, the zygomaticofacial foramen and the mental foramen.",["Supraorbital notch or foramen","Optic foramen (canal)","Superior and inferior orbital fissures","Infraorbital foramen","Zygomaticofacial foramen","Mental foramen"]],
+['A',"Which bones and landmarks can be recognised on the posterior view of the skull?","The parietal bones with the sagittal suture and sutural bones, the occipital bone with the lambdoid suture, the external occipital protuberance, the superior and inferior nuchal lines and the foramen magnum, the temporal bone with the mastoid and styloid processes, the occipital condyles, the vomer, the inferior nasal concha, the hard palate (horizontal plate of the palatine and palatine process of the maxilla) and the mandible.",["Parietal bones, sagittal suture and sutural bones","Occipital bone, lambdoid suture, external occipital protuberance","Superior and inferior nuchal lines, foramen magnum, occipital condyle","Mastoid and styloid processes of the temporal","Hard palate: horizontal plate of palatine and palatine process of maxilla"]],
+/* B */
+['B',"Describe the location of the frontal bone, the bones it articulates with and its two portions.","The frontal bone lies in the anterosuperior area of the skull. It articulates with the parietal, ethmoid, sphenoid, maxillary, zygomatic, lacrimal and nasal bones and contains the frontal sinuses. It has a squamous (vertical) portion and an orbital or orbitonasal (horizontal) portion.",["Anterosuperior area of the skull","Articulates with parietal, ethmoid, sphenoid, maxillary, zygomatic, lacrimal, nasal","Contains the frontal sinuses","Squamous (vertical) portion","Orbital or orbitonasal (horizontal) portion"]],
+['B',"List the landmarks of the external surface of the frontal bone seen in anterior view.","Supraorbital ridge, superciliary arch, frontal tuberosity, supraorbital notch or foramen, frontal notch or foramen, glabella (median frontal eminence), zygomatic process, nasal spine, nasion and the temporal line.",["Supraorbital ridge and superciliary arch","Frontal tuberosity","Supraorbital and frontal notches or foramina","Glabella (median frontal eminence)","Zygomatic process, nasal spine, nasion","Temporal line"]],
+['B',"Which features are seen on the inferior view of the frontal bone?","The ethmoid notch, the orbital fossa, the anterior and posterior ethmoidal canals and the frontonasal canal. The figure also shows the opening of the frontal sinus, the lacrimal fossa and the nasal part with the nasal spine.",["Ethmoid notch","Orbital fossa","Anterior and posterior ethmoidal canals","Frontonasal canal"]],
+['B',"Describe the endocranial face of the frontal bone.","On the posterior (endocranial) face we find the frontal crest, the ethmoidal notch, the foramen cecum and the frontal fossae.",["Frontal crest","Ethmoidal notch","Foramen cecum","Frontal fossae"]],
+['B',"The ethmoid bone is located in a notch of another bone. Which notch, and how does it relate to the frontal bone?","The ethmoid sits in the ethmoidal notch of the frontal bone, which is seen on both the inferior and endocranial views of the frontal bone. The frontal bone also articulates with the ethmoid.",["Ethmoidal notch of the frontal bone","Seen on inferior and endocranial views","Frontal and ethmoid articulate"]],
+['B',"Which parts of the frontal bone take part in the superior margin of the orbit and which openings are found there?","The supraorbital margin belongs to the frontal bone. It carries the supraorbital notch or foramen and, medially, the frontal notch or foramen. The superciliary arch lies above it and the zygomatic process ends it laterally.",["Supraorbital margin belongs to the frontal bone","Supraorbital notch or foramen","Frontal notch or foramen","Zygomatic process laterally"]],
+['B',"Where does the frontal bone take part in the temporal fossa?","The temporal line runs on the frontal bone and begins at its zygomatic process. It forms part of the upper margin of the temporal fossa, and the anterior limit of the fossa is the posterior surface of the zygomatic process of the frontal bone together with the frontal process of the zygomatic bone.",["Temporal line on the frontal bone","Starts at the zygomatic process of the frontal","Upper margin of the temporal fossa","Anterior limit with the frontal process of the zygomatic bone"]],
+/* C */
+['C',"Describe the location and role of the ethmoid bone and give the bones it articulates with.","It sits in the ethmoidal notch of the frontal bone, takes part in the facial mass (nasal cavities and orbits) and separates the nasal cavity from the brain. It articulates with the frontal, sphenoid, nasal, inferior nasal concha, vomer, lacrimal, palatine and maxillary bones and contains the ethmoidal sinuses (cells).",["Located in the ethmoidal notch of the frontal","Participates in nasal cavities and orbits","Separates nasal cavity from brain","Articulates with frontal, sphenoid, nasal, inferior concha, vomer, lacrimal, palatine, maxillary","Contains the ethmoidal cells (sinuses)"]],
+['C',"Name the three parts of the ethmoid bone.","The perpendicular plate, the cribriform plate and the lateral portions, also called the ethmoidal labyrinths.",["Perpendicular plate","Cribriform plate","Lateral portions (ethmoidal labyrinth)"]],
+['C',"Describe the superior view of the ethmoid bone.","On the superior view we see the crista galli process, the cribriform plate with its olfactory channels, the anterior ethmoidal foramen (internal nasal nerve and artery), the anterior and posterior ethmoidal canals and the ethmoidal labyrinth, made of ethmoidal cells (sinuses). The orbital plate lies laterally and the perpendicular plate continues in the midline.",["Crista galli","Cribriform plate with olfactory channels","Anterior ethmoidal foramen (internal nasal nerve and artery)","Anterior and posterior ethmoidal canals","Ethmoidal labyrinth with ethmoidal cells"]],
+['C',"Describe the lateral portion (labyrinth) of the ethmoid bone.","Its orbital face is the lamina papyracea. The upper face has the anterior and posterior ethmoidal ducts and the ethmoidal cells. The internal surface carries the superior and middle nasal conchae and ethmoidal cells, the inferior side has the uncinate process, and the posterior side articulates with the sphenoid and the palatine.",["Orbital face: lamina papyracea","Upper face: anterior and posterior ethmoidal ducts and cells","Internal surface: superior and middle nasal conchae","Inferior side: uncinate process","Posterior side: articulates with sphenoid and palatine"]],
+['C',"What structures separate the nasal cavity from the cranial cavity at the level of the ethmoid, and what passes through them?","The cribriform plate lies between the nasal cavity below and the cranial cavity above, with the crista galli rising from its midline. Its openings are the olfactory channels (olfactory foramina). The ethmoid therefore separates the nasal cavity from the brain.",["Cribriform plate","Crista galli in the midline","Olfactory channels or foramina","Separates nasal cavity from the brain"]],
+['C',"On a coronal section, how is the ethmoid related to the orbit, nasal cavity and maxillary sinus?","The orbital plate of the ethmoidal labyrinth forms the medial wall of the orbit. The middle ethmoidal cells and ethmoidal bulla lie inside the labyrinth, the middle concha hangs into the nasal cavity and the perpendicular plate forms the septum. The uncinate process projects towards the inferior concha near the maxillary sinus.",["Orbital plate forms medial wall of the orbit","Ethmoidal cells and bulla inside the labyrinth","Middle concha in the nasal cavity","Perpendicular plate in the midline","Uncinate process near the inferior concha and maxillary sinus"]],
+['C',"Which part of the ethmoid takes part in the nasal septum and which other structures complete it?","The perpendicular plate of the ethmoid forms the upper part of the medial wall of the nasal cavity. It is completed by the vomer, the septal cartilage, the nasal bone and nasal spine of the frontal bone above and the nasal crest of the maxilla and palatine below.",["Perpendicular plate of ethmoid","Vomer","Septal cartilage","Nasal crest of maxilla and palatine"]],
+/* D */
+['D',"Describe the location, shape and articulations of the sphenoid bone.","It lies in the middle portion of the skull base, between the ethmoid and the basilar part of the occipital. It participates in the nasal cavities and orbits and is shaped like a butterfly. It articulates with the frontal, ethmoid, occipital, parietal, temporal, palatine and zygomatic bones and contains the sphenoid sinus.",["Middle portion of the skull base, between ethmoid and basilar occipital","Participates in nasal cavities and orbits","Butterfly shape","Articulates with frontal, ethmoid, occipital, parietal, temporal, palatine, zygomatic","Contains the sphenoid sinus"]],
+['D',"Name the four parts of the sphenoid bone.","The body, the greater wings, the lesser wings and the pterygoid process.",["Body","Greater wings","Lesser wings","Pterygoid process"]],
+['D',"List the structures seen on the superior view of the body of the sphenoid.","Ethmoid process, prechiasmatic groove, optic canal, tuberculum sellae, sella turcica with the pituitary fossa, anterior and posterior clinoid processes, dorsum sellae and jugum sphenoidale.",["Ethmoid process, prechiasmatic groove","Optic canal","Tuberculum sellae, sella turcica, pituitary fossa","Anterior and posterior clinoid processes","Dorsum sellae and jugum sphenoidale"]],
+['D',"What openings are found on the lesser wings and on the greater wings in superior view?","The lesser wing has the optic canal and the superior orbital fissure (sphenoidal cleft). The greater wing has the foramen rotundum, the foramen ovale, the foramen spinosum and takes part in the superior orbital fissure.",["Lesser wing: optic canal","Lesser wing: superior orbital fissure (sphenoidal cleft)","Greater wing: foramen rotundum","Greater wing: foramen ovale and foramen spinosum"]],
+['D',"Describe the greater wing of the sphenoid, including its faces and landmarks.","The greater wing has an orbital face and a temporozygomatic surface. The temporozygomatic surface presents the spine of the sphenoid, the infratemporal crest, the foramen ovale and the foramen spinosum. The foramen rotundum also opens in the greater wing.",["Orbital face","Temporozygomatic surface","Spine of the sphenoid","Infratemporal crest","Foramen ovale and foramen spinosum"]],
+['D',"Describe the pterygoid process of the sphenoid bone.","It has a medial plate and a lateral plate separated by the pterygoid fossa. The pterygoid notch articulates with the pyramidal process of the palatine bone. Other features are the hamulus, the scaphoid fossa and the pterygoid canal.",["Medial plate and lateral plate","Pterygoid fossa","Pterygoid notch articulates with pyramidal process of palatine","Hamulus","Scaphoid fossa and pterygoid canal"]],
+['D',"What is found on the inferior and anterior views of the body of the sphenoid?","The inferior sphenoidal crest (and the peak or rostrum of the sphenoid on the anterior view) and the sphenoid sinuses, which lie inside the body. The figure also shows the sphenoidal concha.",["Inferior sphenoidal crest","Peak (rostrum) of the sphenoid","Sphenoid sinuses inside the body"]],
+['D',"How does the body of the sphenoid relate to the occipital bone, and what features are found on its posterior surface?","The posterior surface of the body is joined to the basilar part of the occipital bone. The posterior view shows the dorsum sellae, the posterior clinoid processes, the carotid groove, the rostrum and vaginal process and the lingula.",["Posterior surface joined to basilar part of occipital","Dorsum sellae and posterior clinoid processes","Carotid groove","Rostrum and vaginal process"]],
+['D',"Name the components of the sella turcica and state where it is found.","The sella turcica is on the superior surface of the body of the sphenoid. It is made of the tuberculum sellae, the hypophyseal (pituitary) fossa and the dorsum sellae. The anterior and posterior clinoid processes lie around it.",["On the body of the sphenoid","Tuberculum sellae","Hypophyseal (pituitary) fossa","Dorsum sellae","Anterior and posterior clinoid processes"]],
+['D',"Which openings of the sphenoid open into the pterygopalatine fossa?","The anterosuperior surface of the pterygoid process contributes to the pterygopalatine fossa, and two large foramina open onto it: the foramen rotundum and the pterygoid canal, which is the more medial and inferior one.",["Anterosuperior surface of pterygoid process","Foramen rotundum","Pterygoid canal (more medial and inferior)"]],
+/* E */
+['E',"Describe the location of the temporal bone, its articulations and its four parts.","It lies in the lower and lateral area of the skull and participates in the skull base. It articulates with the parietal, occipital, sphenoid, zygomatic and mandible. It has four parts: squamous, petrous, mastoid and tympanic.",["Lower and lateral area of the skull","Participates in the skull base","Articulates with parietal, occipital, sphenoid, zygomatic, mandible","Squamous, petrous, mastoid and tympanic portions"]],
+['E',"Describe the squamous portion of the temporal bone on the exocranial (lateral) view.","It carries the temporal line, the mandibular fossa (glenoid cavity), the petrotympanic fissure (Glaser's fissure) and the zygomatic process. The zygomatic process has a longitudinal root with the anterior and posterior zygomatic tubercles, a transverse root formed by the articular tubercle and the zygomatic arch as its free anterior segment.",["Temporal line","Mandibular fossa (glenoid cavity)","Petrotympanic fissure (Glaser's fissure)","Longitudinal root: anterior and posterior zygomatic tubercles","Transverse root: articular tubercle; zygomatic arch"]],
+['E',"List the landmarks of the mastoid, tympanic and petrous portions on the lateral view.","Mastoid portion: the mastoid process and the digastric notch or groove. Tympanic portion: the external auditory canal and the tympanosquamous fissure. Petrous portion: the styloid process and its sheath.",["Mastoid process","Digastric notch or groove","External auditory canal","Tympanosquamous fissure","Styloid process and sheath"]],
+['E',"List the structures of the petrous and mastoid portions seen on the inferior surface of the temporal bone.","Mastoid portion: mastoid process and digastric notch. Petrous portion: styloid process, pars petrosa, stylomastoid foramen (facial nerve), jugular fossa and carotid canal.",["Mastoid process and digastric notch","Styloid process","Stylomastoid foramen (facial nerve)","Jugular fossa","Carotid canal"]],
+['E',"Which structure passes through the stylomastoid foramen, and where is the foramen found?","The facial nerve passes through the stylomastoid foramen, which lies on the inferior surface of the petrous portion of the temporal bone, behind the styloid process.",["Facial nerve","Inferior surface of the temporal bone","Petrous portion near the styloid process"]],
+['E',"Describe the inner surface of the petrous portion of the temporal bone.","It contains the internal auditory canal (internal acoustic meatus), through which cranial nerves VII and VIII pass, and the arcuate eminence. Other labelled features are the groove for the sigmoid sinus, the subarcuate fossa and the petrous apex.",["Internal auditory canal","CN VII and VIII","Arcuate eminence","Groove for sigmoid sinus"]],
+['E',"Which temporal bone structures take part in the temporomandibular joint?","The mandibular fossa (glenoid cavity) and the articular tubercle of the squamous portion of the temporal bone articulate with the condylar process of the mandible. The mandible articulates with the temporal bones at the temporomandibular joint (TMJ).",["Mandibular fossa (glenoid cavity)","Articular tubercle","Condylar process of the mandible","Squamous portion of the temporal"]],
+['E',"Describe the carotid canal and the jugular fossa and say which portion of the temporal bone they belong to.","Both are seen on the inferior surface of the petrous portion of the temporal bone. The carotid canal is the passage of the carotid artery and the jugular fossa lies behind it. On the skull base they are seen with the jugular foramen and the stylomastoid foramen.",["Inferior surface of petrous portion","Carotid canal","Jugular fossa","Seen on skull base with jugular and stylomastoid foramina"]],
+['E',"What is the petrotympanic fissure and where is it located?","The petrotympanic fissure (Glaser's fissure) is a fissure at the squamous portion of the temporal bone, behind the mandibular fossa and in front of the external acoustic meatus.",["Also called Glaser's fissure","Behind the mandibular fossa","In front of the external acoustic meatus"]],
+/* F */
+['F',"Describe the parietal bone: location, shape, articulations and sutures.","It lies in the upper and lateral area of the skull. It is flat and quadrangular, takes part in the cranial vault and articulates with the contralateral parietal, occipital, sphenoid and frontal bones. It forms four sutures: sagittal, squamous, coronal and lambdoid.",["Upper and lateral area of the skull","Flat and quadrangular, cranial vault","Articulates with contralateral parietal, occipital, sphenoid, frontal","Four sutures: sagittal, squamous, coronal, lambdoid"]],
+['F',"Describe the external and internal surfaces of the parietal bone.","External surface: the superior and inferior temporal lines and the parietal tuberosity. Internal surface: the parietal fossa and the grooves of the middle meningeal artery. The figures also show the parietal foramen and the groove for the superior sagittal sinus.",["External: superior and inferior temporal lines","External: parietal tuberosity","Internal: parietal fossa","Internal: grooves of the middle meningeal artery"]],
+['F',"Describe the location and parts of the occipital bone.","The occipital bone lies in the posterior and lower portion of the skull and articulates with the parietal, sphenoid and temporal bones. It has four portions: the basilar portion, two lateral portions and the squamous portion.",["Posterior and lower portion of the skull","Articulates with parietal, sphenoid, temporal","Basilar portion","Two lateral portions and squamous portion"]],
+['F',"List the landmarks of the external surface of the squamous portion of the occipital bone.","The external occipital protuberance, the external occipital crest, the superior nuchal line (towards the mastoid process) and the inferior nuchal line (towards the jugular process).",["External occipital protuberance","External occipital crest","Superior nuchal line","Inferior nuchal line"]],
+['F',"Describe the external (inferior) surface of the basilar and lateral portions of the occipital bone.","Basilar portion: the pharyngeal tubercle. Lateral portions: the occipital condyles, the foramen magnum and the jugular foramen. The figure also shows the condylar fossa and canal and the hypoglossal canal.",["Basilar portion: pharyngeal tubercle","Lateral portions: occipital condyles","Foramen magnum","Jugular foramen"]],
+['F',"Describe the internal surface of the basilar and lateral portions of the occipital bone.","Basilar portion: the clivus. Lateral portions: the jugular tubercle, the hypoglossal canal and the jugular foramen.",["Basilar portion: clivus","Jugular tubercle","Hypoglossal canal","Jugular foramen"]],
+['F',"List the features of the internal surface of the squamous portion of the occipital bone.","The groove for the superior sagittal sinus, the groove for the transverse sinus, the internal occipital crest, the internal occipital protuberance, the cruciform eminence and the cerebral and cerebellar fossae.",["Groove for superior sagittal sinus","Groove for transverse sinus","Internal occipital crest and protuberance","Cruciform eminence","Cerebral and cerebellar fossae"]],
+['F',"Which bones form the margins of the foramen magnum and the jugular foramen on the skull base?","The foramen magnum lies in the occipital bone, between the basilar and lateral parts and the squamous portion. The jugular foramen lies between the lateral part of the occipital and the petrous portion of the temporal bone.",["Foramen magnum in the occipital bone","Jugular foramen between occipital and temporal","Petrous portion of the temporal bone"]],
+['F',"Which bones does the occipital articulate with, and through which sutures does the occipital bone appear on the skull?","It articulates with the parietal (lambdoid suture), the temporal and the sphenoid, the latter via the basilar part joined to the body of the sphenoid. The sutural bones can lie along the lambdoid suture.",["Parietal via the lambdoid suture","Temporal","Sphenoid (body joined to the basilar part)"]],
+/* G */
+['G',"Name the paranasal sinuses and the bone in which each one is found.","The frontal sinus is in the frontal bone, the ethmoidal sinus (cells) in the ethmoid, the sphenoidal sinus in the body of the sphenoid and the maxillary sinus in the maxilla.",["Frontal sinus in the frontal bone","Ethmoidal cells in the ethmoid","Sphenoid sinus in the sphenoid body","Maxillary sinus in the maxilla"]],
+['G',"Name the three cranial fossae and the bones or landmarks that limit them.","The anterior, middle and posterior cranial fossae. The anterior fossa is limited by the lesser wing of the sphenoid and the jugum sphenoidale, the middle fossa lies between the lesser wing and the dorsum sellae and the superior border of the petrous portion, and the posterior fossa surrounds the foramen magnum.",["Anterior, middle and posterior fossae","Anterior limited by lesser wing and jugum sphenoidale","Middle between lesser wing, dorsum sellae and petrous border","Posterior contains the foramen magnum"]],
+['G',"Name the openings seen on the internal (endocranial) view of the skull base.","Foramen cecum, cribriform plate (olfactory foramina), optic canal, superior orbital fissure, foramen rotundum, foramen ovale, foramen spinosum, foramen lacerum, internal acoustic meatus, jugular foramen, hypoglossal canal and foramen magnum.",["Foramen cecum and cribriform plate","Optic canal and superior orbital fissure","Foramen rotundum, ovale, spinosum, lacerum","Internal acoustic meatus","Jugular foramen and hypoglossal canal","Foramen magnum"]],
+['G',"Name the openings and landmarks seen on the external view of the skull base.","Incisive foramen, greater palatine foramen, foramen lacerum, foramen ovale, foramen spinosum, pharyngotympanic groove, carotid canal, external acoustic meatus, stylomastoid foramen, jugular foramen, condylar canal and foramen magnum.",["Incisive and greater palatine foramina","Foramen lacerum, ovale, spinosum","Carotid canal and external acoustic meatus","Stylomastoid and jugular foramina","Condylar canal and foramen magnum"]],
+['G',"What is the foramen lacerum, where is it seen and what closes it?","The foramen lacerum is an opening of the skull base, seen on both the endocranial and the external views next to the foramen ovale and spinosum and the carotid canal. The slides state that it is closed by cartilage.",["Opening of the skull base","Seen on the endocranial and external views","Closed by cartilage"]],
+['G',"Which bones form the external surface of the skull base, from the palate backwards?","From front to back: the palatine process of the maxilla and the horizontal plate of the palatine (hard palate), the vomer and pterygoid processes of the sphenoid, then the sphenoid and temporal bones with their foramina, and finally the occipital bone with the occipital condyles, foramen magnum and nuchal lines. The zygomatic bone and zygomatic arch lie laterally.",["Maxilla and palatine at the front","Vomer and pterygoid processes of sphenoid","Temporal bone laterally","Occipital bone with condyles and foramen magnum","Zygomatic arch laterally"]],
+/* H */
+['H',"Describe the maxilla: type of bone, location, articulations, sinus and processes.","The maxilla is a paired, irregular, large and light bone. It lies above the oral cavity, below the orbital cavity and lateral to the nasal cavities. It articulates with the frontal, ethmoid, nasal, zygomatic, lacrimal, inferior nasal concha, palatine, vomer, the contralateral maxilla (and the sphenoid) and contains the maxillary sinus. It has four processes: frontal, zygomatic, palatine and alveolar.",["Paired, irregular, large and light","Above oral cavity, below orbit, lateral to nasal cavities","Long list of articulations","Contains the maxillary sinus","Frontal, zygomatic, palatine, alveolar processes"]],
+['H',"Describe the external (lateral) face of the maxilla.","Inferior border: alveolar process. Posterior border: maxillary tuberosity. Superior side: inferior orbital margin and frontal process. Anterior side: nasal notch and anterior nasal spine. The zygomatic process articulates with the zygomatic bone, the orbital floor has the infraorbital groove and canal, and the anterior side has the infraorbital foramen, canine eminence, canine fossa, incisive fossa and incisive eminences.",["Alveolar process (inferior) and maxillary tuberosity (posterior)","Inferior orbital margin and frontal process (superior)","Nasal notch and anterior nasal spine (anterior)","Zygomatic process articulates with zygomatic bone","Infraorbital groove, canal and foramen","Canine eminence and fossa, incisive fossa and eminences"]],
+['H',"Describe the maxillary tuberosity and its relations.","It forms the anterior wall of the infratemporal fossa. The alveolar foramina on it carry the posterior superior alveolar nerves. It is related to the groove of the maxillary nerve and the infraorbital groove, which carries the infraorbital nerve.",["Anterior wall of the infratemporal fossa","Alveolar foramina: posterior superior alveolar nerves","Groove of the maxillary nerve","Infraorbital groove: infraorbital nerve"]],
+['H',"Describe the frontal process of the maxilla.","It is the anterior end of the superior border. It carries the anterior lacrimal crest and, with the lacrimal bone, forms the nasolacrimal duct. Its medial wall forms the lateral wall of the nasal cavity. The ethmoid crest articulates with the middle nasal concha and the conchal crest with the inferior concha.",["Anterior end of the superior border","Anterior lacrimal crest","Forms the nasolacrimal duct with the lacrimal bone","Medial wall: lateral wall of the nasal cavity","Ethmoid crest: middle concha; conchal crest: inferior concha"]],
+['H',"Describe the palatine process of the maxilla.","It articulates with the palatine bone posteriorly. Its upper surface is the floor of the nasal cavity and its inferior surface is the roof of the oral cavity. The medial border has the intermaxillary suture, the incisive foramen and canal (nasopalatine), the nasal crest and the anterior nasal spine.",["Articulates with the palatine bone posteriorly","Upper surface: floor of nasal cavity","Inferior surface: roof of oral cavity","Intermaxillary suture","Incisive foramen and canal (nasopalatine), nasal crest, anterior nasal spine"]],
+['H',"Describe the nasal (medial) portion of the maxilla.","It shows the maxillary hiatus (opening of the sinus), the palatine fissure, the lacrimal groove (nasolacrimal duct) and the greater palatine groove.",["Maxillary hiatus","Palatine fissure","Lacrimal groove (nasolacrimal duct)","Greater palatine groove"]],
+['H',"Which nerves are related to the maxilla and by which openings or grooves do they pass?","The infraorbital nerve runs in the infraorbital groove and canal and leaves through the infraorbital foramen. The posterior superior alveolar nerves enter through the alveolar foramina on the maxillary tuberosity. The nasopalatine nerve passes through the incisive foramen and canal.",["Infraorbital nerve: groove, canal, foramen","Posterior superior alveolar nerves: alveolar foramina","Nasopalatine nerve: incisive foramen and canal"]],
+['H',"What forms the nasolacrimal duct?","The lacrimal groove of the maxilla, bounded by the anterior lacrimal crest of the frontal process, is closed by the lacrimal bone. Together they form the nasolacrimal duct.",["Lacrimal groove of the maxilla","Anterior lacrimal crest of the frontal process","Lacrimal bone"]],
+/* I */
+['I',"Describe the lacrimal bone: type, location, articulations and role.","It is a paired, small and flattened bone on the medial wall of the orbit, posterior to the frontal process of the maxilla and anterior to the orbital plate of the ethmoid. It articulates with the frontal, ethmoid, maxillary and inferior nasal concha bones and, together with the maxilla, forms the nasolacrimal duct.",["Paired, small and flattened","Medial wall of the orbit","Behind the frontal process of the maxilla, in front of the orbital plate of the ethmoid","Articulates with frontal, ethmoid, maxilla, inferior concha","Forms the nasolacrimal duct with the maxilla"]],
+['I',"Describe the palatine bone: shape, location, articulations, what it forms and its two plates.","The palatine is a flat, thin, L-shaped bone plate in the posterior nasal cavity, between the maxilla and the pterygoid process. It articulates with the sphenoid, ethmoid, maxilla, inferior nasal concha, vomer and contralateral palatine. It forms part of the floor and lateral wall of the nasal cavity, the roof of the oral cavity and the floor of the orbit. It has a horizontal plate and a vertical plate.",["Flat, thin, L-shaped","Posterior nasal cavity, between maxilla and pterygoid process","Articulates with sphenoid, ethmoid, maxilla, inferior concha, vomer, contralateral palatine","Floor and lateral wall of nose, roof of mouth, floor of orbit","Horizontal and vertical plates"]],
+['I',"Describe the horizontal plate of the palatine bone.","Its superior side is the nasal face (floor of the nasal cavities). Its inferior side is the palatal face (hard palate) with the greater palatine groove. The posterior border has the posterior nasal spine. The lateral border has the greater palatine foramen, which carries the greater palatine nerve.",["Superior side: nasal face, floor of nasal cavities","Inferior side: palatal face (hard palate) and greater palatine groove","Posterior border: posterior nasal spine","Lateral border: greater palatine foramen with greater palatine nerve"]],
+['I',"Describe the vertical plate of the palatine bone (nasal and maxillary surfaces and processes).","The nasal surface has the ethmoid crest and the conchal crest. The maxillary surface has a sinusal segment, a maxillary segment (greater palatine canal), an interpterygomaxillary segment (medial wall of the pterygopalatine fossa) and a pterygoid segment. The maxillary process joins the palatine fissure of the maxilla and the inferior concha. The pyramidal process occupies the pterygoid notch and has the lesser palatine foramina for the lesser palatine nerves. The orbital process and the sphenoidal process are separated by the sphenopalatine notch.",["Nasal surface: ethmoid crest and conchal crest","Maxillary surface: sinusal, maxillary, interpterygomaxillary and pterygoid segments","Maxillary process joins palatine fissure and inferior concha","Pyramidal process in the pterygoid notch; lesser palatine foramina and nerves","Orbital process, sphenoidal process and sphenopalatine notch"]],
+['I',"Describe the orbital process of the palatine bone.","The orbital process articulates with the maxilla (palatine trigone), the ethmoid (ethmoid labyrinth) and the sphenoid (body). It has an orbital surface, which is the posterior part of the inferior wall of the orbit, and a pterygomaxillary surface.",["Articulates with maxilla, ethmoid labyrinth and sphenoid body","Orbital surface: posterior part of the inferior wall of the orbit","Pterygomaxillary surface"]],
+['I',"Describe the greater palatine canal: origin, formation, termination and contents.","The greater palatine canal starts on the inferior aspect of the pterygopalatine fossa and runs down to the palate, ending at the greater palatine foramen. Accessory branches are the lesser palatine canals. It is formed by a vertical groove on the posterior part of the maxillary surface of the palatine bone, converted into a canal by articulation with the maxilla. It transmits the descending palatine vessels, the greater palatine nerve and the lesser palatine nerve.",["Starts on the inferior aspect of the pterygopalatine fossa","Ends at the greater palatine foramen","Groove on the palatine closed by the maxilla","Lesser palatine canals branch off","Descending palatine vessels, greater and lesser palatine nerves"]],
+['I',"What is the sphenopalatine foramen: how is it formed, where does it lead and what does it transmit?","It is formed by the sphenopalatine notch of the palatine bone and the body of the sphenoid. It leads from the pterygopalatine fossa into the posterior part of the superior meatus of the nose and transmits the sphenopalatine vessels (sphenopalatine artery) and the nasopalatine nerve.",["Sphenopalatine notch of palatine plus body of sphenoid","From pterygopalatine fossa to superior meatus of the nose","Sphenopalatine vessels (artery)","Nasopalatine nerve"]],
+['I',"Describe the inferior nasal concha.","It is a flat, elongated bone plate on the lateral wall of the nasal cavity. It articulates with the ethmoid, lacrimal, maxillary and palatine bones and separates the inferior and middle nasal meatuses. Its parts are the lacrimal, ethmoid and maxillary processes.",["Flat, elongated plate on the lateral wall of the nasal cavity","Articulates with ethmoid, lacrimal, maxillary, palatine","Separates inferior and middle meatuses","Lacrimal, ethmoid and maxillary processes"]],
+['I',"Describe the nasal bone and the vomer.","The nasal bone is a flat rhomboid plate at the anterior and superior angle of the nasal cavity, below the nasal border of the frontal bone, and articulates with the ethmoid, frontal, maxillary and contralateral nasal bones. The vomer is flat, thin and quadrilateral, in the posterior and inferior part of the medial wall of the nasal cavity (nasal septum). It articulates with the sphenoid, ethmoid, maxilla, palatine and the nasal cartilage, has the nasopalatine groove on its lateral surface and the wing (ala) on its superior border.",["Nasal: flat rhomboid, anterosuperior angle of nasal cavity","Nasal articulates with ethmoid, frontal, maxilla, contralateral nasal","Vomer: flat, thin, quadrilateral, posteroinferior nasal septum","Vomer articulates with sphenoid, ethmoid, maxilla, palatine, nasal cartilage","Nasopalatine groove and wing (ala) of the vomer"]],
+/* J */
+['J',"Describe the zygomatic bone: location, articulations and its foramina.","It lies at the upper and lateral part of the face and forms the prominence of the cheek, part of the lateral wall and floor of the orbit and parts of the temporal and infratemporal fossae. It articulates with the frontal, sphenoid, temporal and maxillary bones. The orbital surface is convex and has the zygomaticoorbital foramen (zygomaticofacial nerve and vessels) connecting with the zygomaticofacial foramen. The temporal surface is concave, has a rough triangular area for the maxilla and the zygomaticotemporal foramen for the zygomaticotemporal nerve.",["Prominence of the cheek; lateral wall and floor of the orbit","Articulates with frontal, sphenoid, temporal, maxillary","Zygomaticoorbital foramen connecting with the zygomaticofacial foramen","Temporal surface concave with rough area for the maxilla","Zygomaticotemporal foramen and nerve"]],
+['J',"Describe the mandible in general and name its parts.","The mandible is a large, flattened, elongated, U-shaped bone in the lower third of the face. It articulates with the temporal bones at the temporomandibular joint (TMJ). It has a body and a ramus, and the ramus ends in the coronoid process and the condylar process.",["Large, flattened, elongated, U-shaped","Lower third of the face","Articulates with the temporal bones (TMJ)","Body and ramus","Coronoid and condylar processes"]],
+['J',"List the landmarks of the external face of the mandibular body.","Mandibular symphysis, mental protuberance, mental tubercles, oblique line, mental foramen and the upper (alveolar) edge with the dental alveoli.",["Mandibular symphysis","Mental protuberance and tubercles","Oblique line","Mental foramen","Alveolar edge with dental alveoli"]],
+['J',"List the landmarks of the medial side and inferior border of the mandibular body.","Medial side: superior and inferior mental spines, mylohyoid line, mylohyoid groove, submandibular fossa and sublingual fossa. Inferior border: digastric fossa and the angle.",["Superior and inferior mental spines","Mylohyoid line and mylohyoid groove","Submandibular and sublingual fossae","Digastric fossa","Angle"]],
+['J',"Describe the medial side, anterior portion and superior portion of the mandibular ramus.","Medial side: mandibular foramen, lingula and mylohyoid groove. Anterior portion: temporal crest and buccinator crest. Superior portion: coronoid process, mandibular notch, neck, condylar process and articular surface. The head of the condyle and the pterygoid fovea are also labelled.",["Medial: mandibular foramen, lingula, mylohyoid groove","Anterior: temporal crest and buccinator crest","Superior: coronoid process and mandibular notch","Neck, condylar process and articular surface"]],
+['J',"Describe the course of the mandibular canal and the nerves shown in relation to the mandible.","The inferior alveolar nerve, a branch of the mandibular nerve, enters the mandible at the mandibular foramen and runs in the mandibular canal, giving the inferior dental plexus for the teeth. It leaves through the mental foramen as the mental nerve. The lingual nerve runs on the medial side of the ramus.",["Enters at the mandibular foramen","Runs in the mandibular canal","Inferior dental plexus","Leaves by the mental foramen as the mental nerve","Lingual nerve shown with the mandibular nerve"]],
+['J',"Which features of the mandible separate the body from the ramus and which mark the angle?","The angle lies at the junction of the inferior border of the body and the posterior border of the ramus, below the oblique line and the mylohyoid line. The ramus carries the mandibular foramen and lingula on its medial side and ends superiorly with the coronoid and condylar processes.",["Angle between body and ramus","Mandibular foramen and lingula on the ramus","Coronoid and condylar processes at the top","Body carries mental foramen and oblique line"]],
+/* K */
+['K',"Which regional spaces are described in the regional osteology part of the course?","The temporal fossa, the infratemporal fossa, the pterygomaxillary fissure, the pterygopalatine fossa, the hard and soft palate, the orbit, the nasal cavity and the maxillary sinus.",["Temporal and infratemporal fossae","Pterygomaxillary fissure and pterygopalatine fossa","Hard and soft palate","Orbit, nasal cavity, maxillary sinus"]],
+['K',"Describe the temporal fossa and its boundaries.","It is a narrow, fan-shaped space covering the lateral surface of the skull. The upper margin is formed by the temporal lines arching from the zygomatic process of the frontal bone to the supramastoid crest of the temporal bone. The lateral margin is the temporal fascia. Anteriorly it is limited by the posterior surface of the frontal process of the zygomatic bone and of the zygomatic process of the frontal bone. The inferior margin is the zygomatic arch laterally and the infratemporal crest of the greater wing of the sphenoid medially.",["Narrow fan-shaped space on the lateral skull","Upper margin: temporal lines to the supramastoid crest","Lateral margin: temporal fascia","Anterior: zygomatic bone and frontal bone","Inferior: zygomatic arch and infratemporal crest"]],
+['K',"How are the temporal fossa and the infratemporal fossa connected?","Between the zygomatic arch laterally and the infratemporal crest of the sphenoid medially the floor of the temporal fossa is open: medially to the infratemporal fossa and laterally to the region containing the masseter. The roof of the infratemporal fossa, lateral to the infratemporal crest, is open superiorly to the temporal fossa.",["Open between zygomatic arch and infratemporal crest","Open medially to the infratemporal fossa","Region of the masseter laterally","Roof of infratemporal fossa open to the temporal fossa"]],
+['K',"Describe the boundaries of the infratemporal fossa.","The fossa lies below the temporal fossa, between the ramus of the mandible laterally and the wall of the pharynx medially. The roof is formed by the inferior surfaces of the greater wing of the sphenoid and of the temporal bone. The lateral wall is the medial surface of the ramus of the mandible. The medial wall is formed by the lateral plate of the pterygoid process and, posteriorly, by the pharynx and the tensor and levator veli palatini; it contains the pterygomaxillary fissure and the pterygopalatine fossa. The anterior wall is part of the posterior surface of the maxilla.",["Between the ramus of the mandible and the pharynx wall","Roof: greater wing of the sphenoid and temporal bone","Lateral wall: medial surface of the ramus","Medial wall: lateral pterygoid plate, pharynx, tensor and levator veli palatini","Anterior wall: posterior surface of the maxilla"]],
+['K',"List the major contents of the infratemporal fossa.","The sphenomandibular ligament, the medial and lateral pterygoid muscles, the maxillary artery, the mandibular nerve (V3), branches of the facial nerve (VII), the glossopharyngeal nerve (IX) and the pterygoid plexus of veins.",["Sphenomandibular ligament","Medial and lateral pterygoid muscles","Maxillary artery","Mandibular nerve (V3)","Branches of VII and IX","Pterygoid plexus of veins"]],
+['K',"Describe the pterygopalatine fossa: shape and bony walls.","It is an inverted teardrop-shaped space between bones, on the lateral side of the skull immediately behind the maxilla. The anterior wall is the posterior surface of the maxilla, the medial wall is the lateral surface of the vertical plate of the palatine bone, and the posterior wall and roof are formed by parts of the sphenoid bone.",["Inverted teardrop shape, behind the maxilla","Anterior wall: posterior surface of maxilla","Medial wall: vertical plate of palatine","Posterior wall and roof: sphenoid"]],
+['K',"List the seven openings of the pterygopalatine fossa and where each leads.","Foramen rotundum and pterygoid canal lead to the middle cranial fossa (posterior wall). The palatovaginal canal leads to the nasopharynx. The palatine canal leads to the hard palate. The sphenopalatine foramen leads to the nasal cavity. The pterygomaxillary fissure leads to the infratemporal fossa. The inferior orbital fissure leads to the floor of the orbit.",["Foramen rotundum: middle cranial fossa","Pterygoid canal: middle cranial fossa","Palatovaginal canal: nasopharynx","Palatine canal: hard palate","Sphenopalatine foramen: nasal cavity","Pterygomaxillary fissure: infratemporal fossa","Inferior orbital fissure: orbit"]],
+['K',"What passes through the pterygopalatine fossa and why is it important for the upper teeth?","All the upper teeth receive their innervation and blood supply from the maxillary nerve (V2) and the terminal part of the maxillary artery, respectively, and these pass through the pterygopalatine fossa. The figure also shows the pterygopalatine ganglion, the vidian nerve, the palatine nerves and the infraorbital nerve.",["Maxillary nerve (V2)","Terminal part of the maxillary artery","Supply all the upper teeth","Pterygopalatine ganglion, vidian nerve, palatine nerves"]],
+['K',"Which bones form the pterygomaxillary fissure and where does it lead?","It is a large gap between the posterior surface of the maxilla and the pterygoid process of the sphenoid. It connects the lateral aspect of the pterygopalatine fossa with the infratemporal fossa.",["Posterior surface of the maxilla","Pterygoid process of the sphenoid","Links pterygopalatine and infratemporal fossae"]],
+/* L */
+['L',"Name the bones forming the four walls of the bony orbit.","Roof: orbital part of the frontal bone with a small contribution of the lesser wing of the sphenoid. Medial wall: maxillary, lacrimal, ethmoid and sphenoid (lesser wing). Lateral wall: zygomatic bone and greater wing of the sphenoid. Floor: orbital surface of the maxilla with small contributions of the zygomatic and the palatine (orbital process), also the roof of the maxillary sinus.",["Roof: frontal bone and lesser wing of sphenoid","Medial wall: maxilla, lacrimal, ethmoid, sphenoid lesser wing","Lateral wall: zygomatic and greater wing of sphenoid","Floor: maxilla with zygomatic and palatine orbital process","Floor is the roof of the maxillary sinus"]],
+['L',"List the main openings and landmarks of the bony orbit.","Supraorbital foramen, posterior and anterior ethmoidal foramina, lacrimal fossa, canal for the nasolacrimal duct, infraorbital foramen, optic canal, superior orbital fissure, inferior orbital fissure and infraorbital groove.",["Supraorbital foramen","Anterior and posterior ethmoidal foramina","Lacrimal fossa and nasolacrimal canal","Infraorbital foramen and groove","Optic canal, superior and inferior orbital fissures"]],
+['L',"Which bones form the medial wall (nasal septum) of the nasal cavity?","The nasal bone and the nasal spine of the frontal bone anteriorly, the perpendicular plate of the ethmoid, the vomer and the septal cartilage. The nasal crest of the maxilla and palatine bones and the incisor crest form its base. The sphenoidal rostrum articulates with the vomer in the midline.",["Nasal bone and nasal spine of the frontal","Perpendicular plate of the ethmoid","Vomer","Septal cartilage","Nasal crest of maxilla and palatine, incisor crest"]],
+['L',"Which bones and structures form the lateral wall of the nasal cavity?","The nasal bone, the frontal process of the maxilla, the lacrimal bone, the superior and middle conchae and the uncinate process of the ethmoid, the inferior concha, the perpendicular plate of the palatine and the medial pterygoid plate of the sphenoid. The septal and alar cartilages complete it anteriorly.",["Frontal process of the maxilla and lacrimal bone","Superior and middle conchae and uncinate process of ethmoid","Inferior concha","Perpendicular plate of palatine","Medial pterygoid plate of sphenoid"]],
+['L',"Describe the meatuses and the structures seen on the coronal view of the nasal cavity and maxillary sinus.","The middle turbinate (concha) overlies the middle meatus, the inferior turbinate overlies the inferior meatus, and the inferior concha separates these two meatuses. The uncinate process, the ethmoidal bulla, the hiatus semilunaris and the maxillary infundibulum lie around the opening of the maxillary sinus into the middle meatus. The superior meatus receives the sphenopalatine foramen posteriorly.",["Middle turbinate and middle meatus","Inferior turbinate and inferior meatus","Uncinate process, ethmoidal bulla, hiatus semilunaris","Maxillary infundibulum and maxillary sinus","Sphenopalatine foramen opens in the superior meatus"]],
+['L',"Describe the hard palate: bones, sutures and openings.","The hard palate is formed by the palatine processes of the maxillae in front and the horizontal plates of the palatine bones behind. The intermaxillary suture runs in the midline, with the incisive fossa and foramen anteriorly (nasopalatine nerve), the greater and lesser palatine foramina laterally and the posterior nasal spine posteriorly.",["Palatine process of maxilla and horizontal plate of palatine","Intermaxillary suture","Incisive foramen (nasopalatine nerve)","Greater and lesser palatine foramina and nerves","Posterior nasal spine"]],
+['L',"Which structures are associated with the soft palate and the posterior opening of the nasal cavity?","The soft palate continues the hard palate backwards; the tensor and levator veli palatini muscles of the soft palate help form the medial wall of the infratemporal fossa. The posterior nasal cavity opens through the choanae, limited by the vomer, the medial pterygoid plates, the horizontal plates of the palatine and the body of the sphenoid.",["Soft palate behind the hard palate","Tensor and levator veli palatini","Choanae limited by vomer","Medial pterygoid plates and horizontal plates of palatine"]],
+['L',"Describe the walls of the maxillary sinus (antrum of Highmore).","Medial wall: the lateral wall of the nasal cavity, formed by the maxilla and by parts of the inferior concha and palatine bone that overlie the maxillary hiatus. Lateral wall: zygomatic process of the maxilla. Posterior wall: maxillary tuberosity and alveolar canals. Floor and anterior wall: alveolar process of the maxilla. Superior wall: orbital surface of the maxilla with small contributions from the zygomatic and the palatine (orbital process).",["Medial wall: maxilla, inferior concha and palatine over the maxillary hiatus","Lateral wall: zygomatic process of the maxilla","Posterior wall: maxillary tuberosity and alveolar canals","Floor and anterior wall: alveolar process","Superior wall: orbital surface of the maxilla"]],
+['L',"What is the nerve and blood supply of the maxillary sinus?","The maxillary sinuses are innervated by the infraorbital and alveolar branches of the maxillary nerve (V2) and receive their blood through branches from the infraorbital and superior alveolar branches of the maxillary artery.",["Infraorbital and alveolar branches of V2","Infraorbital and superior alveolar branches of the maxillary artery"]],
+['L',"How are the orbit, the maxillary sinus and the pterygopalatine fossa related?","The floor of the orbit is also the roof of the maxillary sinus. The pterygopalatine fossa opens into the floor of the orbit through the inferior orbital fissure and lies immediately behind the maxilla, whose posterior surface forms its anterior wall.",["Orbital floor is the roof of the maxillary sinus","Inferior orbital fissure links the fossa and the orbit","Fossa lies behind the maxilla"]]
+];
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t3-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 3</p>
+ <h1>Craniofacial Osteology Questions</h1>
+ <p class="lead">${QS.length} open questions on the Topic 3 slides (parts 1 and 2): cranial bones, facial bones, skull base, fossae, orbit, nasal cavity and palate. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+</script>
+
+</body></html>
