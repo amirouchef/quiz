@@ -1,0 +1,452 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Muscles Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+
+<script>
+/* Each row: section, question, CORRECT answer, wrong 1, wrong 2, wrong 3, explanation, level (1 recall, 2 understand, 3 tricky). Option order is shuffled at runtime. */
+const SECS=[
+ {k:'A',n:'Trigeminal nerve and motor branches'},
+ {k:'B',n:'Masseter'},
+ {k:'C',n:'Temporalis'},
+ {k:'D',n:'Lateral pterygoid'},
+ {k:'E',n:'Medial pterygoid'},
+ {k:'F',n:'Suprahyoid (associated) muscles'},
+ {k:'G',n:'Fascias of the masticatory muscles'},
+ {k:'H',n:'Hypoglossal nerve and lingual muscle groups'},
+ {k:'I',n:'Intrinsic lingual muscles'},
+ {k:'J',n:'Extrinsic lingual muscles'}
+];
+const RAW=[
+['A',"Which branch of the trigeminal nerve is the only one with motor fibers?","The mandibular nerve (V3)","The ophthalmic nerve (V1)","The maxillary nerve (V2)","All three branches equally","Of the three branches of the trigeminal nerve, only the mandibular nerve (V3) carries motor fibers.",1],
+['A',"Which of the following is NOT a masticatory muscle?","Mylohyoid","Masseter","Temporalis","Medial pterygoid","The masticatory muscles are the masseter, temporalis, medial pterygoid and lateral pterygoid. The mylohyoid belongs to the associated (suprahyoid) group.",1],
+['A',"Which nerves innervate the temporalis muscle?","The deep temporal nerves","The masseteric nerve","The mylohyoid nerve","The medial pterygoid nerve","The deep temporal nerves are branches of the anterior trunk of V3 and supply the temporalis.",1],
+['A',"Besides supplying the masseter, the masseteric nerve also gives:","Sensory innervation to the TMJ","Motor innervation to the temporalis","Sensory innervation to the parotid gland","Motor innervation to the anterior belly of the digastric","The masseteric nerve is motor to the masseter (from its medial side) and sensory to the temporomandibular joint.",2],
+['A',"Which nerve supplies the medial pterygoid, the tensor veli palatini and the tensor tympani?","The medial pterygoid muscle nerve","The masseteric nerve","The deep temporal nerves","The mylohyoid nerve","The medial pterygoid muscle nerve supplies the medial pterygoid from its deep side and also innervates the tensor veli palatini and the tensor tympani.",2],
+['A',"The mylohyoid nerve is a branch of which nerve?","The inferior alveolar nerve","The lingual nerve","The buccal nerve","The auriculotemporal nerve","It is a branch of the inferior alveolar nerve (posterior trunk). It divides just above the mandibular foramen and runs forwards below the mylohyoid line.",2],
+['A',"Which muscles does the mylohyoid nerve supply?","Mylohyoid and anterior belly of the digastric","Mylohyoid and geniohyoid","Geniohyoid and anterior belly of the digastric","Mylohyoid and posterior belly of the digastric","The mylohyoid nerve innervates the mylohyoid muscle and the anterior belly of the digastric.",2],
+['A',"The nerve of the lateral pterygoid muscle may be:","An independent nerve or a lateral branch of the buccal nerve","A branch of the masseteric nerve","A branch of the inferior alveolar nerve","A branch of the deep temporal nerves","The slides state that it may be an independent nerve, or a lateral branch of the buccal nerve.",3],
+['B',"What is the shape of the masseter?","Short, thick and rectangular","Wide, flat and triangular","Short, thick and flattened","Thick and rhomboid","The masseter is short, thick and rectangular. Wide, flat and triangular is the temporalis; thick and rhomboid is the medial pterygoid.",1],
+['B',"What is the path of the masseter?","From the zygomatic arch to the lateral side of the angle and ramus of the mandible","From the temporal fossa to the coronoid process","From the pterygoid process to the neck of the mandible","From the pterygoid process to the medial side of the angle of the mandible","The masseter runs from the zygomatic arch to the lateral side of the angle and ramus. The other paths belong to the temporalis, the lateral pterygoid and the medial pterygoid.",1],
+['B',"Where does the superficial portion of the masseter arise?","The anterior part of the lower edge of the zygomatic arch","The posterior part of the lower edge and medial side of the zygomatic arch","The temporal fossa","The maxillary tuberosity","The superficial portion arises from the anterior part of the lower edge of the zygomatic arch. The deep portion arises from the posterior part and the medial side.",2],
+['B',"Where does the deep portion of the masseter insert?","The lateral side of the coronoid process and the ramus, superior to the superficial portion","The inferior area of the lateral side of the ramus and the angle","The medial side of the angle of the mandible","The neck of the mandible","The deep portion inserts higher than the superficial one: on the lateral side of the coronoid process and the ramus. The superficial portion inserts on the lower ramus and angle.",3],
+['B',"What is the main function of the masseter?","It elevates the mandible","It elevates and retracts the mandible","It moves the mandible forwards, downward and laterally","It elevates the hyoid bone","The slides give the masseter one action: elevation of the mandible.",1],
+['B',"The masseteric nerve is a branch of which part of V3?","The anterior trunk","The posterior trunk","The inferior alveolar nerve","The lingual nerve","The masseteric nerve, like the deep temporal nerves, is a branch of the anterior trunk.",2],
+['B',"From which side does the masseteric nerve reach the masseter?","Its medial side","Its lateral side","Its deep side through the pterygoid fossa","Its anterior border","The masseteric nerve supplies the muscle from its medial side. The medial pterygoid nerve reaches its muscle from the deep side.",3],
+['C',"What is the shape of the temporalis?","Wide, flat and triangular","Short, thick and rectangular","Thick and rhomboid","Elongated and cylindrical","The temporalis is wide, flat and triangular.",1],
+['C',"What is the path of the temporalis?","From the temporal fossa to the coronoid process of the mandible","From the zygomatic arch to the angle of the mandible","From the pterygoid process to the neck of the mandible","From the mandibular symphysis to the hyoid bone","The temporalis fills the temporal fossa and ends on the coronoid process.",1],
+['C',"Which of the following is an origin of the temporalis?","The infratemporal crest","The zygomatic arch","The pterygoid fossa","The maxillary tuberosity","The temporalis arises from the temporal fossa, the inferior temporal line, the infratemporal crest and the upper half of the deep temporal fascia.",2],
+['C',"Where does the temporalis insert?","On the lateral and medial sides of the coronoid process and on the temporal crest","On the lateral side of the angle of the mandible","On the neck of the mandible and the TMJ disc","On the medial side of the angle of the mandible","The temporalis ends on the coronoid process (both sides) and on the temporal crest.",2],
+['C',"Which action distinguishes the temporalis from the masseter?","It also retracts the mandible","It also lowers the mandible","It also moves the mandible laterally","It also elevates the hyoid bone","The temporalis elevates and retracts the mandible; the masseter only elevates it.",2],
+['C',"What innervates the temporalis?","V3, through the deep temporal nerves","V2, through the infraorbital nerve","V3, through the masseteric nerve","The facial nerve","The temporalis is supplied by V3 through the deep temporal nerves (anterior trunk).",1],
+['D',"What is the shape of the lateral pterygoid?","Short, thick and flattened","Short, thick and rectangular","Thick and rhomboid","Wide, flat and triangular","The lateral pterygoid is short, thick and flattened.",1],
+['D',"What movement does the lateral pterygoid produce on the mandible?","Forwards, downward and laterally","Elevation and retraction","Elevation, forwards and laterally","Elevation only","The lateral pterygoid moves the mandible forwards, downward and laterally. It is not an elevator.",1],
+['D',"Another name for the lateral pterygoid is:","External pterygoid","Internal pterygoid","Pterygomandibular muscle","Sphenomandibular muscle","The slides call it lateral pterygoid or external pterygoid.",1],
+['D',"Which of these is an origin of the upper head of the lateral pterygoid?","The lower portion of the lateral side of the greater wing of the sphenoid","The lateral side of the pyramidal process of the palatine bone","The posterior side of the maxillary tuberosity","The pterygoid fossa","The upper head arises from the greater wing of the sphenoid, the infratemporal crest and the upper third of the lateral plate of the pterygoid process.",2],
+['D',"Which of these is an origin of the lower head of the lateral pterygoid?","The lateral side of the pyramidal process of the palatine bone","The lower portion of the lateral side of the greater wing of the sphenoid","The infratemporal crest","The posterior side of the maxillary tuberosity","The lower head arises from the lower part of the lateral side of the lateral plate and from the pyramidal process of the palatine bone.",3],
+['D',"Which muscle inserts on the neck of the mandible and on the anterior edge of the TMJ disc?","The lateral pterygoid","The medial pterygoid","The masseter","The temporalis","Both heads of the lateral pterygoid end on the anterior edge of the TMJ disc and the anteromedial fossa of the neck of the mandible.",2],
+['D',"What do the upper and lower heads of the lateral pterygoid have in common?","The same insertion on the TMJ disc and the neck of the mandible","The same origin on the greater wing of the sphenoid","The same origin on the palatine bone","The same insertion on the coronoid process","They differ in origin but share the insertion: anterior edge of the TMJ disc and anteromedial fossa of the neck of the mandible.",3],
+['E',"What is the shape of the medial pterygoid?","Thick and rhomboid","Short, thick and flattened","Short, thick and rectangular","Wide and flattened","The medial pterygoid is thick and rhomboid.",1],
+['E',"What movement does the medial pterygoid produce?","It elevates the mandible and moves it forwards and laterally","It elevates and retracts the mandible","It moves the mandible forwards, downward and laterally","It only elevates the mandible","The medial pterygoid elevates the mandible and moves it forwards and laterally.",1],
+['E',"Where does the superficial head of the medial pterygoid arise?","The posterior side of the maxillary tuberosity","The pterygoid fossa","The infratemporal crest","The lateral side of the pyramidal process of the palatine bone","The superficial head arises from the posterior side of the maxillary tuberosity.",2],
+['E',"Where does the deep head of the medial pterygoid arise?","The pterygoid fossa and the pterygoid plates","The posterior side of the maxillary tuberosity","The temporal fossa","The zygomatic arch","The deep head arises from the pterygoid fossa, the medial side of the lateral plate and the lateral side of the medial plate.",2],
+['E',"Where does the medial pterygoid insert on the mandible?","The medial side of the angle and the lower portion of the ramus","The lateral side of the angle and ramus","The neck of the mandible","The coronoid process","Both heads end on the medial side of the angle and the lower ramus. The lateral side is for the masseter.",2],
+['E',"Which muscle arises from the pterygoid process AND elevates the mandible?","The medial pterygoid","The lateral pterygoid","The masseter","The temporalis","Both pterygoids arise from the pterygoid process, but only the medial pterygoid elevates the mandible.",3],
+['F',"Which of the following is NOT an associated (suprahyoid) muscle of this group?","Masseter","Mylohyoid","Geniohyoid","Anterior belly of the digastric","The associated muscles are the mylohyoid, geniohyoid and anterior belly of the digastric. The masseter is a masticatory muscle.",1],
+['F',"What is the path of the geniohyoid?","From the mandibular symphysis to the hyoid bone","From the lingual side of the mandible to the hyoid and median raphe","From the mandibular symphysis to the mastoid region","From the styloid process to the tongue","The geniohyoid is short and thick and runs from the mandibular symphysis to the hyoid bone.",1],
+['F',"According to the slides, how is the geniohyoid innervated?","By C1 through the hypoglossal nerve (XII)","By V3 through the mylohyoid nerve","By the facial nerve","By the vagus nerve","The geniohyoid slide gives the first spinal nerve (C1) via the hypoglossal nerve (XII), unlike the mylohyoid and the anterior digastric, which receive V3.",3],
+['F',"What is the shape of the mylohyoid?","Wide and flattened","Short and thick","Elongated and cylindrical","Thin and elongated","The mylohyoid is wide and flattened. The geniohyoid is short and thick; the anterior digastric is elongated and cylindrical.",1],
+['F',"Where does the mylohyoid insert?","On the anterior side of the body of the hyoid bone and the median raphe","On the mastoid notch","On the inferior mental spines","On the styloid process","The mylohyoid runs from the mylohyoid line of the mandible to the anterior side of the body of the hyoid and the median raphe.",2],
+['F',"What is the path of the anterior belly of the digastric?","From the mandibular symphysis to the mastoid region","From the mandibular symphysis to the hyoid bone","From the lingual side of the mandible to the median raphe","From the styloid process to the hyoid","The slides describe it as running from the mandibular symphysis to the mastoid region.",2],
+['F',"Where does the anterior belly of the digastric arise?","The digastric fossa on the lower border of the mandible","The mylohyoid line","The inferior mental spines","The mastoid notch","The anterior belly arises from the digastric fossa. The mastoid notch of the temporal bone is where the posterior belly is attached.",2],
+['F',"Which muscle arises from the inferior mental spines?","The geniohyoid","The mylohyoid","The anterior belly of the digastric","The genioglossus","The geniohyoid arises from the inferior mental spines. The genioglossus arises from the superior mental spines.",3],
+['G',"What are the fascias of the masticatory muscles?","Aponeuroses that wrap the muscles","Layers of oriented muscle fibers","Cartilaginous sheaths","Bony crests","They are aponeuroses made of layers of dense, non-oriented connective tissue.",1],
+['G',"Which three fascias belong to the masticatory muscles?","Temporal, masseteric and interpterygoid","Temporal, masseteric and buccopharyngeal","Masseteric, parotid and interpterygoid","Temporal, parotid and buccal","The slides list the temporal, masseteric and interpterygoid fascias.",1],
+['G',"The temporal fascia covers the area from:","The superior temporal line to the zygomatic arch","The inferior temporal line to the coronoid process","The zygomatic arch to the angle of the mandible","The infratemporal crest to the neck of the mandible","The temporal fascia extends from the superior temporal line to the zygomatic arch.",2],
+['G',"Which structures does the masseteric fascia wrap?","The anterior portion of the parotid gland and the parotid duct","The submandibular gland","The sublingual gland","The capsule of the TMJ","The masseteric fascia is thinner and unfolds to wrap the anterior portion of the parotid gland and the parotid duct.",2],
+['G',"Which fascia forms the sphenomandibular ligament?","The interpterygoid fascia","The temporal fascia","The masseteric fascia","The parotid fascia","The posterior side of the interpterygoid fascia, located between the medial and lateral pterygoids, is thicker and forms the sphenomandibular ligament.",2],
+['G',"Which statement about the temporal fascia is correct?","In its inferior part it has two layers, including adipose tissue","It wraps the parotid duct","It lies between the two pterygoid muscles","It extends from the zygomatic arch to the posterior border of the mandible","Only the inferior part of the temporal fascia is split into two layers enclosing adipose tissue. The other statements describe the masseteric or interpterygoid fascias.",3],
+['H',"The hypoglossal nerve is which cranial nerve?","CN XII","CN X","CN IX","CN XI","The hypoglossal nerve is cranial nerve 12 (XII).",1],
+['H',"What type of nerve is the hypoglossal nerve?","A motor nerve","A sensory nerve","A mixed nerve with taste fibers","A parasympathetic nerve","The slides describe it as a motor nerve.",1],
+['H',"The hypoglossal nerve controls:","The infrahyoid and lingual muscles, except the palatoglossus","The suprahyoid muscles only","The masticatory muscles","The intrinsic lingual muscles only","It controls the infrahyoid and lingual muscles, with the palatoglossus as the exception.",2],
+['H',"Which lingual muscle is supplied by the vagus nerve (CN X)?","The palatoglossus","The styloglossus","The hyoglossus","The genioglossus","The palatoglossus is the exception: it is supplied by the vagus nerve.",2],
+['I',"Which of the following is an intrinsic lingual muscle?","The transverse muscle","The genioglossus","The hyoglossus","The styloglossus","The intrinsic muscles are the longitudinal, vertical and transverse.",1],
+['I',"What is the path of the longitudinal muscle of the tongue?","From the hyoid minor horns and the epiglottis, covering the dorsal side of the tongue","From the lingual septum to the lateral border of the tongue","From the soft palate to the tip of the tongue","From the styloid process to the tip of the tongue","The longitudinal muscle starts at the minor horns of the hyoid and the epiglottis and covers all the dorsal side of the tongue.",2],
+['I',"What does the longitudinal muscle do?","It depresses and shortens the tongue","It elongates and narrows the tongue","It depresses and retracts the tongue","It raises the base of the tongue","The longitudinal muscle depresses and shortens the tongue.",1],
+['I',"What does the vertical muscle do?","It depresses and retracts the tongue","It depresses and shortens the tongue","It elongates and narrows the tongue","It enlarges the tongue and retracts it to the palate","The vertical muscle depresses and retracts the tongue.",2],
+['I',"What is the path of the vertical muscle, according to the slides?","From the hyoid minor horns to the tip of the tongue","From the lingual septum to the lateral border","From the hyoid body to the lingual septum","From the superior mental spines to the tip","The slides say the vertical muscle runs from the hyoid minor horns to the tip of the tongue.",3],
+['I',"What is the path of the transverse muscle?","From the lingual septum to the lateral border of the tongue","From the hyoid minor horns to the tip of the tongue","From the epiglottis to the dorsal side of the tongue","From the soft palate to the tip of the tongue","The transverse muscle runs across the tongue, from the lingual septum to the lateral border.",1],
+['I',"What does the transverse muscle do?","It elongates and narrows the tongue","It depresses and shortens the tongue","It depresses and retracts the tongue","It retracts the tongue to the floor of the mouth","The transverse muscle elongates and narrows the tongue.",2],
+['J',"Which of the following is NOT an extrinsic lingual muscle?","The longitudinal muscle","The genioglossus","The hyoglossus","The amygdaloglossus","The longitudinal muscle is intrinsic. The extrinsic group includes genioglossus, hyoglossus, styloglossus, palatoglossus, amygdaloglossus and the glossopharyngeal portion of the superior constrictor.",1],
+['J',"Where does the genioglossus arise?","From the superior mental spines","From the inferior mental spines","From the styloid process","From the body of the hyoid bone","The genioglossus runs from the superior mental spines to the dorsum and tip of the tongue and the superior border of the hyoid.",2],
+['J',"What is the shape of the genioglossus?","Flattened and triangular","Flattened and rhomboidal","Thin and elongated","Very thin and elongated","The genioglossus is flattened and triangular; the hyoglossus is flattened and rhomboidal.",1],
+['J',"Where does the hyoglossus arise?","From the body and major horns of the hyoid bone","From the minor horns of the hyoid and the epiglottis","From the styloid process","From the superior mental spines","The hyoglossus runs from the body and the major horns of the hyoid bone to the lingual septum.",2],
+['J',"What does the hyoglossus do, according to the slides?","It retracts the tongue to the floor of the mouth","It enlarges and retracts the tongue to the palate","It raises the base of the tongue","It elongates and narrows the tongue","The hyoglossus retracts the tongue to the floor of the mouth.",2],
+['J',"What is the path of the styloglossus?","From the styloid process of the temporal bone to the tip of the tongue","From the soft palate to the tip of the tongue","From the capsule of the palatine tonsil to the lingual septum","From the hyoid body to the lingual septum","The styloglossus is thin and elongated and runs from the styloid process to the tip of the tongue.",1],
+['J',"What does the styloglossus do?","It enlarges and retracts the tongue towards the palate","It retracts the tongue to the floor of the mouth","It raises the base of the tongue","It depresses and shortens the tongue","The styloglossus enlarges the tongue and retracts it towards the palate.",2],
+['J',"What is the path of the palatoglossus?","From the soft palate to the tip of the tongue","From the styloid process to the tip of the tongue","From the posterior mylohyoid line to the lateral border of the tongue","From the capsule of the palatine tonsil to the lingual septum","The palatoglossus is thin and flattened and runs from the soft palate to the tip of the tongue.",1],
+['J',"Where does the amygdaloglossus run?","From the capsule of the palatine tonsil to the lingual septum","From the soft palate to the tip of the tongue","From the styloid process to the tip of the tongue","From the body of the hyoid to the lingual septum","The amygdaloglossus is very thin and runs from the capsule of the palatine tonsil to the lingual septum.",2],
+['J',"What does the amygdaloglossus do?","It raises the base of the tongue","It retracts the tongue to the palate","It elongates and narrows the tongue","It enlarges the tongue","The amygdaloglossus raises the base of the tongue.",2],
+['J',"What is the path of the glossopharyngeal portion of the superior constrictor of the pharynx?","From the posterior portion of the mylohyoid line to the lateral border of the tongue","From the soft palate to the tip of the tongue","From the styloid process to the tip of the tongue","From the lingual septum to the lateral border of the tongue","This elongated and flattened portion runs from the posterior mylohyoid line to the lateral border of the tongue and retracts it.",3]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+<script>
+
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Nerves','V3 and hypoglossal'],['Chewing','4 masticatory muscles'],['Floor','suprahyoid muscles and fascias'],['Tongue','intrinsic and extrinsic']];
+const KEY='anat-t5-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 5 part 1</p>
+ <h1>Masticatory and Tongue Muscles Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with a full explanation for each one, built from the Topic 5 part 1 slides: trigeminal motor nerves, muscles of mastication, suprahyoid muscles, fascias, hypoglossal nerve and tongue muscles. A warm-up before the fill-in-the-blank texts and the open questions.</p>
+ <div class="ribbon" aria-label="Regions covered">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The areas covered by Topic 5 part 1. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+
+</script>
+
+</body></html>

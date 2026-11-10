@@ -1,0 +1,320 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Muscles Open Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Trigeminal nerve and motor branches'},
+ {k:'B',n:'Masseter'},
+ {k:'C',n:'Temporalis'},
+ {k:'D',n:'Lateral pterygoid'},
+ {k:'E',n:'Medial pterygoid'},
+ {k:'F',n:'Suprahyoid (associated) muscles'},
+ {k:'G',n:'Fascias of the masticatory muscles'},
+ {k:'H',n:'Hypoglossal nerve and lingual muscle groups'},
+ {k:'I',n:'Intrinsic lingual muscles'},
+ {k:'J',n:'Extrinsic lingual muscles'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+/* A */
+['A',"Which branch of the trigeminal nerve carries motor fibers, and which two groups of muscles does it supply?","Of the three branches of the trigeminal nerve (V), the only one with motor fibers is the mandibular nerve (V3). It supplies two groups of muscles: the masticatory muscles (masseter, temporalis, medial pterygoid and lateral pterygoid) and the associated or suprahyoid muscles (mylohyoid, geniohyoid and the anterior belly of the digastric).",["Only the mandibular nerve (V3) has motor fibers","Masticatory group: masseter, temporalis, medial pterygoid, lateral pterygoid","Associated (suprahyoid) group: mylohyoid, geniohyoid, anterior belly of the digastric"]],
+['A',"Describe the medial pterygoid muscle nerve.","The medial pterygoid muscle nerve is a motor branch of V3. It supplies the medial pterygoid muscle from its deep side. It also innervates the tensor veli palatini and the tensor tympani muscles.",["Motor branch of the mandibular nerve (V3)","Supplies the medial pterygoid from its deep side","Also innervates tensor veli palatini and tensor tympani"]],
+['A',"Describe the deep temporal nerves.","The deep temporal nerves are motor branches of V3 that arise from the anterior trunk. They innervate the temporalis muscle.",["Motor branches of V3","Branches of the anterior trunk","Innervate the temporalis muscle"]],
+['A',"Describe the masseteric nerve and give its two functions.","The masseteric nerve is a branch of the anterior trunk of V3. It supplies motor innervation to the masseter from its medial side, and it gives sensory innervation to the temporomandibular joint (TMJ).",["Branch of the anterior trunk of V3","Motor innervation to the masseter, entering from its medial side","Sensory innervation to the TMJ"]],
+['A',"Describe the lateral pterygoid muscle nerve.","The lateral pterygoid muscle nerve supplies the motor innervation of the lateral pterygoid muscle. It may be an independent nerve, or it may be a lateral branch of the buccal nerve.",["Motor innervation to the lateral pterygoid","May be an independent nerve","Or a lateral branch of the buccal nerve"]],
+['A',"Describe the mylohyoid nerve: its origin, its course and the muscles it supplies.","The mylohyoid nerve is a branch of the inferior alveolar nerve (posterior trunk of V3). It divides just above the mandibular foramen and runs forwards below the mylohyoid line. It innervates the mylohyoid muscle and the anterior belly of the digastric.",["Branch of the inferior alveolar nerve (posterior trunk)","Divides just above the mandibular foramen","Runs forwards below the mylohyoid line","Supplies the mylohyoid and the anterior belly of the digastric"]],
+['A',"List the motor branches of the mandibular nerve (V3) and the muscle or muscles each one supplies.","The medial pterygoid nerve supplies the medial pterygoid (and tensor veli palatini and tensor tympani). The deep temporal nerves supply the temporalis. The masseteric nerve supplies the masseter. The lateral pterygoid nerve supplies the lateral pterygoid. The mylohyoid nerve supplies the mylohyoid and the anterior belly of the digastric.",["Medial pterygoid nerve: medial pterygoid (plus tensor veli palatini, tensor tympani)","Deep temporal nerves: temporalis","Masseteric nerve: masseter","Lateral pterygoid nerve: lateral pterygoid","Mylohyoid nerve: mylohyoid and anterior belly of the digastric"]],
+/* B */
+['B',"Describe the masseter muscle: shape, path, function and innervation.","The masseter is a short, thick and rectangular muscle. It runs from the zygomatic arch to the lateral side of the angle and ramus of the mandible. It elevates the mandible. It is innervated by V3, the mandibular branch of the trigeminal nerve.",["Short, thick and rectangular","From the zygomatic arch to the lateral side of the angle and ramus of the mandible","Elevates the mandible","Innervation: V3 (mandibular nerve)"]],
+['B',"Describe the superficial portion of the masseter: where it arises and where it inserts.","The superficial portion arises from the anterior part of the lower edge of the zygomatic arch. It inserts on the inferior area of the lateral side of the ramus and on the angle of the mandible.",["Origin: anterior part of the lower edge of the zygomatic arch","Insertion: inferior area of the lateral side of the ramus","Insertion: angle of the mandible"]],
+['B',"Describe the deep portion of the masseter: where it arises and where it inserts.","The deep portion arises from the posterior part of the lower edge and the medial side of the zygomatic arch. It inserts on the lateral side of the coronoid process and on the ramus, superior to the superficial portion.",["Origin: posterior part of the lower edge and medial side of the zygomatic arch","Insertion: lateral side of the coronoid process","Insertion: ramus, superior to the superficial portion"]],
+['B',"Which nerve supplies the masseter, and what else does this nerve do?","The masseter is supplied by the masseteric nerve, a branch of the anterior trunk of the mandibular nerve (V3). It enters the muscle from its medial side. Besides motor innervation to the masseter, it gives sensory innervation to the TMJ.",["Masseteric nerve (branch of V3, anterior trunk)","Enters the masseter from its medial side","Also sensory to the TMJ"]],
+['B',"Which masticatory muscles elevate the mandible, and how does the temporalis differ from the masseter in function?","The masseter elevates the mandible. The temporalis elevates and also retracts it. The medial pterygoid elevates the mandible and also moves it forwards and laterally. The lateral pterygoid does not elevate: it moves the mandible forwards, downward and laterally.",["Masseter: elevates","Temporalis: elevates and retracts","Medial pterygoid: elevates and moves forwards and laterally","Lateral pterygoid: forwards, downward and laterally (no elevation)"]],
+/* C */
+['C',"Describe the temporalis muscle: shape, path, function and innervation.","The temporalis is a wide, flat and triangular muscle. It runs from the temporal fossa to the coronoid process of the mandible. It elevates and retracts the mandible. It is innervated by V3, through the deep temporal nerves.",["Wide, flat and triangular","From the temporal fossa to the coronoid process","Elevates and retracts the mandible","Innervation: V3 (deep temporal nerves)"]],
+['C',"Where does the temporalis arise?","The temporalis arises from the temporal fossa, the inferior temporal line, the infratemporal crest and the upper half of the deep temporal fascia.",["Temporal fossa","Inferior temporal line","Infratemporal crest","Upper half of the deep temporal fascia"]],
+['C',"Where does the temporalis insert?","The temporalis inserts on the lateral and medial sides of the coronoid process and on the temporal crest of the mandible.",["Lateral side of the coronoid process","Medial side of the coronoid process","Temporal crest"]],
+['C',"Which movements does the temporalis produce, and how does this differ from the masseter?","The temporalis elevates and retracts the mandible. The masseter only elevates it. Both are supplied by V3 (the temporalis by the deep temporal nerves, the masseter by the masseteric nerve).",["Temporalis: elevation and retraction","Masseter: elevation only","Both supplied by V3, through different nerves"]],
+['C',"Which nerves supply the temporalis, and where do they come from?","The temporalis is supplied by the deep temporal nerves. They are motor branches of the anterior trunk of the mandibular nerve (V3).",["Deep temporal nerves","Motor branches of V3","From the anterior trunk"]],
+/* D */
+['D',"Describe the lateral pterygoid muscle: shape, path, function and innervation.","The lateral pterygoid (also called external pterygoid) is a short, thick and flattened muscle. It runs from the pterygoid process of the sphenoid to the neck of the mandible. It moves the mandible forwards, downward and laterally. It is innervated by V3 (the lateral pterygoid nerve).",["Short, thick and flattened","From the pterygoid process of the sphenoid to the neck of the mandible","Moves the mandible forwards, downward and laterally","Innervation: V3"]],
+['D',"Describe the upper head of the lateral pterygoid: origin and insertion.","The upper head arises from the lower portion of the lateral side of the greater wing of the sphenoid, the infratemporal crest and the upper third of the lateral side of the lateral plate of the pterygoid process. It inserts on the anterior edge of the TMJ disc and on the anteromedial fossa of the neck of the mandible.",["Origin: lower portion of the lateral side of the greater wing of the sphenoid","Origin: infratemporal crest","Origin: upper third of the lateral side of the lateral plate of the pterygoid process","Insertion: anterior edge of the TMJ disc and anteromedial fossa of the neck of the mandible"]],
+['D',"Describe the lower head of the lateral pterygoid: origin and insertion.","The lower head arises from the inferior portion of the lateral side of the lateral plate of the pterygoid process and from the lateral side of the pyramidal process of the palatine bone. It inserts on the anterior edge of the TMJ disc and on the anteromedial fossa of the neck of the mandible.",["Origin: inferior portion of the lateral side of the lateral plate of the pterygoid process","Origin: lateral side of the pyramidal process of the palatine bone","Insertion: anterior edge of the TMJ disc and anteromedial fossa of the neck of the mandible"]],
+['D',"What do the two heads of the lateral pterygoid have in common, and how do they differ?","Both heads end on the anterior edge of the TMJ disc and the anteromedial fossa of the neck of the mandible. They differ in their origin. The upper head arises from the greater wing of the sphenoid, the infratemporal crest and the upper third of the lateral plate. The lower head arises from the lower part of the lateral plate and the pyramidal process of the palatine bone.",["Common insertion: TMJ disc (anterior edge) and neck of the mandible","Upper head: greater wing of the sphenoid, infratemporal crest, upper lateral plate","Lower head: lower lateral plate, pyramidal process of the palatine"]],
+['D',"Which structures does the lateral pterygoid connect to the TMJ, and which nerve supplies it?","The lateral pterygoid attaches to the anterior edge of the TMJ disc and to the neck of the mandible. It is supplied by the lateral pterygoid muscle nerve, which may be an independent nerve or a lateral branch of the buccal nerve.",["Attaches to the TMJ disc (anterior edge)","Attaches to the neck of the mandible","Lateral pterygoid nerve (independent or branch of the buccal nerve)"]],
+/* E */
+['E',"Describe the medial pterygoid muscle: shape, path, function and innervation.","The medial pterygoid (also called internal pterygoid) is a thick, rhomboid muscle. It runs from the pterygoid process of the sphenoid to the medial side of the angle of the mandible. It elevates the mandible and moves it forwards and laterally. It is innervated by V3.",["Thick and rhomboid","From the pterygoid process of the sphenoid to the medial side of the angle of the mandible","Elevates and moves the mandible forwards and laterally","Innervation: V3"]],
+['E',"Describe the superficial head of the medial pterygoid: origin and insertion.","The superficial head arises from the posterior side of the maxillary tuberosity. It inserts on the medial side of the angle and on the lower portion of the ramus of the mandible.",["Origin: posterior side of the maxillary tuberosity","Insertion: medial side of the angle of the mandible","Insertion: lower portion of the ramus"]],
+['E',"Describe the deep head of the medial pterygoid: origin and insertion.","The deep head arises from the pterygoid fossa, the medial side of the lateral plate and the lateral side of the medial plate of the pterygoid process. It inserts on the medial side of the angle and on the lower portion of the ramus of the mandible.",["Origin: pterygoid fossa","Origin: medial side of the lateral plate and lateral side of the medial plate","Insertion: medial side of the angle and lower ramus of the mandible"]],
+['E',"Which nerve supplies the medial pterygoid, and what other muscles does it supply?","The medial pterygoid is supplied by the medial pterygoid muscle nerve, a motor branch of V3 that reaches the muscle from its deep side. The same nerve also innervates the tensor veli palatini and the tensor tympani.",["Medial pterygoid muscle nerve (V3)","Reaches the muscle from its deep side","Also tensor veli palatini and tensor tympani"]],
+['E',"Compare the medial and lateral pterygoid muscles: shape, mandibular attachment and function.","The medial pterygoid is thick and rhomboid; it attaches to the medial side of the angle and lower ramus and elevates the mandible while moving it forwards and laterally. The lateral pterygoid is short, thick and flattened; it attaches to the neck of the mandible and the TMJ disc and moves the mandible forwards, downward and laterally. Both arise from the pterygoid process and both are supplied by V3.",["Medial: thick, rhomboid; angle and lower ramus; elevates and moves forwards and laterally","Lateral: short, thick, flattened; neck of the mandible and TMJ disc; forwards, downward, laterally","Both arise from the pterygoid process and are supplied by V3"]],
+/* F */
+['F',"Name the suprahyoid (associated) muscles of the trigeminal system and the nerve involved.","The associated or suprahyoid muscles are the mylohyoid, the geniohyoid and the anterior belly of the digastric. They are presented with the mandibular nerve (V3), although the slides give the geniohyoid an innervation by C1 through the hypoglossal nerve.",["Mylohyoid","Geniohyoid","Anterior belly of the digastric","Linked to V3 (geniohyoid: C1 via XII on its own slide)"]],
+['F',"Describe the geniohyoid muscle: shape, path, function and innervation.","The geniohyoid is short and thick. It runs from the mandibular symphysis to the hyoid bone. It elevates the floor of the mouth, and it elevates the hyoid bone or lowers the jaw. It is innervated by the first spinal nerve (C1) through the hypoglossal nerve (XII).",["Short and thick","From the mandibular symphysis to the hyoid bone","Elevates the floor of the mouth; elevates the hyoid or lowers the jaw","Innervation: C1 via the hypoglossal nerve (XII)"]],
+['F',"Describe the insertions of the geniohyoid.","The geniohyoid arises from the inferior mental spines of the mandible and inserts on the anterior side of the body of the hyoid bone.",["Origin: inferior mental spines","Insertion: anterior side of the body of the hyoid bone"]],
+['F',"Describe the mylohyoid muscle: shape, path, function and innervation.","The mylohyoid is wide and flattened. It runs from the lingual side of the mandible to the hyoid bone and the median raphe. It elevates the floor of the mouth, and it elevates the hyoid bone or lowers the jaw. It is innervated by V3, through the mylohyoid nerve.",["Wide and flattened","From the lingual side of the mandible to the hyoid bone and median raphe","Elevates the floor of the mouth; elevates the hyoid or lowers the jaw","Innervation: V3 (mylohyoid nerve)"]],
+['F',"Describe the insertions of the mylohyoid.","The mylohyoid arises along the mylohyoid line of the mandible. It inserts on the anterior side of the body of the hyoid bone and on the median raphe.",["Origin: along the mylohyoid line of the mandible","Insertion: anterior side of the body of the hyoid bone","Insertion: median raphe"]],
+['F',"Describe the anterior belly of the digastric: shape, path, function and innervation.","The anterior belly of the digastric is elongated and cylindrical. It runs from the mandibular symphysis to the mastoid region. It elevates the hyoid bone or lowers the jaw. It is innervated by V3, through the mylohyoid nerve.",["Elongated and cylindrical","From the mandibular symphysis to the mastoid region","Elevates the hyoid bone or lowers the jaw","Innervation: V3 (mylohyoid nerve)"]],
+['F',"Describe the insertions of the digastric muscle.","The anterior belly arises from the digastric fossa, on the lower border of the mandible. The muscle ends at the mastoid notch of the temporal bone, where the posterior belly is attached.",["Origin: digastric fossa on the lower border of the mandible","End: mastoid notch of the temporal bone (posterior belly)"]],
+['F',"Which suprahyoid muscles are supplied by the mylohyoid nerve, and which one has a different innervation according to the slides?","The mylohyoid nerve supplies the mylohyoid and the anterior belly of the digastric. The geniohyoid has a different innervation: the first spinal nerve (C1) travelling with the hypoglossal nerve (XII).",["Mylohyoid nerve: mylohyoid and anterior belly of the digastric","Geniohyoid: C1 via the hypoglossal nerve (XII)"]],
+/* G */
+['G',"What are fascias, and which three fascias belong to the masticatory muscles?","Fascias are aponeuroses that wrap the different muscles. They are formed by layers of dense, non-oriented connective tissue. In the masticatory muscles there are three: the temporal, the masseteric and the interpterygoid fascias.",["Aponeuroses wrapping the muscles","Dense non-oriented connective tissue in layers","Temporal, masseteric and interpterygoid fascias"]],
+['G',"Describe the temporal fascia.","The temporal fascia covers the area from the superior temporal line to the zygomatic arch. In its inferior part it has two layers, which include adipose tissue. It is separated from the muscle by a layer of adipose tissue that increases from top to bottom.",["Covers from the superior temporal line to the zygomatic arch","Two layers inferiorly, including adipose tissue","Separated from the muscle by adipose tissue, increasing from top to bottom"]],
+['G',"Describe the masseteric fascia.","The masseteric fascia covers the area from the zygomatic arch to the posterior and inferior borders of the mandible and the anterior edge of the coronoid process. It is thinner and unfolds to wrap the anterior portion of the parotid gland and the parotid duct. It is separated from the muscle by a layer of adipose tissue that increases from top to bottom.",["From the zygomatic arch to the posterior and inferior borders of the mandible and anterior edge of the coronoid process","Thinner; wraps the anterior portion of the parotid gland and the parotid duct","Adipose layer between fascia and muscle, increasing from top to bottom"]],
+['G',"Describe the interpterygoid fascia.","The interpterygoid fascia lies between the medial and lateral pterygoid muscles. Its posterior side is thicker and more resistant, and it forms the sphenomandibular ligament.",["Located between the medial and lateral pterygoid muscles","Posterior side thicker and more resistant","Forms the sphenomandibular ligament"]],
+['G',"Compare the temporal, masseteric and interpterygoid fascias.","The temporal fascia extends from the superior temporal line to the zygomatic arch and is separated from the temporalis by adipose tissue. The masseteric fascia extends from the zygomatic arch to the mandible, is thinner, wraps the parotid gland and duct, and is also separated from the muscle by adipose tissue. The interpterygoid fascia lies between the two pterygoids and forms the sphenomandibular ligament posteriorly.",["Temporal: superior temporal line to zygomatic arch; adipose layer","Masseteric: zygomatic arch to the mandible; thinner; parotid gland and duct","Interpterygoid: between the pterygoids; sphenomandibular ligament"]],
+/* H */
+['H',"Describe the hypoglossal nerve (CN XII) and the muscles it controls.","The hypoglossal nerve (CN XII) is a motor nerve. It controls the infrahyoid and the lingual muscles, except the palatoglossus.",["Cranial nerve XII, purely motor","Controls the infrahyoid muscles","Controls the lingual muscles, except the palatoglossus"]],
+['H',"Classify the lingual muscles.","The lingual muscles are divided into intrinsic and extrinsic muscles. The intrinsic muscles are the longitudinal, vertical and transverse. The extrinsic muscles are the genioglossus, hyoglossus, styloglossus, palatoglossus, amygdaloglossus and the glossopharyngeal portion of the superior constrictor of the pharynx.",["Two groups: intrinsic and extrinsic","Intrinsic: longitudinal, vertical, transverse","Extrinsic: genioglossus, hyoglossus, styloglossus, palatoglossus, amygdaloglossus, glossopharyngeal portion of the superior constrictor"]],
+['H',"Which lingual muscle is not supplied by the hypoglossal nerve, and by which nerve is it supplied?","The palatoglossus is the exception. It is supplied by the vagus nerve (CN X). All the other lingual muscles listed in the slides are supplied by the hypoglossal nerve (CN XII).",["Palatoglossus","Vagus nerve (CN X)","All the others: hypoglossal nerve (CN XII)"]],
+/* I */
+['I',"Name the three intrinsic lingual muscles and their common innervation.","The intrinsic lingual muscles are the longitudinal, the vertical and the transverse. All three are innervated by the hypoglossal nerve (CN XII).",["Longitudinal","Vertical","Transverse","Hypoglossal nerve (CN XII)"]],
+['I',"Describe the longitudinal muscle of the tongue: shape, path, function and innervation.","The longitudinal muscle is wide and flattened. It runs from the minor horns of the hyoid and the epiglottis and covers the whole dorsal side of the tongue. It depresses and shortens the tongue. It is innervated by the hypoglossal nerve (CN XII).",["Wide and flattened","From the hyoid minor horns and the epiglottis, covering the dorsal side of the tongue","Depresses and shortens the tongue","Hypoglossal nerve (CN XII)"]],
+['I',"Describe the vertical muscle of the tongue: shape, path, function and innervation.","The vertical muscle is thin and flattened. According to the slides it runs from the minor horns of the hyoid to the tip of the tongue. It depresses and retracts the tongue. It is innervated by the hypoglossal nerve (CN XII).",["Thin and flattened","From the hyoid minor horns to the tip of the tongue","Depresses and retracts the tongue","Hypoglossal nerve (CN XII)"]],
+['I',"Describe the transverse muscle of the tongue: shape, path, function and innervation.","The transverse muscle is short and flattened. It runs from the lingual septum to the lateral border of the tongue. It elongates and narrows the tongue. It is innervated by the hypoglossal nerve (CN XII).",["Short and flattened","From the lingual septum to the lateral border of the tongue","Elongates and narrows the tongue","Hypoglossal nerve (CN XII)"]],
+['I',"Compare the actions of the three intrinsic lingual muscles.","The longitudinal muscle depresses and shortens the tongue. The vertical muscle depresses and retracts it. The transverse muscle elongates and narrows it. All three are supplied by the hypoglossal nerve.",["Longitudinal: depresses and shortens","Vertical: depresses and retracts","Transverse: elongates and narrows"]],
+/* J */
+['J',"Name the six extrinsic lingual muscles listed in the slides.","The extrinsic lingual muscles are the genioglossus, the hyoglossus, the styloglossus, the palatoglossus, the amygdaloglossus and the glossopharyngeal portion of the superior constrictor of the pharynx.",["Genioglossus","Hyoglossus","Styloglossus","Palatoglossus","Amygdaloglossus","Glossopharyngeal portion of the superior constrictor"]],
+['J',"Describe the genioglossus: shape, path, function and innervation.","The genioglossus is flattened and triangular. It runs from the superior mental spines to the dorsum and the tip of the tongue and to the superior border of the hyoid bone. According to the slides, it retracts the tongue. It is innervated by the hypoglossal nerve (CN XII).",["Flattened and triangular","From the superior mental spines to the dorsum and tip of the tongue and the superior border of the hyoid","Function on the slide: retracts the tongue","Hypoglossal nerve (CN XII)"]],
+['J',"Describe the hyoglossus: shape, path, function and innervation.","The hyoglossus is flattened and rhomboidal. It runs from the body and the major horns of the hyoid bone to the lingual septum. It retracts the tongue towards the floor of the mouth. It is innervated by the hypoglossal nerve (CN XII).",["Flattened and rhomboidal","From the body and major horns of the hyoid to the lingual septum","Retracts the tongue to the floor of the mouth","Hypoglossal nerve (CN XII)"]],
+['J',"Describe the styloglossus: shape, path, function and innervation.","The styloglossus is thin and elongated. It runs from the styloid process of the temporal bone to the tip of the tongue. It enlarges the tongue and retracts it towards the palate. It is innervated by the hypoglossal nerve (CN XII).",["Thin and elongated","From the styloid process of the temporal bone to the tip of the tongue","Enlarges and retracts the tongue to the palate","Hypoglossal nerve (CN XII)"]],
+['J',"Describe the palatoglossus: shape, path, function and innervation.","The palatoglossus is thin and flattened. It runs from the soft palate to the tip of the tongue. It retracts the tongue towards the palate. It is innervated by the vagus nerve (CN X), unlike the other lingual muscles.",["Thin and flattened","From the soft palate to the tip of the tongue","Retracts the tongue to the palate","Vagus nerve (CN X)"]],
+['J',"Describe the amygdaloglossus: shape, path, function and innervation.","The amygdaloglossus is very thin and elongated. It runs from the capsule of the palatine tonsil to the lingual septum. It raises the base of the tongue. It is innervated by the hypoglossal nerve (CN XII).",["Very thin and elongated","From the capsule of the palatine tonsil to the lingual septum","Raises the base of the tongue","Hypoglossal nerve (CN XII)"]],
+['J',"Describe the glossopharyngeal portion of the superior constrictor of the pharynx as a lingual muscle.","This portion is elongated and flattened. It runs from the posterior portion of the mylohyoid line to the lateral border of the tongue. It retracts the tongue. On the slide, it is innervated by the hypoglossal nerve (CN XII).",["Elongated and flattened","From the posterior portion of the mylohyoid line to the lateral border of the tongue","Retracts the tongue","Hypoglossal nerve (CN XII) as given on the slide"]],
+['J',"Compare the origins of the extrinsic lingual muscles: which arise from the mandible, the hyoid, the styloid process, the palate and the tonsil?","The genioglossus arises from the superior mental spines of the mandible. The hyoglossus arises from the body and major horns of the hyoid. The styloglossus arises from the styloid process. The palatoglossus arises from the soft palate. The amygdaloglossus arises from the capsule of the palatine tonsil. The glossopharyngeal portion arises from the posterior mylohyoid line of the mandible.",["Genioglossus: superior mental spines","Hyoglossus: hyoid (body and major horns)","Styloglossus: styloid process","Palatoglossus: soft palate","Amygdaloglossus: capsule of the palatine tonsil","Glossopharyngeal portion: posterior mylohyoid line"]]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t5-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 5 part 1</p>
+ <h1>Masticatory and Tongue Muscles Questions</h1>
+ <p class="lead">${QS.length} open questions on the Topic 5 part 1 slides: trigeminal motor nerves, muscles of mastication, suprahyoid muscles, fascias, hypoglossal nerve and tongue muscles. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>
+
+</body></html>

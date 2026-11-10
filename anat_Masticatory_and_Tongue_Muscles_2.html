@@ -1,0 +1,401 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Muscles Fill in Blanks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* Fill-in-the-blank additions */
+.cloze{font-size:18px;line-height:2.25;margin:14px 0 18px;overflow-wrap:anywhere}
+.blank{font:inherit;font-size:16px;font-family:var(--f-body);color:var(--fg);background:var(--surface);border:0;border-bottom:2px solid var(--hema);border-radius:6px 6px 0 0;padding:2px 8px;margin:0 2px;min-width:84px;min-height:34px;text-align:center;vertical-align:baseline;cursor:pointer;max-width:100%}
+input.blank{cursor:text;min-width:0}
+.blank:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.blank.sel{background:var(--hema-soft);border-bottom-color:var(--eosin)}
+.blank.ok{background:var(--ok-bg);border-bottom-color:var(--ok);color:var(--ok)}
+.blank.bad{background:var(--bad-bg);border-bottom-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.fix{display:inline-block;margin:0 4px 0 2px;padding:1px 8px;border-radius:6px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{font:inherit;font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--hema);background:var(--hema-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--hema)}
+.chip:disabled{opacity:.35;cursor:default}
+.chip:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.wrap-r{flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Trigeminal nerve and motor branches'},
+ {k:'B',n:'Masseter'},
+ {k:'C',n:'Temporalis'},
+ {k:'D',n:'Lateral pterygoid'},
+ {k:'E',n:'Medial pterygoid'},
+ {k:'F',n:'Suprahyoid (associated) muscles'},
+ {k:'G',n:'Fascias of the masticatory muscles'},
+ {k:'H',n:'Hypoglossal nerve and lingual muscle groups'},
+ {k:'I',n:'Intrinsic lingual muscles'},
+ {k:'J',n:'Extrinsic lingual muscles'}
+];
+/* [section, topic, text]. Blank = [[answer|alt]]; interchangeable blanks share a group: [[g1:answer]] */
+const RAW=[
+['A',"Motor fibers of the trigeminal nerve","Of the three branches of the trigeminal nerve, the only one with [[motor]] fibers is the [[mandibular]] nerve ([[V3]]). It supplies two groups of muscles: the [[masticatory]] muscles and the associated or [[suprahyoid]] muscles."],
+['A',"Medial pterygoid nerve","The medial pterygoid muscle nerve supplies the medial pterygoid from its [[deep]] side. It also innervates the [[g1:tensor veli palatini]] and the [[g1:tensor tympani]] muscles."],
+['A',"Deep temporal nerves","The deep temporal nerves are branches of the [[anterior]] trunk of V3 and innervate the [[temporalis]] muscle."],
+['A',"Masseteric nerve","The masseteric nerve is a branch of the [[anterior]] trunk. It supplies motor innervation to the [[masseter]] from its [[medial]] side, and sensory innervation to the [[TMJ|temporomandibular joint]]."],
+['A',"Lateral pterygoid nerve","The lateral pterygoid muscle nerve supplies the [[lateral pterygoid]] muscle. It may be an independent nerve, or a lateral branch of the [[buccal]] nerve."],
+['A',"Mylohyoid nerve","The mylohyoid nerve is a branch of the [[inferior alveolar]] nerve (posterior trunk). It divides just above the [[mandibular]] foramen and runs forwards below the [[mylohyoid]] line. It innervates the mylohyoid muscle and the anterior belly of the [[digastric]]."],
+['A',"Motor branches of V3","The [[masseteric]] nerve supplies the masseter, the deep [[temporal]] nerves supply the temporalis, the medial [[pterygoid]] nerve supplies the medial pterygoid, and the [[mylohyoid]] nerve supplies the mylohyoid and the anterior belly of the digastric."],
+['B',"Masseter overview","The masseter is a [[short]], thick and [[rectangular]] muscle that runs from the [[zygomatic]] arch to the lateral side of the angle and [[ramus]] of the mandible. It [[elevates]] the mandible and is innervated by [[V3]]."],
+['B',"Superficial portion of the masseter","The superficial portion of the masseter arises from the [[anterior]] part of the lower edge of the zygomatic arch and inserts on the inferior area of the lateral side of the [[ramus]] and on the [[angle]] of the mandible."],
+['B',"Deep portion of the masseter","The deep portion of the masseter arises from the [[posterior]] part of the lower edge and the [[medial]] side of the zygomatic arch. It inserts on the lateral side of the [[coronoid]] process and on the ramus, [[superior]] to the superficial portion."],
+['B',"Masseter innervation","The masseter is supplied by the [[masseteric]] nerve, a branch of the [[anterior]] trunk of V3, which enters from its [[medial]] side. This nerve is also [[sensory]] to the TMJ."],
+['B',"Mandibular elevators","The masseter [[elevates]] the mandible, the temporalis elevates and [[retracts]] it, and the medial pterygoid elevates it and moves it [[forwards]] and laterally. The [[lateral]] pterygoid does not elevate: it moves the mandible forwards, downward and laterally."],
+['C',"Temporalis overview","The temporalis is a [[wide]], [[flat]] and triangular muscle that runs from the temporal [[fossa]] to the [[coronoid]] process of the mandible. It elevates and [[retracts]] the mandible."],
+['C',"Origin of the temporalis","The temporalis arises from the temporal fossa, the [[g1:inferior temporal line]], the [[g1:infratemporal crest]] and the upper half of the deep temporal [[fascia]]."],
+['C',"Insertion of the temporalis","The temporalis inserts on the [[g1:lateral]] and [[g1:medial]] sides of the [[coronoid]] process and on the temporal [[crest]]."],
+['C',"Temporalis versus masseter","The temporalis elevates and [[retracts]] the mandible, whereas the masseter only [[elevates]] it. Both are supplied by [[V3]]."],
+['C',"Temporalis innervation","The temporalis is supplied by the deep [[temporal]] nerves, which are motor branches of the [[anterior]] trunk of the [[mandibular]] nerve."],
+['D',"Lateral pterygoid overview","The lateral pterygoid, also called the [[external]] pterygoid, is a short, thick and [[flattened]] muscle. It runs from the pterygoid process of the [[sphenoid]] to the neck of the [[mandible]]. It moves the mandible forwards, [[downward]] and laterally."],
+['D',"Upper head of the lateral pterygoid","The upper head of the lateral pterygoid arises from the lower portion of the lateral side of the [[greater]] wing of the sphenoid, the [[infratemporal]] crest and the upper [[third]] of the lateral side of the lateral plate of the pterygoid process. It inserts on the anterior edge of the [[TMJ|temporomandibular joint]] disc and the anteromedial fossa of the neck of the mandible."],
+['D',"Lower head of the lateral pterygoid","The lower head of the lateral pterygoid arises from the inferior portion of the lateral side of the [[lateral]] plate of the pterygoid process and from the lateral side of the [[pyramidal]] process of the [[palatine]] bone."],
+['D',"Common insertion of the heads","Both heads of the lateral pterygoid insert on the anterior edge of the TMJ [[disc]] and on the [[anteromedial]] fossa of the neck of the mandible. They differ in their [[origin]]."],
+['D',"Lateral pterygoid and the TMJ","The lateral pterygoid attaches to the [[disc]] of the TMJ and to the [[neck]] of the mandible. Its nerve may be independent or a lateral branch of the [[buccal]] nerve."],
+['E',"Medial pterygoid overview","The medial pterygoid, also called the [[internal]] pterygoid, is a thick and [[rhomboid]] muscle. It runs from the pterygoid process of the sphenoid to the [[medial]] side of the [[angle]] of the mandible. It [[elevates]] the mandible and moves it forwards and laterally."],
+['E',"Superficial head of the medial pterygoid","The superficial head of the medial pterygoid arises from the [[posterior]] side of the maxillary [[tuberosity]]. It inserts on the medial side of the [[angle]] and the lower portion of the [[ramus]] of the mandible."],
+['E',"Deep head of the medial pterygoid","The deep head of the medial pterygoid arises from the pterygoid [[fossa]], the medial side of the [[lateral]] plate and the lateral side of the [[medial]] plate of the pterygoid process."],
+['E',"Medial pterygoid innervation","The medial pterygoid is supplied by the medial pterygoid muscle nerve, a branch of [[V3]] that enters from the [[deep]] side. The same nerve supplies the tensor veli [[palatini]] and the tensor [[tympani]]."],
+['E',"Medial versus lateral pterygoid","The [[medial]] pterygoid elevates the mandible and attaches to the angle. The [[lateral]] pterygoid attaches to the neck of the mandible and the TMJ disc and moves the mandible forwards, downward and laterally. Both arise from the [[pterygoid]] process."],
+['F',"Suprahyoid muscles","The associated or suprahyoid muscles are the [[g1:mylohyoid]], the [[g1:geniohyoid]] and the anterior belly of the [[g1:digastric]]."],
+['F',"Geniohyoid overview","The geniohyoid is [[short]] and thick. It runs from the mandibular [[symphysis]] to the [[hyoid]] bone. It elevates the [[floor]] of the mouth. It is innervated by the first spinal nerve ([[C1]]) via the [[hypoglossal]] nerve."],
+['F',"Geniohyoid insertions","The geniohyoid arises from the inferior [[mental]] spines and inserts on the anterior side of the [[body]] of the hyoid bone."],
+['F',"Mylohyoid overview","The mylohyoid is [[wide]] and flattened. It runs from the [[lingual]] side of the mandible to the hyoid bone and the median [[raphe]]. It is innervated by [[V3]]."],
+['F',"Mylohyoid insertions","The mylohyoid arises along the [[mylohyoid]] line of the mandible and inserts on the anterior side of the body of the [[hyoid]] bone and on the median [[raphe]]."],
+['F',"Anterior belly of the digastric","The anterior belly of the digastric is elongated and [[cylindrical]]. It runs from the mandibular [[symphysis]] to the [[mastoid]] region. It elevates the hyoid bone or [[lowers]] the jaw. It is innervated by [[V3]]."],
+['F',"Digastric insertions","The anterior belly of the digastric arises from the digastric [[fossa]], on the lower border of the mandible. The posterior belly is attached to the mastoid [[notch]] of the [[temporal]] bone."],
+['F',"Nerves of the suprahyoid muscles","The [[mylohyoid]] nerve supplies the mylohyoid and the anterior belly of the digastric. The [[geniohyoid]] has a different innervation: [[C1]] via the hypoglossal nerve."],
+['G',"Fascias in general","Fascias are [[aponeuroses]] that wrap the muscles. They are made of layers of dense [[non-oriented|nonoriented]] connective tissue. The masticatory muscles have three: the [[g1:temporal]], the [[g1:masseteric]] and the [[g1:interpterygoid]] fascias."],
+['G',"Temporal fascia","The temporal fascia covers the area from the [[superior]] temporal line to the zygomatic [[arch]]. In its inferior part it has [[two]] layers, including adipose tissue. It is separated from the muscle by a layer of [[adipose]] tissue that increases from top to bottom."],
+['G',"Masseteric fascia","The masseteric fascia covers the area from the zygomatic [[arch]] to the posterior and inferior borders of the [[mandible]]. It is [[thinner]] and wraps the anterior portion of the [[parotid]] gland and the parotid [[duct]]."],
+['G',"Interpterygoid fascia","The interpterygoid fascia lies between the [[medial]] and [[lateral]] pterygoid muscles. Its [[posterior]] side is thicker and forms the [[sphenomandibular]] ligament."],
+['G',"Three fascias compared","The [[temporal]] fascia reaches the zygomatic arch from the superior temporal line. The [[masseteric]] fascia is thinner and wraps the parotid gland. The [[interpterygoid]] fascia forms the sphenomandibular [[ligament]]."],
+['H',"Hypoglossal nerve","The hypoglossal nerve is cranial nerve [[XII|12]] and is a [[motor]] nerve. It controls the [[infrahyoid]] and lingual muscles, except the [[palatoglossus]]."],
+['H',"Lingual muscle groups","The lingual muscles are divided into [[intrinsic]] and [[extrinsic]] muscles. The intrinsic muscles are the longitudinal, [[vertical]] and [[transverse]]."],
+['H',"The exception to XII","The [[palatoglossus]] is the lingual muscle not supplied by the hypoglossal nerve. It is supplied by the [[vagus]] nerve (CN [[X|10]])."],
+['I',"Intrinsic muscles","The three intrinsic lingual muscles are the [[g1:longitudinal]], the [[g1:vertical]] and the [[g1:transverse]]. All are innervated by the [[hypoglossal]] nerve."],
+['I',"Longitudinal muscle","The longitudinal muscle is [[wide]] and flattened. It runs from the hyoid minor [[horns]] and the [[epiglottis]] and covers the dorsal side of the tongue. It depresses and [[shortens]] the tongue."],
+['I',"Vertical muscle","The vertical muscle is [[thin]] and flattened. It runs from the hyoid minor horns to the [[tip]] of the tongue. It [[depresses]] and retracts the tongue."],
+['I',"Transverse muscle","The transverse muscle is [[short]] and flattened. It runs from the lingual [[septum]] to the lateral [[border]] of the tongue. It elongates and [[narrows]] the tongue."],
+['I',"Intrinsic muscle actions","The [[longitudinal]] muscle depresses and shortens the tongue, the [[vertical]] muscle depresses and retracts it, and the [[transverse]] muscle elongates and narrows it."],
+['J',"Extrinsic muscles","The extrinsic lingual muscles are the [[g1:genioglossus]], the [[g1:hyoglossus]], the [[g1:styloglossus]], the [[g1:palatoglossus]], the [[g1:amygdaloglossus]] and the glossopharyngeal portion of the superior [[constrictor]] of the pharynx."],
+['J',"Genioglossus","The genioglossus is flattened and [[triangular]]. It runs from the superior [[mental]] spines to the dorsum and the tip of the tongue and to the superior border of the [[hyoid]] bone. According to the slides, it [[retracts]] the tongue."],
+['J',"Hyoglossus","The hyoglossus is flattened and [[rhomboidal]]. It runs from the body and the major [[horns]] of the hyoid bone to the lingual [[septum]]. It retracts the tongue to the floor of the [[mouth]]."],
+['J',"Styloglossus","The styloglossus is thin and [[elongated]]. It runs from the [[styloid]] process of the temporal bone to the [[tip]] of the tongue. It enlarges and retracts the tongue to the [[palate]]."],
+['J',"Palatoglossus","The palatoglossus is thin and flattened. It runs from the soft [[palate]] to the tip of the tongue and retracts the tongue to the palate. It is innervated by the [[vagus]] nerve (CN [[X|10]])."],
+['J',"Amygdaloglossus","The amygdaloglossus is [[very]] thin and elongated. It runs from the capsule of the palatine [[tonsil]] to the lingual [[septum]]. It [[raises]] the base of the tongue."],
+['J',"Glossopharyngeal portion","The glossopharyngeal portion of the superior constrictor runs from the posterior portion of the [[mylohyoid]] line to the lateral [[border]] of the tongue. It [[retracts]] the tongue and, on the slide, is innervated by the [[hypoglossal]] nerve."],
+['J',"Origins of the extrinsic muscles","The genioglossus arises from the [[mental]] spines, the hyoglossus from the [[hyoid]], the styloglossus from the [[styloid]] process, the palatoglossus from the soft [[palate]], and the amygdaloglossus from the capsule of the palatine [[tonsil]]."]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t5-cloze-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={bank:{},type:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.bank&&o.type)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function parse(text){
+ const parts=[],blanks=[];let last=0,m;const re=/\[\[(.+?)\]\]/g;
+ while((m=re.exec(text))){
+  if(m.index>last)parts.push({t:text.slice(last,m.index)});
+  let inner=m[1],g=null;const gm=/^(g\d+):/.exec(inner);if(gm){g=gm[1];inner=inner.slice(gm[0].length)}
+  const alts=inner.split('|');
+  const b={i:blanks.length,g:g,alts:alts};blanks.push(b);parts.push({b:b});last=m.index+m[0].length;
+ }
+ if(last<text.length)parts.push({t:text.slice(last)});
+ return{parts:parts,blanks:blanks};
+}
+const QS=RAW.map((r,i)=>{const p=parse(r[2]);return{id:i+1,s:r[0],title:r[1],parts:p.parts,blanks:p.blanks}});
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[];for(let j=0;j<=n;j++)p[j]=j;
+ for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function matches(v,alts,tol){const x=norm(v);if(!x)return false;return alts.some(a=>{const y=norm(a);if(x===y)return true;if(!tol)return false;const L=y.length,d=L>=9?2:L>=5?1:0;return d>0&&lev(x,y)<=d})}
+function evaluate(q,vals,tol){
+ const res=q.blanks.map(()=>false),done={};
+ q.blanks.forEach(b=>{if(!b.g){res[b.i]=matches(vals[b.i]||'',b.alts,tol)}});
+ const groups={};q.blanks.forEach(b=>{if(b.g)(groups[b.g]=groups[b.g]||[]).push(b)});
+ Object.keys(groups).forEach(g=>{
+  const slots=groups[g].map(b=>({alts:b.alts,used:false}));
+  groups[g].forEach(b=>{const v=vals[b.i]||'';
+   for(const s of slots){if(!s.used&&matches(v,s.alts,tol)){s.used=true;res[b.i]=true;break}}
+  });
+ });
+ return res;
+}
+const lv=()=>L==='bank'?store.bank:store.type;
+const rec=q=>lv()[q.id];
+const pct=q=>{const r=rec(q);return r?Math.round(r.c/r.t*100):0};
+const weakList=()=>QS.filter(q=>rec(q)&&pct(q)<70);
+let L='bank',scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(q=>rec(q)).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(q=>rec(q)).length;
+  const sum=p.filter(q=>rec(q)).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} texts · ${d} done${d?` · ${avg}% correct`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' texts below 70%':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 5 part 1</p>
+ <h1>Fill in the Blanks</h1>
+ <p class="lead">${QS.length} short texts on the Topic 5 part 1 slides (muscles of mastication and the tongue) with key words removed. Step two of the path: after the multiple-choice warm-up, before the open questions.</p>
+ <p class="sec-title">Level</p>
+ <div class="scopes">
+  <label class="scope"><input type="radio" name="lvl" value="bank" ${L==='bank'?'checked':''}><span class="sc-name">Level 1 · Word bank</span><span class="sc-meta">Pick the missing words from a list that includes a few wrong ones.</span></label>
+  <label class="scope"><input type="radio" name="lvl" value="type" ${L==='type'?'checked':''}><span class="sc-name">Level 2 · Type the words</span><span class="sc-meta">No list. Small spelling slips are accepted, and you can overrule the check.</span></label>
+ </div>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} texts done at this level. Your results stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the texts</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase all results?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function makeBank(q){
+ const own=q.blanks.map(b=>b.alts[0]);
+ const ownN=new Set(q.blanks.flatMap(b=>b.alts.map(norm)));
+ const other=[];QS.forEach(o=>{if(o.s===q.s&&o.id!==q.id)o.blanks.forEach(b=>{const n=norm(b.alts[0]);if(!ownN.has(n)&&!other.some(x=>norm(x)===n))other.push(b.alts[0])})});
+ const extra=shuf(other).slice(0,Math.max(2,Math.min(4,Math.ceil(own.length/2))));
+ return shuf(own.concat(extra));
+}
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,lv:L};
+ load();question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+function load(){
+ const q=cur();
+ S.vals=q.blanks.map(()=>'');S.chipOf=q.blanks.map(()=>-1);S.sel=0;S.checked=false;S.res=null;S.over={};
+ S.bank=L==='bank'?makeBank(q):[];
+}
+function nextEmpty(){const q=cur();for(let k=0;k<q.blanks.length;k++)if(!S.vals[k])return k;return -1}
+function ok(k){return !!(S.res&&(S.res[k]||S.over[k]))}
+function question(){
+ const q=cur(),n=S.list.length,bank=S.lv==='bank';
+ const body=q.parts.map(p=>{
+  if(p.t!==undefined)return esc(p.t);
+  const b=p.b,k=b.i,v=S.vals[k];
+  const cls='blank'+(S.checked?(ok(k)?' ok':' bad'):'')+(!S.checked&&bank&&S.sel===k?' sel':'');
+  if(bank){
+   return `<button type="button" class="${cls}" data-b="${k}" ${S.checked?'disabled':''}>${v?esc(v):'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</button>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+  }
+  const w=Math.max(6,Math.min(18,b.alts[0].length+2));
+  return `<input type="text" class="${cls}" data-b="${k}" value="${esc(v)}" size="${w}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Blank ${k+1}" ${S.checked?'readonly':''}>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+ }).join('');
+ const total=q.blanks.length,good=S.checked?q.blanks.filter((_,k)=>ok(k)).length:0;
+ const chips=bank&&!S.checked?`<div class="chips" role="group" aria-label="Word bank">${S.bank.map((w,k)=>`<button type="button" class="chip" data-chip="${k}" ${S.chipOf.includes(k)?'disabled':''}>${esc(w)}</button>`).join('')}</div>`:'';
+ const wrong=S.checked&&!bank?q.blanks.filter((_,k)=>!S.res[k]).map(b=>`<button type="button" class="btn ghost small" data-over="${b.i}">${S.over[b.i]?'Counted as right':'I was right'} · blank ${b.i+1}</button>`).join(''):'';
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">${bank?'Level 1':'Level 2'} · ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext">${esc(q.title)}</h2>
+ <p class="cloze">${body}</p>
+ ${chips}
+ ${S.checked?`<p class="sc-line" id="scl">${good} of ${total} blanks correct</p>${wrong?`<div class="row wrap-r">${wrong}</div>`:''}`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${S.checked?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next text'}</button>`:`<button type="button" class="btn" data-a="check">Check</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+function record(){
+ const q=cur();const good=q.blanks.filter((_,k)=>ok(k)).length;
+ (S.lv==='bank'?store.bank:store.type)[q.id]={c:good,t:q.blanks.length};save();
+}
+function results(){
+ const store_=S.lv==='bank'?store.bank:store.type;
+ const Ls=S.list.map(id=>QS[id-1]).filter(q=>store_[q.id]);
+ const tot=Ls.reduce((a,q)=>a+store_[q.id].t,0),gt=Ls.reduce((a,q)=>a+store_[q.id].c,0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=Ls.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+store_[q.id].c,0),b=l.reduce((x,q)=>x+store_[q.id].t,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=Ls.filter(q=>Math.round(store_[q.id].c/store_[q.id].t*100)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} blanks correct across ${Ls.length} text${Ls.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No text was completed in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>`<div class="item"><p class="q">${esc(q.title)}</p><p class="ex">${q.parts.map(x=>x.t!==undefined?esc(x.t):'<b>'+esc(x.b.alts[0])+'</b>').join('')}</p></div>`).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the texts to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+function check(){
+ const q=cur();
+ S.res=evaluate(q,S.vals,S.lv==='type');S.checked=true;S.over={};record();question();
+}
+app.addEventListener('input',e=>{
+ const t=e.target;if(t.dataset&&t.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){S.vals[+t.dataset.b]=t.value}
+});
+app.addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){
+  e.preventDefault();const ins=[...app.querySelectorAll('input.blank')];const i=ins.indexOf(e.target);
+  if(i<ins.length-1)ins[i+1].focus();else check();
+ }
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.name==='lvl'){L=t.value;home();return}
+ if(t.id==='shuf'){shuffle=t.checked}
+});
+app.addEventListener('click',e=>{
+ const chip=e.target.closest('[data-chip]');
+ if(chip&&S&&S.lv==='bank'&&!S.checked){
+  const k=+chip.dataset.chip;let tgt=S.sel;
+  if(tgt==null||S.vals[tgt]){const ne=nextEmpty();tgt=ne;}
+  if(tgt<0)return;
+  S.vals[tgt]=S.bank[k];S.chipOf[tgt]=k;
+  const ne=nextEmpty();S.sel=ne<0?null:ne;question();return;
+ }
+ const ov=e.target.closest('[data-over]');
+ if(ov&&S&&S.checked){const k=+ov.dataset.over;S.over[k]=!S.over[k];record();question();return}
+ const bl=e.target.closest('button[data-b]');
+ if(bl&&S&&S.lv==='bank'&&!S.checked){
+  const k=+bl.dataset.b;
+  if(S.vals[k]){S.vals[k]='';S.chipOf[k]=-1}
+  S.sel=k;question();return;
+ }
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='check')check();
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;load();question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;load();question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={bank:{},type:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>
+
+</body></html>
