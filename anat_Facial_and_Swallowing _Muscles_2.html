@@ -1,0 +1,391 @@
+<title>Facial Muscles Fill in Blanks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* Fill-in-the-blank additions */
+.cloze{font-size:18px;line-height:2.25;margin:14px 0 18px;overflow-wrap:anywhere}
+.blank{font:inherit;font-size:16px;font-family:var(--f-body);color:var(--fg);background:var(--surface);border:0;border-bottom:2px solid var(--hema);border-radius:6px 6px 0 0;padding:2px 8px;margin:0 2px;min-width:84px;min-height:34px;text-align:center;vertical-align:baseline;cursor:pointer;max-width:100%}
+input.blank{cursor:text;min-width:0}
+.blank:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.blank.sel{background:var(--hema-soft);border-bottom-color:var(--eosin)}
+.blank.ok{background:var(--ok-bg);border-bottom-color:var(--ok);color:var(--ok)}
+.blank.bad{background:var(--bad-bg);border-bottom-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.fix{display:inline-block;margin:0 4px 0 2px;padding:1px 8px;border-radius:6px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{font:inherit;font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--hema);background:var(--hema-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--hema)}
+.chip:disabled{opacity:.35;cursor:default}
+.chip:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.wrap-r{flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Facial nerve and groups of facial muscles'},
+ {k:'B',n:'Muscles of the eyelids and eyebrows'},
+ {k:'C',n:'Muscles of the ear and nose'},
+ {k:'D',n:'Lip dilators: upper lip and commissure'},
+ {k:'E',n:'Lip dilators: cheek, commissure, lower lip and neck'},
+ {k:'F',n:'Lip constrictors'},
+ {k:'G',n:'Deglutition muscles: nerves and overview'},
+ {k:'H',n:'Soft palate and uvula muscles'},
+ {k:'I',n:'Pharyngeal muscles'}
+];
+/* [section, topic, text]. Blank = [[answer|alt]]; interchangeable blanks share a group: [[g1:answer]] */
+const RAW=[
+['A',"Facial nerve","The facial nerve is cranial nerve [[VII|7|CN7]]. It is a [[mixed]] nerve, but mainly [[motor]]. It controls the muscles of [[mimicry]], which can act independently or coordinated."],
+['A',"Four groups","The facial muscles are divided into four groups: the muscles of the [[g1:eyelids and eyebrows|eyelids]], the muscles of the [[g1:ear]], the muscles of the [[g1:nose]] and the muscles of the [[g1:lips]]."],
+['A',"Muscles of the four groups","The eyelid and eyebrow group includes the [[g1:occipitofrontalis]], the [[g1:procerus]], the [[g1:orbicularis oculi]] and the [[g1:corrugator supercilii]]. The lip group has eleven [[dilators]] and two [[constrictors]]."],
+['A',"Branches of the facial nerve","The diagram shows the temporal, [[zygomatic]], [[buccal]], marginal [[mandibular]] and [[cervical]] branches, which pass through the [[parotid]] gland."],
+['A',"Facial versus masticatory innervation","The facial muscles are innervated by the [[facial]] nerve (CN7), whereas the masticatory muscles are innervated by the [[mandibular]] nerve ([[V3]])."],
+['B',"Occipitofrontalis","The occipitofrontalis is [[thin]] and flattened. It runs from the [[occipital]] bone to the skin of the [[eyebrows]]. It pulls the [[scalp]] posteriorly."],
+['B',"Procerus","The procerus is thin and [[elongated]]. It runs from the [[nasal]] bone to the skin of the [[frown]] and [[descends]] it."],
+['B',"Orbicularis oculi","The orbicularis oculi is wide, flat and [[circular]]. It runs around the anterior border of the [[orbit]], to the [[eyelids]]. It [[closes]] the eye."],
+['B',"Corrugator supercilii","The corrugator supercilii is very thin and [[flat]]. It runs from the [[superciliary]] arch to the skin of the eyebrow. It descends the eyebrow and contracts the [[frown]]."],
+['B',"Actions on the upper face","The [[occipitofrontalis]] pulls the scalp posteriorly, the [[procerus]] descends the skin of the frown, the [[orbicularis oculi]] closes the eye and the [[corrugator supercilii]] descends the eyebrow."],
+['C',"Muscles of the ear","The intrinsic muscles of the ear are the [[g1:tragus]], [[g1:antitragus]] and [[g1:helix]] muscles. The extrinsic muscles are the auricularis [[g2:anterior]], [[g2:superior]] and [[g2:posterior]]."],
+['C',"Muscles of the nose","The intrinsic muscles of the nose are the [[transverse]] portion of the nasalis, the [[alar]] portion of the nasalis and the depressor septi [[nasi]]."],
+['D',"Levator labii superioris","The levator labii superioris is flattened and [[elongated]]. It runs from the inferior border of the [[orbit]] to the skin of the angle of the [[mouth]]. It pulls the [[upper]] lip upwards."],
+['D',"Levator labii superioris alaeque nasi","This muscle is thin and elongated. It runs from the [[medial]] border of the orbit to the skin of the upper lip. It pulls the upper lip and the nasal [[wing]] upwards."],
+['D',"Levator anguli oris","The levator anguli oris is flattened and [[quadrate]]. It runs from the [[canine]] fossa to the skin of the angle of the mouth. It elevates the [[commissure]] and the lower lip."],
+['D',"Zygomaticus minor","The zygomaticus minor is thin and elongated. It runs from the [[anterior]] side of the zygomatic bone to the [[upper]] lip. It pulls the lip upwards and [[laterally]]."],
+['D',"Zygomaticus major","The zygomaticus major runs from the [[lateral]] side of the zygomatic bone to the upper lip. It pulls the upper lip [[upwards]] and laterally and is innervated by the [[facial]] nerve."],
+['D',"Zygomaticus minor versus major","Both zygomaticus muscles pull the upper lip upwards and laterally. The [[minor]] arises from the anterior side of the zygomatic bone and the [[major]] from its [[lateral]] side."],
+['E',"Buccinator","The buccinator is wide and flattened. It runs from the [[pterygomandibular]] raphe and the [[alveolar]] process of the jaws to the skin of the oral commissure. It compresses the oral [[vestibule]] for blowing and whistling."],
+['E',"Risorius","The risorius is flattened and elongated. It runs from the [[masseteric]] fascia to the oral [[commissure]] and pulls it [[backwards]]."],
+['E',"Depressor anguli oris","The depressor anguli oris is wide and flattened. It runs from the [[oblique]] line of the mandible to the skin of the oral commissure and pulls the commissure [[downwards]]."],
+['E',"Depressor labii inferioris","The depressor labii inferioris is flattened and [[quadrate]]. It runs from the anterior portion of the oblique line of the [[mandible]] to the skin of the lower lip and pulls the [[lower]] lip downwards."],
+['E',"Mentalis","The mentalis is short and flattened. It runs from the inferior [[canine]] and [[incisive]] eminences to the skin of the [[mental]] region. It elevates the chin and the lower lip."],
+['E',"Platysma","The platysma is very [[wide]] and flattened. It runs from the skin of the base of the [[neck]] to the chin, the oral commissure and the [[cheek]]. It pulls the commissure and the skin of the chin [[downwards]]."],
+['E',"Direction of lip movements","The [[depressor anguli oris]] pulls the commissure downwards, the [[depressor labii inferioris]] pulls the lower lip downwards, the [[risorius]] pulls the commissure backwards and the [[levator anguli oris]] elevates the commissure."],
+['F',"Dilators and constrictors","The lip muscles are divided into [[eleven|11]] dilators and [[two|2]] constrictors. The constrictors are the [[orbicularis oris]] and the [[compressor labii]]."],
+['F',"Orbicularis oris","The orbicularis oris is [[elliptical]] and runs concentrically around the mouth. It [[closes]] the lips. Its two portions are the [[marginal]] and the [[labial]] portions."],
+['F',"Extrinsic fibers of the marginal portion","The extrinsic fibers form [[two|2]] groups. Fibers from the [[depressor anguli oris]] and the buccinator insert in the [[upper]] lip. Fibers from the [[levator anguli oris]] and the buccinator insert in the [[lower]] lip."],
+['F',"Intrinsic fibers of the marginal portion","The intrinsic fibers are the [[superior]] and [[inferior]] incisive muscles. They run from the superior incisive fossa and the inferior [[canine]] eminence to the skin and mucosa of the labial [[commissure]]."],
+['F',"Labial portion","The fibers of the labial portion are inserted along the free [[edge]] of the upper and lower lips and run to the skin and [[mucosa]] of the oral commissure."],
+['F',"Compressor labii","The compressor labii is very [[short]] and flattened. It runs around the lips, from the deep side of the lip [[skin]] to the oral [[mucosa]]. It [[compresses]] the lips."],
+['G',"Nerves of deglutition","The deglutition muscles belong to the neuromuscular systems of the [[g1:trigeminal]], [[g1:glossopharyngeal]], [[g1:vagus|vague]] and [[g1:hypoglossal]] nerves, and of the [[pharyngeal]] plexus (CN9 + CN10)."],
+['G',"Coordination","The deglutition muscles work in [[coordination]] during swallowing. Their function is continued by the [[smooth]] muscle of the [[esophagus|oesophagus]]."],
+['G',"Sensory innervation of the pharynx","The nasopharynx is sensory through [[V2]], the oropharynx through [[IX|9|CN9]] and the laryngopharynx through [[X|10|CN10]]."],
+['G',"The eight deglutition muscles","The deglutition muscles are the musculus [[uvulae]], levator veli [[palatini]], tensor veli palatini, [[palatoglossus]], [[palatopharyngeus]], the [[constrictors]] of the pharynx, the [[stylopharyngeus]] and the [[salpingopharyngeus]]."],
+['G',"Innervation summary","CN5 supplies the [[tensor]] veli palatini. CN9 supplies the [[stylopharyngeus]]. CN10 supplies the musculus uvulae, the [[levator]] veli palatini and the palatoglossus. The pharyngeal [[plexus]] supplies the palatopharyngeus, the constrictors and the salpingopharyngeus."],
+['H',"Musculus uvulae","The musculus uvulae is [[small]] and elongated. It runs from the posterior nasal [[spine]] and the palatine [[aponeurosis]] to the uvula. It [[retracts]] the uvula and is innervated by the [[vagus]] nerve."],
+['H',"Levator veli palatini","The levator veli palatini is flattened and [[triangular]]. It runs from the inferior side of the [[petrous|petrus]] portion of the temporal bone to the upper side of the soft palate. It [[elevates]] the soft palate."],
+['H',"Tensor veli palatini","The tensor veli palatini runs from the inferior side of the [[greater]] wing of the sphenoid, through the [[hamulus]], to the palatine aponeurosis. It [[tenses]] the soft palate and is innervated by the [[trigeminal]] nerve (CN5)."],
+['H',"Palatoglossus in swallowing","The palatoglossus runs from the lower side of the soft [[palate]] to the tongue. It [[descends]] the soft palate and elevates the [[tongue]]. It is innervated by the [[vagus]] nerve."],
+['H',"Palatopharyngeus","The palatopharyngeus is thick, wide and flattened. It runs from the palatine aponeurosis and the [[hamulus]] to the thyroid [[cartilage]] and the pharynx. It descends the soft palate and [[elevates]] the pharynx."],
+['H',"Actions on the soft palate","The [[levator]] veli palatini elevates the soft palate, the [[tensor]] veli palatini tenses it, and the [[palatoglossus]] and the [[palatopharyngeus]] descend it."],
+['H',"Nerves of the soft palate muscles","The tensor veli palatini is supplied by CN[[5]], the musculus uvulae, levator veli palatini and palatoglossus by CN[[10]], and the palatopharyngeus by the pharyngeal [[plexus]]."],
+['I',"Superior constrictor","The superior constrictor is wide and flattened. It runs from the [[hamulus]], the pterygomandibular [[raphe]] and the [[mylohyoid]] line to the contralateral muscle fibers. It [[narrows]] the pharynx."],
+['I',"Middle constrictor","The middle constrictor runs from the [[hyoid]] bone to the [[contralateral]] muscle fibers. It narrows the pharynx and is innervated by the pharyngeal [[plexus]]."],
+['I',"Inferior constrictor","The inferior constrictor runs from the [[cricoid]] and [[thyroid]] cartilages to the contralateral muscle fibers. It [[narrows]] the pharynx."],
+['I',"Constrictors compared","The three constrictors narrow the pharynx and are supplied by the pharyngeal plexus. The [[superior]] arises from the hamulus, the [[middle]] from the hyoid bone and the [[inferior]] from the cricoid and thyroid cartilages."],
+['I',"Stylopharyngeus","The stylopharyngeus is thin and [[triangular]]. It runs from the [[styloid]] process to the epiglottis, the thyroid cartilage and the cricoid cartilage. It elevates the pharynx and the [[larynx]]. It is innervated by the [[glossopharyngeal]] nerve (CN9)."],
+['I',"Salpingopharyngeus","The salpingopharyngeus is short and flattened. It runs from the [[auditory]] tube to the lateral wall of the [[pharynx]]. It elevates the pharynx and [[opens]] the auditory tube."],
+['I',"Elevators of the pharynx","The [[palatopharyngeus]], the [[stylopharyngeus]] and the [[salpingopharyngeus]] elevate the pharynx. Only the stylopharyngeus is supplied by CN[[9]]."]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t5b-cloze-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={bank:{},type:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.bank&&o.type)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function parse(text){
+ const parts=[],blanks=[];let last=0,m;const re=/\[\[(.+?)\]\]/g;
+ while((m=re.exec(text))){
+  if(m.index>last)parts.push({t:text.slice(last,m.index)});
+  let inner=m[1],g=null;const gm=/^(g\d+):/.exec(inner);if(gm){g=gm[1];inner=inner.slice(gm[0].length)}
+  const alts=inner.split('|');
+  const b={i:blanks.length,g:g,alts:alts};blanks.push(b);parts.push({b:b});last=m.index+m[0].length;
+ }
+ if(last<text.length)parts.push({t:text.slice(last)});
+ return{parts:parts,blanks:blanks};
+}
+const QS=RAW.map((r,i)=>{const p=parse(r[2]);return{id:i+1,s:r[0],title:r[1],parts:p.parts,blanks:p.blanks}});
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[];for(let j=0;j<=n;j++)p[j]=j;
+ for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function matches(v,alts,tol){const x=norm(v);if(!x)return false;return alts.some(a=>{const y=norm(a);if(x===y)return true;if(!tol)return false;const L=y.length,d=L>=9?2:L>=5?1:0;return d>0&&lev(x,y)<=d})}
+function evaluate(q,vals,tol){
+ const res=q.blanks.map(()=>false),done={};
+ q.blanks.forEach(b=>{if(!b.g){res[b.i]=matches(vals[b.i]||'',b.alts,tol)}});
+ const groups={};q.blanks.forEach(b=>{if(b.g)(groups[b.g]=groups[b.g]||[]).push(b)});
+ Object.keys(groups).forEach(g=>{
+  const slots=groups[g].map(b=>({alts:b.alts,used:false}));
+  groups[g].forEach(b=>{const v=vals[b.i]||'';
+   for(const s of slots){if(!s.used&&matches(v,s.alts,tol)){s.used=true;res[b.i]=true;break}}
+  });
+ });
+ return res;
+}
+const lv=()=>L==='bank'?store.bank:store.type;
+const rec=q=>lv()[q.id];
+const pct=q=>{const r=rec(q);return r?Math.round(r.c/r.t*100):0};
+const weakList=()=>QS.filter(q=>rec(q)&&pct(q)<70);
+let L='bank',scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(q=>rec(q)).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(q=>rec(q)).length;
+  const sum=p.filter(q=>rec(q)).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} texts · ${d} done${d?` · ${avg}% correct`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' texts below 70%':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 5 part 2</p>
+ <h1>Fill in the Blanks</h1>
+ <p class="lead">${QS.length} short texts on the Topic 5 part 2 slides (facial and swallowing muscles) with key words removed. Step two of the path: after the multiple-choice warm-up, before the open questions.</p>
+ <p class="sec-title">Level</p>
+ <div class="scopes">
+  <label class="scope"><input type="radio" name="lvl" value="bank" ${L==='bank'?'checked':''}><span class="sc-name">Level 1 · Word bank</span><span class="sc-meta">Pick the missing words from a list that includes a few wrong ones.</span></label>
+  <label class="scope"><input type="radio" name="lvl" value="type" ${L==='type'?'checked':''}><span class="sc-name">Level 2 · Type the words</span><span class="sc-meta">No list. Small spelling slips are accepted, and you can overrule the check.</span></label>
+ </div>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} texts done at this level. Your results stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the texts</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase all results?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function makeBank(q){
+ const own=q.blanks.map(b=>b.alts[0]);
+ const ownN=new Set(q.blanks.flatMap(b=>b.alts.map(norm)));
+ const other=[];QS.forEach(o=>{if(o.s===q.s&&o.id!==q.id)o.blanks.forEach(b=>{const n=norm(b.alts[0]);if(!ownN.has(n)&&!other.some(x=>norm(x)===n))other.push(b.alts[0])})});
+ const extra=shuf(other).slice(0,Math.max(2,Math.min(4,Math.ceil(own.length/2))));
+ return shuf(own.concat(extra));
+}
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,lv:L};
+ load();question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+function load(){
+ const q=cur();
+ S.vals=q.blanks.map(()=>'');S.chipOf=q.blanks.map(()=>-1);S.sel=0;S.checked=false;S.res=null;S.over={};
+ S.bank=L==='bank'?makeBank(q):[];
+}
+function nextEmpty(){const q=cur();for(let k=0;k<q.blanks.length;k++)if(!S.vals[k])return k;return -1}
+function ok(k){return !!(S.res&&(S.res[k]||S.over[k]))}
+function question(){
+ const q=cur(),n=S.list.length,bank=S.lv==='bank';
+ const body=q.parts.map(p=>{
+  if(p.t!==undefined)return esc(p.t);
+  const b=p.b,k=b.i,v=S.vals[k];
+  const cls='blank'+(S.checked?(ok(k)?' ok':' bad'):'')+(!S.checked&&bank&&S.sel===k?' sel':'');
+  if(bank){
+   return `<button type="button" class="${cls}" data-b="${k}" ${S.checked?'disabled':''}>${v?esc(v):'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</button>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+  }
+  const w=Math.max(6,Math.min(18,b.alts[0].length+2));
+  return `<input type="text" class="${cls}" data-b="${k}" value="${esc(v)}" size="${w}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Blank ${k+1}" ${S.checked?'readonly':''}>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+ }).join('');
+ const total=q.blanks.length,good=S.checked?q.blanks.filter((_,k)=>ok(k)).length:0;
+ const chips=bank&&!S.checked?`<div class="chips" role="group" aria-label="Word bank">${S.bank.map((w,k)=>`<button type="button" class="chip" data-chip="${k}" ${S.chipOf.includes(k)?'disabled':''}>${esc(w)}</button>`).join('')}</div>`:'';
+ const wrong=S.checked&&!bank?q.blanks.filter((_,k)=>!S.res[k]).map(b=>`<button type="button" class="btn ghost small" data-over="${b.i}">${S.over[b.i]?'Counted as right':'I was right'} · blank ${b.i+1}</button>`).join(''):'';
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">${bank?'Level 1':'Level 2'} · ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext">${esc(q.title)}</h2>
+ <p class="cloze">${body}</p>
+ ${chips}
+ ${S.checked?`<p class="sc-line" id="scl">${good} of ${total} blanks correct</p>${wrong?`<div class="row wrap-r">${wrong}</div>`:''}`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${S.checked?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next text'}</button>`:`<button type="button" class="btn" data-a="check">Check</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+function record(){
+ const q=cur();const good=q.blanks.filter((_,k)=>ok(k)).length;
+ (S.lv==='bank'?store.bank:store.type)[q.id]={c:good,t:q.blanks.length};save();
+}
+function results(){
+ const store_=S.lv==='bank'?store.bank:store.type;
+ const Ls=S.list.map(id=>QS[id-1]).filter(q=>store_[q.id]);
+ const tot=Ls.reduce((a,q)=>a+store_[q.id].t,0),gt=Ls.reduce((a,q)=>a+store_[q.id].c,0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=Ls.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+store_[q.id].c,0),b=l.reduce((x,q)=>x+store_[q.id].t,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=Ls.filter(q=>Math.round(store_[q.id].c/store_[q.id].t*100)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} blanks correct across ${Ls.length} text${Ls.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No text was completed in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>`<div class="item"><p class="q">${esc(q.title)}</p><p class="ex">${q.parts.map(x=>x.t!==undefined?esc(x.t):'<b>'+esc(x.b.alts[0])+'</b>').join('')}</p></div>`).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the texts to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+function check(){
+ const q=cur();
+ S.res=evaluate(q,S.vals,S.lv==='type');S.checked=true;S.over={};record();question();
+}
+app.addEventListener('input',e=>{
+ const t=e.target;if(t.dataset&&t.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){S.vals[+t.dataset.b]=t.value}
+});
+app.addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){
+  e.preventDefault();const ins=[...app.querySelectorAll('input.blank')];const i=ins.indexOf(e.target);
+  if(i<ins.length-1)ins[i+1].focus();else check();
+ }
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.name==='lvl'){L=t.value;home();return}
+ if(t.id==='shuf'){shuffle=t.checked}
+});
+app.addEventListener('click',e=>{
+ const chip=e.target.closest('[data-chip]');
+ if(chip&&S&&S.lv==='bank'&&!S.checked){
+  const k=+chip.dataset.chip;let tgt=S.sel;
+  if(tgt==null||S.vals[tgt]){const ne=nextEmpty();tgt=ne;}
+  if(tgt<0)return;
+  S.vals[tgt]=S.bank[k];S.chipOf[tgt]=k;
+  const ne=nextEmpty();S.sel=ne<0?null:ne;question();return;
+ }
+ const ov=e.target.closest('[data-over]');
+ if(ov&&S&&S.checked){const k=+ov.dataset.over;S.over[k]=!S.over[k];record();question();return}
+ const bl=e.target.closest('button[data-b]');
+ if(bl&&S&&S.lv==='bank'&&!S.checked){
+  const k=+bl.dataset.b;
+  if(S.vals[k]){S.vals[k]='';S.chipOf[k]=-1}
+  S.sel=k;question();return;
+ }
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='check')check();
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;load();question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;load();question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={bank:{},type:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>

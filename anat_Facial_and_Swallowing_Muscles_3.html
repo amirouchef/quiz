@@ -1,0 +1,309 @@
+<title>Facial Muscles Open Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Facial nerve and groups of facial muscles'},
+ {k:'B',n:'Muscles of the eyelids and eyebrows'},
+ {k:'C',n:'Muscles of the ear and nose'},
+ {k:'D',n:'Lip dilators: upper lip and commissure'},
+ {k:'E',n:'Lip dilators: cheek, commissure, lower lip and neck'},
+ {k:'F',n:'Lip constrictors'},
+ {k:'G',n:'Deglutition muscles: nerves and overview'},
+ {k:'H',n:'Soft palate and uvula muscles'},
+ {k:'I',n:'Pharyngeal muscles'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+/* A */
+['A',"Describe the facial nerve (CN7) and the muscles it controls.","The facial nerve (CN7) is a mixed nerve, but mainly motor. It controls the muscles of mimicry, which can act independently or in a coordinated way.",["Cranial nerve VII (CN7)","Mixed nerve, but mainly motor","Controls the muscles of mimicry","These muscles act independently or coordinated"]],
+['A',"Name the four groups of facial muscles.","The facial muscles are divided into four groups: the muscles of the eyelids and eyebrows, the muscles of the ear, the muscles of the nose and the muscles of the lips.",["Eyelids and eyebrows","Ear","Nose","Lips"]],
+['A',"List the muscles of each of the four groups of facial muscles.","Eyelids and eyebrows: occipitofrontalis, procerus, orbicularis oculi and corrugator supercilii. Ear: intrinsic (tragus, antitragus, helix) and extrinsic (auricularis anterior, superior and posterior). Nose: transverse and alar portions of the nasalis and the depressor septi nasi. Lips: eleven dilators and two constrictors (orbicularis oris and compressor labii).",["Eyelids and eyebrows: occipitofrontalis, procerus, orbicularis oculi, corrugator supercilii","Ear: tragus, antitragus, helix; auricularis anterior, superior, posterior","Nose: transverse and alar portions of nasalis, depressor septi nasi","Lips: dilators and constrictors (orbicularis oris, compressor labii)"]],
+['A',"Name the branches of the facial nerve shown in the diagram of the slides.","The diagram shows the temporal, zygomatic, buccal, marginal mandibular and cervical branches. It also shows the temporofacial and cervicofacial branches, the posterior auricular nerve, and the parotid gland through which the branches pass.",["Temporal and zygomatic branches","Buccal branches","Marginal mandibular and cervical branches","Temporofacial and cervicofacial branches; posterior auricular nerve; parotid gland"]],
+['A',"Compare the motor innervation of the facial muscles with that of the masticatory muscles.","The facial muscles (muscles of mimicry) are innervated by the facial nerve (CN7). The masticatory muscles are innervated by the mandibular nerve (V3), the only branch of the trigeminal nerve with motor fibers.",["Facial muscles: facial nerve (CN7)","Masticatory muscles: mandibular nerve (V3) of the trigeminal nerve"]],
+/* B */
+['B',"Describe the occipitofrontalis: shape, path, function and innervation.","The occipitofrontalis is thin and flattened. It runs from the occipital bone to the skin of the eyebrows. It pulls the scalp posteriorly. It is innervated by the facial nerve (CN7).",["Thin and flattened","From the occipital bone to the skin of the eyebrows","Pulls the scalp posteriorly","Facial nerve (CN7)"]],
+['B',"Describe the procerus: shape, path, function and innervation.","The procerus is thin and elongated. It runs from the nasal bone to the skin of the frown. It descends the skin of the frown. It is innervated by the facial nerve (CN7).",["Thin and elongated","From the nasal bone to the skin of the frown","Descends the skin of the frown","Facial nerve (CN7)"]],
+['B',"Describe the orbicularis oculi: shape, path, function and innervation.","The orbicularis oculi is wide, flat and circular. It runs around the anterior border of the orbit, to the eyelids. It closes the eye. It is innervated by the facial nerve (CN7).",["Wide, flat and circular","Around the anterior border of the orbit, to the eyelids","Closes the eye","Facial nerve (CN7)"]],
+['B',"Describe the corrugator supercilii: shape, path, function and innervation.","The corrugator supercilii is very thin and flat. It runs from the superciliary arch to the skin of the eyebrow. It descends the eyebrow and contracts the frown. It is innervated by the facial nerve (CN7).",["Very thin and flat","From the superciliary arch to the skin of the eyebrow","Descends the eyebrow and contracts the frown","Facial nerve (CN7)"]],
+['B',"Compare the actions of the four muscles of the eyelids and eyebrows.","The occipitofrontalis pulls the scalp posteriorly. The procerus descends the skin of the frown. The orbicularis oculi closes the eye. The corrugator supercilii descends the eyebrow and contracts the frown. All four are innervated by the facial nerve.",["Occipitofrontalis: pulls the scalp posteriorly","Procerus: descends the skin of the frown","Orbicularis oculi: closes the eye","Corrugator supercilii: descends the eyebrow, contracts the frown"]],
+/* C */
+['C',"Name the intrinsic and extrinsic muscles of the ear.","The intrinsic muscles of the ear are the tragus, antitragus and helix muscles. The extrinsic muscles are the auricularis anterior, the auricularis superior and the auricularis posterior.",["Intrinsic: tragus, antitragus, helix","Extrinsic: auricularis anterior, superior, posterior"]],
+['C',"Name the intrinsic muscles of the nose.","The intrinsic muscles of the nose are the transverse portion of the nasalis, the alar portion of the nasalis and the depressor septi nasi.",["Transverse portion of the nasalis","Alar portion of the nasalis","Depressor septi nasi"]],
+/* D */
+['D',"Describe the levator labii superioris: shape, path, function and innervation.","The levator labii superioris is flattened and elongated. It runs from the inferior border of the orbit to the skin of the angle of the mouth. It pulls the upper lip upwards. It is innervated by the facial nerve (CN7).",["Flattened and elongated","From the inferior border of the orbit to the skin of the angle of the mouth","Pulls the upper lip upwards","Facial nerve (CN7)"]],
+['D',"Describe the levator labii superioris alaeque nasi: shape, path, function and innervation.","This muscle is thin and elongated. It runs from the medial border of the orbit to the skin of the upper lip. It pulls the upper lip and the nasal wing upwards. It is innervated by the facial nerve (CN7).",["Thin and elongated","From the medial border of the orbit to the skin of the upper lip","Pulls the upper lip and the nasal wing upwards","Facial nerve (CN7)"]],
+['D',"Describe the levator anguli oris: shape, path, function and innervation.","The levator anguli oris is flattened and quadrate. It runs from the canine fossa to the skin of the angle of the mouth. It elevates the commissure and the lower lip. It is innervated by the facial nerve (CN7).",["Flattened and quadrate","From the canine fossa to the skin of the angle of the mouth","Elevates the commissure and the lower lip","Facial nerve (CN7)"]],
+['D',"Describe the zygomaticus minor: shape, path, function and innervation.","The zygomaticus minor is thin and elongated. It runs from the anterior side of the zygomatic bone to the upper lip. It pulls the upper lip upwards and laterally. It is innervated by the facial nerve (CN7).",["Thin and elongated","From the anterior side of the zygomatic bone to the upper lip","Pulls the upper lip upwards and laterally","Facial nerve (CN7)"]],
+['D',"Describe the zygomaticus major: shape, path, function and innervation.","The zygomaticus major is thin and elongated. It runs from the lateral side of the zygomatic bone to the upper lip. It pulls the upper lip upwards and laterally. It is innervated by the facial nerve (CN7).",["Thin and elongated","From the lateral side of the zygomatic bone to the upper lip","Pulls the upper lip upwards and laterally","Facial nerve (CN7)"]],
+['D',"Compare the zygomaticus minor and the zygomaticus major.","Both are thin and elongated, both end on the upper lip, both pull it upwards and laterally, and both are supplied by the facial nerve. They differ in origin: the minor arises from the anterior side of the zygomatic bone, the major from its lateral side.",["Same shape, function and innervation","Both end on the upper lip","Minor: anterior side of the zygomatic bone","Major: lateral side of the zygomatic bone"]],
+/* E */
+['E',"Describe the buccinator: shape, path, function and innervation.","The buccinator is wide and flattened. It runs from the pterygomandibular raphe and the alveolar process of the jaws to the skin of the oral commissure. It compresses the oral vestibule, for example for blowing or whistling. It is innervated by the facial nerve (CN7).",["Wide and flattened","From the pterygomandibular raphe and alveolar process of the jaws to the skin of the commissure","Compresses the oral vestibule (blowing, whistling)","Facial nerve (CN7)"]],
+['E',"Describe the risorius: shape, path, function and innervation.","The risorius is flattened and elongated. It runs from the masseteric fascia to the oral commissure. It pulls the oral commissure backwards. It is innervated by the facial nerve (CN7).",["Flattened and elongated","From the masseteric fascia to the oral commissure","Pulls the commissure backwards","Facial nerve (CN7)"]],
+['E',"Describe the depressor anguli oris: shape, path, function and innervation.","The depressor anguli oris is wide and flattened. It runs from the oblique line of the mandible to the skin of the oral commissure. It pulls the oral commissure downwards. It is innervated by the facial nerve (CN7).",["Wide and flattened","From the oblique line of the mandible to the skin of the commissure","Pulls the commissure downwards","Facial nerve (CN7)"]],
+['E',"Describe the depressor labii inferioris: shape, path, function and innervation.","The depressor labii inferioris is flattened and quadrate. It runs from the anterior portion of the oblique line of the mandible to the skin of the lower lip. It pulls the lower lip downwards. It is innervated by the facial nerve (CN7).",["Flattened and quadrate","From the anterior portion of the oblique line of the mandible to the skin of the lower lip","Pulls the lower lip downwards","Facial nerve (CN7)"]],
+['E',"Describe the mentalis: shape, path, function and innervation.","The mentalis is short and flattened. It runs from the inferior canine and incisive eminences to the skin of the mental region. It elevates the chin and the lower lip. It is innervated by the facial nerve (CN7).",["Short and flattened","From the inferior canine and incisive eminences to the skin of the mental region","Elevates the chin and lower lip","Facial nerve (CN7)"]],
+['E',"Describe the platysma: shape, path, function and innervation.","The platysma is very wide and flattened. It runs from the skin of the base of the neck to the chin, the oral commissure and the cheek. It pulls the oral commissure and the skin of the chin downwards. It is innervated by the facial nerve (CN7).",["Very wide and flattened","From the skin of the base of the neck to the chin, commissure and cheek","Pulls the commissure and the skin of the chin downwards","Facial nerve (CN7)"]],
+['E',"Which lip muscles move the oral commissure or the lips downwards, backwards or upwards?","Downwards: the depressor anguli oris (commissure), the depressor labii inferioris (lower lip) and the platysma (commissure and skin of the chin). Backwards: the risorius (commissure). Upwards: the levator anguli oris (commissure and lower lip), the levator labii superioris and the levator labii superioris alaeque nasi (upper lip), and the mentalis (chin and lower lip).",["Downwards: depressor anguli oris, depressor labii inferioris, platysma","Backwards: risorius","Upwards: levator anguli oris, levator labii superioris (and alaeque nasi), mentalis"]],
+/* F */
+['F',"Classify the muscles of the lips into dilators and constrictors.","The dilators are the levator labii superioris, levator labii superioris alaeque nasi, levator anguli oris, zygomaticus minor, zygomaticus major, buccinator, risorius, depressor anguli oris, depressor labii inferioris, mentalis and platysma. The constrictors are the orbicularis oris and the compressor labii.",["Dilators (11): levators, zygomatici, buccinator, risorius, depressors, mentalis, platysma","Constrictors (2): orbicularis oris and compressor labii"]],
+['F',"Describe the orbicularis oris: shape, function and innervation, and name its two portions.","The orbicularis oris is elliptical and runs concentrically around the mouth. It closes the lips. It is innervated by the facial nerve (CN7). It has a marginal portion and a labial portion.",["Elliptical, concentric around the mouth","Closes the lips","Facial nerve (CN7)","Marginal portion and labial portion"]],
+['F',"Describe the extrinsic fibers of the marginal portion of the orbicularis oris.","The extrinsic fibers form two groups. One group comes from the depressor anguli oris and the buccinator and inserts in the upper lip. The other comes from the levator anguli oris and the buccinator and inserts in the lower lip.",["Two groups","Depressor anguli oris and buccinator fibers: upper lip","Levator anguli oris and buccinator fibers: lower lip"]],
+['F',"Describe the intrinsic fibers of the marginal portion of the orbicularis oris.","The intrinsic fibers are the superior and inferior incisive muscles. The superior incisive muscles run from the border of the superior incisive fossa to the skin and mucosa of the labial commissure. The inferior incisive muscles run from the inferior canine eminence to the skin and mucosa of the labial commissure.",["Superior incisive muscles: border of the superior incisive fossa to the labial commissure","Inferior incisive muscles: inferior canine eminence to the labial commissure","Both end on the skin and mucosa of the labial commissure"]],
+['F',"Describe the labial portion of the orbicularis oris.","The fibers of the labial portion are inserted along the free edge of the upper and lower lips and run to the skin and mucosa of the oral commissure.",["Inserted along the free edge of the upper and lower lips","Run to the skin and mucosa of the oral commissure"]],
+['F',"Describe the compressor labii: shape, path, function and innervation.","The compressor labii is very short and flattened. It runs around the lips, from the deep side of the lip skin to the oral mucosa. It compresses the lips. It is innervated by the facial nerve (CN7).",["Very short and flattened","Around the lips, from the deep side of the lip skin to the oral mucosa","Compresses the lips","Facial nerve (CN7)"]],
+/* G */
+['G',"Which neuromuscular systems do the deglutition muscles belong to?","The deglutition muscles form part of the neuromuscular systems of the trigeminal (CN5), glossopharyngeal (CN9), vagus (CN10) and hypoglossal (CN12) nerves, and of the pharyngeal plexus (CN9 + CN10).",["Trigeminal (CN5)","Glossopharyngeal (CN9) and vagus (CN10)","Hypoglossal (CN12)","Pharyngeal plexus (CN9 + CN10)"]],
+['G',"How do the deglutition muscles work, and what continues their function?","They work in coordination during swallowing. Their function is continued by the smooth muscle of the esophagus.",["Work in coordination during swallowing","Function continued by the smooth muscle of the esophagus"]],
+['G',"What is the sensory innervation of the three levels of the pharynx shown in the diagram?","The nasopharynx is sensory through V2, the oropharynx through the glossopharyngeal nerve (IX) and the laryngopharynx through the vagus nerve (X).",["Nasopharynx: V2","Oropharynx: IX","Laryngopharynx: X"]],
+['G',"List the eight deglutition muscles of the slides.","The deglutition muscles are the musculus uvulae, the levator veli palatini, the tensor veli palatini, the palatoglossus, the palatopharyngeus, the constrictors of the pharynx, the stylopharyngeus and the salpingopharyngeus.",["Musculus uvulae","Levator veli palatini, tensor veli palatini","Palatoglossus, palatopharyngeus","Constrictors of the pharynx","Stylopharyngeus, salpingopharyngeus"]],
+['G',"Summarise the innervation of the deglutition muscles.","CN5 supplies the tensor veli palatini. CN9 supplies the stylopharyngeus. CN10 supplies the musculus uvulae, the levator veli palatini and the palatoglossus. The pharyngeal plexus (CN9 + CN10) supplies the palatopharyngeus, the constrictors of the pharynx and the salpingopharyngeus.",["CN5: tensor veli palatini","CN9: stylopharyngeus","CN10: musculus uvulae, levator veli palatini, palatoglossus","Pharyngeal plexus: palatopharyngeus, constrictors, salpingopharyngeus"]],
+/* H */
+['H',"Describe the musculus uvulae: shape, path, function and innervation.","The musculus uvulae is small and elongated. It runs from the posterior nasal spine and the palatine aponeurosis to the uvula. It retracts the uvula. It is innervated by the vagus nerve (CN10).",["Small and elongated","From the posterior nasal spine and palatine aponeurosis to the uvula","Retracts the uvula","Vagus nerve (CN10)"]],
+['H',"Describe the levator veli palatini: shape, path, function and innervation.","The levator veli palatini is flattened and triangular. It runs from the inferior side of the petrous portion of the temporal bone to the upper side of the soft palate. It elevates the soft palate. It is innervated by the vagus nerve (CN10).",["Flattened and triangular","From the inferior side of the petrous portion of the temporal bone to the upper side of the soft palate","Elevates the soft palate","Vagus nerve (CN10)"]],
+['H',"Describe the tensor veli palatini: shape, path, function and innervation.","The tensor veli palatini is thin and elongated. It runs from the inferior side of the greater wing of the sphenoid, through the hamulus, to the palatine aponeurosis. It tenses the soft palate. It is innervated by the trigeminal nerve (CN5).",["Thin and elongated","From the inferior side of the greater wing of the sphenoid, through the hamulus, to the palatine aponeurosis","Tenses the soft palate","Trigeminal nerve (CN5)"]],
+['H',"Describe the palatoglossus in the deglutition slides: shape, path, function and innervation.","The palatoglossus is flattened and elongated. It runs from the lower side of the soft palate to the tongue. It descends the soft palate and elevates the tongue. It is innervated by the vagus nerve (CN10).",["Flattened and elongated","From the lower side of the soft palate to the tongue","Descends the soft palate and elevates the tongue","Vagus nerve (CN10)"]],
+['H',"Describe the palatopharyngeus: shape, path, function and innervation.","The palatopharyngeus is thick, wide and flattened. It runs from the palatine aponeurosis and the hamulus to the thyroid cartilage and the pharynx. It descends the soft palate and elevates the pharynx. It is innervated by the pharyngeal plexus (CN9 + CN10).",["Thick, wide and flattened","From the palatine aponeurosis and hamulus to the thyroid cartilage and pharynx","Descends the soft palate, elevates the pharynx","Pharyngeal plexus (CN9 + CN10)"]],
+['H',"Which muscles elevate, tense and descend the soft palate?","The levator veli palatini elevates the soft palate. The tensor veli palatini tenses it. The palatoglossus and the palatopharyngeus descend it. The musculus uvulae retracts the uvula.",["Elevates: levator veli palatini","Tenses: tensor veli palatini","Descend: palatoglossus and palatopharyngeus","Uvula retracted by the musculus uvulae"]],
+['H',"Which nerve supplies each muscle of the soft palate and uvula?","The tensor veli palatini is supplied by the trigeminal nerve (CN5). The musculus uvulae, the levator veli palatini and the palatoglossus are supplied by the vagus nerve (CN10). The palatopharyngeus is supplied by the pharyngeal plexus (CN9 + CN10).",["Tensor veli palatini: CN5","Musculus uvulae, levator veli palatini, palatoglossus: CN10","Palatopharyngeus: pharyngeal plexus"]],
+/* I */
+['I',"Describe the superior constrictor of the pharynx: shape, path, function and innervation.","The superior constrictor is wide and flattened. It runs from the hamulus, the pterygomandibular raphe and the mylohyoid line to the contralateral muscle fibers. It narrows the pharynx. It is innervated by the pharyngeal plexus (CN9 + CN10).",["Wide and flattened","From the hamulus, pterygomandibular raphe and mylohyoid line to the contralateral fibers","Narrows the pharynx","Pharyngeal plexus (CN9 + CN10)"]],
+['I',"Describe the middle constrictor of the pharynx: shape, path, function and innervation.","The middle constrictor is wide and flattened. It runs from the hyoid bone to the contralateral muscle fibers. It narrows the pharynx. It is innervated by the pharyngeal plexus (CN9 + CN10).",["Wide and flattened","From the hyoid bone to the contralateral fibers","Narrows the pharynx","Pharyngeal plexus (CN9 + CN10)"]],
+['I',"Describe the inferior constrictor of the pharynx: shape, path, function and innervation.","The inferior constrictor is wide and flattened. It runs from the cricoid and thyroid cartilages to the contralateral muscle fibers. It narrows the pharynx. It is innervated by the pharyngeal plexus (CN9 + CN10).",["Wide and flattened","From the cricoid and thyroid cartilages to the contralateral fibers","Narrows the pharynx","Pharyngeal plexus (CN9 + CN10)"]],
+['I',"Compare the three constrictors of the pharynx.","All three are wide and flattened, end on the contralateral muscle fibers, narrow the pharynx and are supplied by the pharyngeal plexus. They differ in origin: the superior arises from the hamulus, pterygomandibular raphe and mylohyoid line; the middle from the hyoid bone; the inferior from the cricoid and thyroid cartilages.",["Common: wide, flattened, narrow the pharynx, pharyngeal plexus","Superior: hamulus, pterygomandibular raphe, mylohyoid line","Middle: hyoid bone","Inferior: cricoid and thyroid cartilages"]],
+['I',"Describe the stylopharyngeus: shape, path, function and innervation.","The stylopharyngeus is thin and triangular. It runs from the styloid process to the epiglottis, the thyroid cartilage and the cricoid cartilage. It elevates the pharynx and the larynx. It is innervated by the glossopharyngeal nerve (CN9).",["Thin and triangular","From the styloid process to the epiglottis, thyroid cartilage and cricoid cartilage","Elevates the pharynx and larynx","Glossopharyngeal nerve (CN9)"]],
+['I',"Describe the salpingopharyngeus: shape, path, function and innervation.","The salpingopharyngeus is short and flattened. It runs from the auditory tube to the lateral wall of the pharynx. It elevates the pharynx and opens the auditory tube. It is innervated by the pharyngeal plexus (CN9 + CN10).",["Short and flattened","From the auditory tube to the lateral wall of the pharynx","Elevates the pharynx and opens the auditory tube","Pharyngeal plexus (CN9 + CN10)"]],
+['I',"Which muscles elevate the pharynx, and which nerve supplies each of them?","The palatopharyngeus, the stylopharyngeus and the salpingopharyngeus elevate the pharynx (the stylopharyngeus also elevates the larynx). The stylopharyngeus is supplied by the glossopharyngeal nerve (CN9); the palatopharyngeus and the salpingopharyngeus by the pharyngeal plexus (CN9 + CN10).",["Palatopharyngeus: pharyngeal plexus","Stylopharyngeus: CN9 (also elevates the larynx)","Salpingopharyngeus: pharyngeal plexus (also opens the auditory tube)"]]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t5b-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 5 part 2</p>
+ <h1>Facial and Swallowing Muscles Questions</h1>
+ <p class="lead">${QS.length} open questions on the Topic 5 part 2 slides: facial nerve, muscles of the eyelids, eyebrows, ear, nose and lips, and the muscles of deglutition. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>
