@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anatomy Writing Kit</title>
+<style>
+:root{--bg:#faf7f5;--surface:#fff;--fg:#1f1a1c;--muted:#6a5f63;--line:#e3d8dc;--accent:#8c1d40;--soft:#f6e9ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171214;--surface:#211a1d;--fg:#f3eceb;--muted:#b3a5a9;--line:#3a2f33;--accent:#e0708f;--soft:#2e2025}}
+:root[data-theme="dark"]{--bg:#171214;--surface:#211a1d;--fg:#f3eceb;--muted:#b3a5a9;--line:#3a2f33;--accent:#e0708f;--soft:#2e2025}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.page{max-width:1000px;margin:0 auto;padding:24px 16px 40px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:2px solid var(--accent);padding-bottom:8px;margin-bottom:14px;flex-wrap:wrap}
+h1{font-size:24px;margin:0;line-height:1.1}
+.sub{color:var(--muted);font-size:13px}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;break-inside:avoid}
+.box.wide{grid-column:1/-1}
+h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 5px}
+ul{margin:0;padding-left:17px}
+li{margin:1px 0}
+.tpl{background:var(--soft);border-radius:7px;padding:5px 8px;margin:4px 0;font-size:14px}
+.tpl b{color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chips span{border:1px solid var(--line);border-radius:999px;padding:0 8px;font-size:13px;background:var(--bg)}
+.lab{font-weight:600;font-size:13px;margin:5px 0 2px;color:var(--muted)}
+.ex{font-size:13.5px}
+.small{font-size:12.5px;color:var(--muted)}
+.two{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:760px){.two{grid-template-columns:1fr 1fr}}
+i{color:var(--muted)}
+@media print{
+ @page{size:A4;margin:6mm}
+ body{background:#fff;color:#000;font-size:8.2pt;line-height:1.25}
+ :root{--bg:#fff;--surface:#fff;--fg:#000;--muted:#444;--line:#cfc3c7;--accent:#8c1d40;--soft:#f6e9ee}
+ .page{max-width:none;padding:0}
+ header{margin-bottom:6px;padding-bottom:4px}
+ h1{font-size:17pt}
+ .grid{grid-template-columns:1fr 1fr;gap:5px}
+ .box{padding:4px 6px;border-radius:5px}
+ h2{font-size:8.3pt;margin-bottom:3px}
+ .tpl{font-size:8.1pt;padding:2px 5px;margin:2px 0}
+ .chips span{font-size:7.6pt;padding:0 3px}
+ .lab{font-size:8pt;margin:2px 0 1px}
+ .ex,.small{font-size:8pt}
+ .two{grid-template-columns:1fr 1fr;gap:8px}
+ p{margin-bottom:3px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+ <h1>Anatomy writing kit</h1>
+ <div class="sub">Topic 3 (bones, fossae, cavities) and Topic 5 (muscles) · for open questions in English</div>
+</header>
+<div class="grid">
+
+<section class="box wide">
+ <h2>1 · The two frames the slides already use</h2>
+ <div class="two">
+ <div>
+  <div class="lab">Muscle (Topic 5): shape, path, function, innervation</div>
+  <div class="tpl"><b>Shape</b> — The [muscle] is a [thin / thick / wide…] muscle. <b>Path</b> — It runs from [origin] to [insertion]. <b>Function</b> — It [elevates / retracts…] the [structure]. <b>Innervation</b> — It is innervated by [nerve].</div>
+  <p class="ex"><b>Example:</b> The masseter is a short, thick and rectangular muscle. It runs from the zygomatic arch to the lateral side of the angle and ramus of the mandible. It elevates the mandible. It is innervated by the mandibular nerve (V3).</p>
+ </div>
+ <div>
+  <div class="lab">Bone (Topic 3): location, shape, articulations, contents, parts</div>
+  <div class="tpl"><b>Location</b> — The [bone] is located in [area of the skull]. <b>Shape</b> — It is a [flat / irregular / paired] bone. <b>Articulations</b> — It articulates with [bones]. <b>Contents</b> — It contains [sinus / foramen]. <b>Parts</b> — It is formed by [number] parts: …</div>
+  <p class="ex"><b>Example:</b> The sphenoid is located in the middle portion of the skull base, between the ethmoid and the basilar part of the occipital bone. It is shaped like a butterfly. It articulates with the frontal, ethmoid, occipital, parietal, temporal, palatine and zygomatic bones. It contains the sphenoid sinus. It is formed by four parts: the body, the greater wings, the lesser wings and the pterygoid process.</p>
+ </div>
+ </div>
+</section>
+
+<section class="box">
+ <h2>2 · Sentence templates</h2>
+ <div class="lab">Foramen or canal</div>
+ <div class="tpl">The [foramen] is located in the [bone / portion]. It <b>transmits</b> the [nerve / vessels]. <i>e.g. the stylomastoid foramen transmits the facial nerve.</i></div>
+ <div class="lab">Wall, floor or roof</div>
+ <div class="tpl">The [roof / floor / medial wall / lateral wall] is <b>formed by</b> [bones], with a small contribution from [bone].</div>
+ <div class="lab">Nerve</div>
+ <div class="tpl">The [nerve] is a <b>branch of</b> [nerve / trunk]. It <b>supplies</b> [muscle] and gives <b>sensory innervation to</b> [structure].</div>
+ <div class="lab">List</div>
+ <div class="tpl">There are [number] [items]: <b>first</b>, … ; <b>second</b>, … ; and <b>finally</b>, …</div>
+ <div class="lab">Compare</div>
+ <div class="tpl"><b>Both</b> [A] and [B] …, <b>but</b> [A] …, <b>whereas</b> [B] …</div>
+ <div class="lab">Position</div>
+ <div class="tpl">It <b>lies between</b> [X] and [Y] / It <b>wraps</b> [structure] / It <b>forms</b> [ligament].</div>
+</section>
+
+<section class="box">
+ <h2>3 · Verb bank</h2>
+ <div class="lab">Origin and insertion</div>
+ <div class="chips"><span>arises from</span><span>originates from</span><span>runs from … to</span><span>inserts on</span><span>attaches to</span><span>ends on</span><span>covers</span><span>wraps</span><span>lies between</span><span>passes through</span></div>
+ <div class="lab">Actions</div>
+ <div class="chips"><span>elevates</span><span>depresses</span><span>descends</span><span>retracts</span><span>moves forwards</span><span>pulls upwards</span><span>pulls backwards</span><span>closes</span><span>opens</span><span>tenses</span><span>narrows</span><span>compresses</span><span>raises</span><span>elongates</span><span>shortens</span><span>enlarges</span></div>
+ <div class="lab">Nerves and bones</div>
+ <div class="chips"><span>is innervated by</span><span>is supplied by</span><span>is a branch of</span><span>articulates with</span><span>forms</span><span>contains</span><span>houses</span><span>is perforated by</span><span>transmits</span><span>is located</span></div>
+ <div class="lab">Relations</div>
+ <div class="chips"><span>is formed by</span><span>is limited by</span><span>is continuous with</span><span>communicates with</span><span>opens onto</span><span>leads to</span><span>separates … from</span></div>
+</section>
+
+<section class="box">
+ <h2>4 · Shapes and directions</h2>
+ <div class="lab">Shapes</div>
+ <div class="chips"><span>paired</span><span>irregular</span><span>L-shaped</span><span>U-shaped</span><span>quadrangular</span><span>butterfly-shaped</span><span>thin</span><span>thick</span><span>wide</span><span>short</span><span>elongated</span><span>flat / flattened</span><span>rectangular</span><span>triangular</span><span>rhomboid</span><span>quadrate</span><span>cylindrical</span><span>circular</span><span>elliptical</span></div>
+ <div class="lab">Directions</div>
+ <div class="chips"><span>superior ↔ inferior</span><span>anterior ↔ posterior</span><span>medial ↔ lateral</span><span>deep ↔ superficial</span><span>upper ↔ lower</span><span>upwards ↔ downwards</span><span>roof ↔ floor</span><span>anterior ↔ posterior wall</span></div>
+ <div class="lab">Landmarks</div>
+ <div class="chips"><span>process</span><span>foramen</span><span>fossa</span><span>crest</span><span>line</span><span>spine</span><span>notch</span><span>tuberosity</span><span>ramus</span><span>angle</span><span>neck</span><span>arch</span><span>wing</span><span>plate</span><span>canal</span><span>fissure</span><span>suture</span><span>sinus</span></div>
+</section>
+
+<section class="box">
+ <h2>5 · Nerves: write them in full once</h2>
+ <ul class="ex">
+  <li>V3 = mandibular nerve (trigeminal, CN5): masticatory muscles</li>
+  <li>CN7 = facial nerve: muscles of mimicry</li>
+  <li>CN9 = glossopharyngeal · CN10 = vagus</li>
+  <li>CN12 = hypoglossal nerve: tongue muscles</li>
+  <li>Pharyngeal plexus = CN9 + CN10</li>
+ </ul>
+ <p class="small">Write “mandibular nerve (V3)” the first time, then V3 is fine.</p>
+</section>
+
+<section class="box wide">
+ <h2>6 · Spelling traps</h2>
+ <div class="chips">
+  <span>masseter</span><span>temporalis</span><span>pterygoid</span><span>mylohyoid</span><span>geniohyoid</span><span>digastric</span><span>genioglossus</span><span>hyoglossus</span><span>styloglossus</span><span>palatoglossus</span><span>amygdaloglossus</span><span>hypoglossal</span><span>zygomaticus</span><span>orbicularis oculi</span><span>orbicularis oris</span><span>corrugator supercilii</span><span>occipitofrontalis</span><span>risorius</span><span>buccinator</span><span>platysma</span><span>commissure</span><span>aponeurosis</span><span>pterygomandibular</span><span>sphenomandibular</span><span>infratemporal</span><span>palatopharyngeus</span><span>stylopharyngeus</span><span>salpingopharyngeus</span><span>ethmoid</span><span>sphenoid</span><span>cribriform plate</span><span>crista galli</span><span>lamina papyracea</span><span>sella turcica</span><span>foramen rotundum</span><span>foramen ovale</span><span>foramen spinosum</span><span>stylomastoid</span><span>pterygopalatine</span><span>infraorbital</span><span>nasolacrimal</span><span>sphenopalatine</span><span>lacrimal</span><span>vomer</span><span>lingula</span><span>coronoid</span><span>mastoid</span><span>styloid</span><span>glenoid</span>
+ </div>
+ <p class="small">Some slides misspell “sphenoid” (esphenoid), “cribriform” (cribiform) and “pterygopalatine” (pterigopalatine). Use the correct spelling.</p>
+</section>
+
+<section class="box wide">
+ <h2>7 · In the exam</h2>
+ <ul>
+  <li><b>Count the key points.</b> “Describe the X” usually means four points: write four short sentences. <b>Name every item of a list</b> and give the number first (“There are three fascias: …”).</li>
+  <li><b>Short and correct beats long and risky.</b> Blank on a detail? Write what you know in order and move on: partial answers earn points.</li>
+  <li><b>Check your spelling</b> against section 6 before handing in. Ask the professor if a list or bullet answer is accepted.</li>
+ </ul>
+</section>
+
+</div>
+</div>
+</body>
+</html>
