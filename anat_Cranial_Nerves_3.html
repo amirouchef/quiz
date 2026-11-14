@@ -1,0 +1,288 @@
+<title>Cranial Nerves Open Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Cranial nerves: general organisation'},
+ {k:'B',n:'Olfactory and optic nerves (I, II)'},
+ {k:'C',n:'Oculomotor, trochlear and abducens (III, IV, VI)'},
+ {k:'D',n:'Trigeminal nerve (V)'},
+ {k:'E',n:'Facial nerve: roots and functions'},
+ {k:'F',n:'Facial nerve: course'},
+ {k:'G',n:'Facial nerve: branches'},
+ {k:'H',n:'Vestibulocochlear and glossopharyngeal (VIII, IX)'},
+ {k:'I',n:'Vagus nerve (X)'},
+ {k:'J',n:'Pharyngeal plexus'},
+ {k:'K',n:'Accessory and hypoglossal (XI, XII)'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+["A","Explain the real and the apparent origin of the cranial nerves, and name the exceptions.","The real origin is a nucleus of grey substance inside the brain, except for nerves I, II and VIII, whose real origin lies outside the brain. The apparent origin is the area of attachment to the surface of the brainstem (superficial origin).",["Real origin: nucleus of grey substance","Exceptions: I, II and VIII","Apparent origin: attachment to the brainstem surface"]],
+["A","Classify the twelve cranial nerves as sensory, motor or mixed.","Sensory: olfactory (I), optic (II), vestibulocochlear (VIII). Motor: oculomotor (III), trochlear (IV), abducens (VI), accessory (XI), hypoglossal (XII). Mixed: trigeminal (V), facial (VII), glossopharyngeal (IX), vagus (X).",["Sensory: I, II, VIII","Motor: III, IV, VI, XI, XII","Mixed: V, VII, IX, X"]],
+["B","Describe the olfactory nerve (CN I): origin, course and function.","It arises from the olfactory cells of the nasal mucosa in the roof of the nasal cavity (superior nasal conchae and septum). The fibres form bundles that pass through the cribriform plate of the ethmoid and end in the olfactory bulb. The olfactory tract then reaches the olfactory areas of the cortex. It has only a special sensory component: smell.",["Origin: olfactory cells of the nasal mucosa","Passes through the cribriform plate","Ends in the olfactory bulb, then tract to the cortex","Special sensory: smell"]],
+["B","Describe the optic nerve (CN II): origin, course and function.","It arises from the ganglion cells of the retina and leaves the orbit through the optic canal, running posteromedially to the optic chiasm, where there is a partial decussation. The fibres continue in the optic tracts to the visual centres of the brain. It has only a special sensory component: sight.",["Origin: ganglion cells of the retina","Leaves the orbit through the optic canal","Partial decussation at the optic chiasm","Special sensory: sight"]],
+["C","Describe the oculomotor nerve (CN III): origin, course and motor supply.","It emerges from the oculomotor sulcus on the medial side of the cerebral peduncle, passes through the dura mater, runs along the lateral wall of the cavernous sinus above the trochlear nerve and enters the orbit through the superior orbital fissure, dividing into superior and inferior branches. The superior branch supplies the superior rectus and the levator palpebrae superioris. The inferior branch supplies the medial rectus, the inferior rectus and the inferior oblique.",["Origin: oculomotor sulcus, cerebral peduncle","Cavernous sinus and superior orbital fissure","Superior branch: superior rectus and levator palpebrae","Inferior branch: medial rectus, inferior rectus, inferior oblique"]],
+["C","Describe the parasympathetic function of the oculomotor nerve.","Parasympathetic fibres leave the inferior branch and synapse in the ciliary ganglion. They form the short ciliary nerves, which innervate the ciliary muscle (shape and refractive power of the lens) and the constrictor pupillae of the iris (constricts the pupil).",["Leave the inferior branch","Synapse in the ciliary ganglion","Ciliary muscle: shape of the lens","Constrictor pupillae: constricts the pupil"]],
+["C","Describe the trochlear nerve (CN IV) and its unique features.","The trochlear nerve arises from the inferior colliculus region on the dorsal surface of the brainstem, decussates with its fellow, travels forward around the cerebral peduncle, runs along the lateral wall of the cavernous sinus and enters the orbit through the superior orbital fissure to innervate the superior oblique. It is the only nerve that exits from the dorsal surface of the brain, the only one whose fibres decussate, and has the longest intracranial course.",["Origin dorsal, inferior colliculus","Supplies the superior oblique","Only dorsal exit","Only decussation","Longest intracranial course"]],
+["C","Describe the abducens nerve (CN VI).","It emerges from the lower border of the pons, just above the pyramid of the medulla, runs along the lateral wall of the cavernous sinus with CN III, IV and V, and enters the orbit through the superior orbital fissure. It has only a somatic motor component and innervates only the lateral rectus.",["Lower border of the pons","Cavernous sinus, superior orbital fissure","Somatic motor only","Lateral rectus only"]],
+["C","Which nerves supply the extraocular muscles? Give the muscle for each.","The oculomotor nerve supplies the superior rectus, medial rectus, inferior rectus, inferior oblique and levator palpebrae superioris. The trochlear nerve supplies the superior oblique. The abducens nerve supplies the lateral rectus.",["CN III: superior, medial, inferior rectus, inferior oblique, levator palpebrae","CN IV: superior oblique","CN VI: lateral rectus"]],
+["D","Describe the course of the trigeminal nerve from the brainstem to its divisions.","It exits from the anterolateral surface of the pons as a large sensory root and a small motor root, which pass forward over the medial tip of the petrous part of the temporal bone into the middle cranial fossa. The sensory root expands into the trigeminal ganglion, in the trigeminal cave on the anterior surface of the petrous bone. The motor root lies below and separate. From the anterior border of the ganglion arise the ophthalmic (V1), maxillary (V2) and mandibular (V3) divisions.",["Exits the pons anterolaterally","Large sensory root and small motor root","Trigeminal ganglion in the trigeminal cave","Motor root below and separate","V1, V2 and V3"]],
+["D","What are the functions of the trigeminal nerve?","It is the major general sensory nerve of the head and also innervates the muscles that move the lower jaw (masticatory muscles) through the motor root and V3.",["Major general sensory nerve of the head","Motor to the muscles that move the lower jaw"]],
+["D","Name the main cutaneous branches of V1, V2 and V3 shown in the diagrams.","V1 (ophthalmic): supra-orbital, supratrochlear, lacrimal, infratrochlear and external nasal nerves. V2 (maxillary): infra-orbital, zygomaticofacial and zygomaticotemporal nerves. V3 (mandibular): auriculotemporal, buccal and mental nerves.",["V1: supra-orbital, supratrochlear, lacrimal, infratrochlear, external nasal","V2: infra-orbital, zygomaticofacial, zygomaticotemporal","V3: auriculotemporal, buccal, mental"]],
+["E","Describe the two roots of the facial nerve and their functions.","The facial nerve is a mixed nerve with two roots. The motor root supplies the muscles of facial expression (raise the eyebrow, close the eyes, wrinkle the nose, smile, blow). The sensitive root, the nervus intermedius of Wrisberg, forms the geniculate ganglion and carries general sensation from the external auditory meatus and tympanic membrane, parasympathetic fibres for the lacrimal, nasal and salivary glands, and taste from the anterior two thirds of the tongue and some areas of the palate.",["Motor root: muscles of facial expression","Sensitive root: nervus intermedius (Wrisberg)","Geniculate ganglion","Parasympathetic: lacrimal, nasal and salivary glands","Taste of the anterior two thirds of the tongue"]],
+["E","Describe the real and apparent origins of the facial nerve.","The motor root emerges from the facial nucleus in the reticular grey substance of the pons. The sensitive root emerges from the geniculate ganglion, and its central fibres form the nervus intermedius, ending in the superior portion of the solitary nucleus. The apparent origin is the bulbopontine sulcus (cerebellopontine angle).",["Motor root: facial nucleus, pons","Sensitive root: geniculate ganglion, solitary nucleus","Apparent origin: bulbopontine sulcus, cerebellopontine angle"]],
+["F","Describe the pathway of the facial nerve from the brainstem to the parotid gland.","From the cerebellopontine angle the two roots cross the posterior cranial fossa and enter the internal auditory canal in the petrous part of the temporal bone. They enter the facial duct (fallopian aqueduct), where they fuse. The nerve exits through the stylomastoid foramen and enters the parotid gland, where it divides into its terminal branches.",["Cerebellopontine angle","Internal auditory canal","Facial duct: roots fuse","Stylomastoid foramen","Enters the parotid gland"]],
+["F","Describe the three segments of the facial nerve in the facial canal.","First, from the entrance, it runs perpendicular to the long axis of the temporal bone. Second, it makes a first posterior curve (the knee or geniculum), with the geniculate ganglion in front, and runs backwards parallel to the long axis. Third, it makes a second downward curve, runs vertically along the posterior wall of the tympanic cavity and exits through the stylomastoid foramen.",["Segment 1: perpendicular to the temporal bone","Segment 2: knee (geniculum) and geniculate ganglion","Segment 3: downward, posterior wall of the tympanic cavity","Exits through the stylomastoid foramen"]],
+["F","Describe the relations of the facial nerve in the parotid gland.","The facial nerve penetrates the parotid gland, passing between the digastric muscle on the outside and the stylohyoid on the inside. It divides the gland into a superficial and a deep lobe, and then gives its terminal branches. The parotid gland is not innervated by the facial nerve.",["Between digastric (outside) and stylohyoid (inside)","Divides the gland into two lobes","Then gives terminal branches","Does not innervate the parotid gland"]],
+["G","List the branches of the facial nerve in three groups.","Intrapetrous collaterals: greater petrosal nerve, chorda tympani, nerve to the stapedius and sensory branch of the external auditory canal. Extrapetrous collaterals: communicating branch with CN IX, posterior auricular nerve and nerves to the stylohyoid and posterior belly of the digastric. Terminal branches: temporofacial and cervicofacial.",["Intrapetrous: greater petrosal, chorda tympani, stapedius, external auditory canal","Extrapetrous: CN IX communication, posterior auricular, stylohyoid and digastric","Terminal: temporofacial and cervicofacial"]],
+["G","Describe the greater petrosal nerve: origin, course and function.","It arises in the geniculate ganglion and runs anteromedially through the temporal bone. It joins the deep petrosal nerve (from the internal carotid sympathetic plexus) to form the nerve of the pterygoid canal, which passes through the pterygoid canal to the pterygopalatine fossa and the pterygopalatine ganglion. It gives parasympathetic fibres to the glands of the nose, palate and pharynx and to the lacrimal gland, and carries taste of the soft palate through the lesser palatine nerve.",["Arises in the geniculate ganglion","Joins the deep petrosal nerve: nerve of the pterygoid canal","Pterygopalatine fossa and ganglion","Parasympathetic: nasal, palatine, pharyngeal glands and lacrimal gland","Taste of the soft palate"]],
+["G","Describe the chorda tympani: origin, course and function.","It arises 2-3 mm above the stylomastoid foramen, goes upward and forward above the tympanic membrane in a bony course and leaves the skull through the petrotympanic fissure. It runs medially to the spine of the sphenoid, between the two pterygoid muscles, and joins the lingual nerve in the infratemporal fossa to reach the submandibular ganglion and the floor of the mouth. It gives parasympathetic fibres to the submandibular and sublingual glands and carries taste from the anterior two thirds of the tongue.",["Arises 2-3 mm above the stylomastoid foramen","Leaves through the petrotympanic fissure","Joins the lingual nerve in the infratemporal fossa","Parasympathetic: submandibular and sublingual glands","Taste: anterior two thirds of the tongue"]],
+["G","Describe the extrapetrous branches of the facial nerve.","They leave the nerve below the stylomastoid foramen, before the parotid gland. The communicating branch joins the glossopharyngeal nerve. The posterior auricular nerve passes behind the ear and supplies the occipital belly of the occipitofrontalis and the posterior auricular muscle. The nerves to the stylohyoid and the posterior belly of the digastric supply those two muscles.",["Below the stylomastoid foramen","Communicating branch with CN IX","Posterior auricular: occipital belly and posterior auricular muscle","Stylohyoid and posterior belly of the digastric"]],
+["G","Describe the terminal branches of the facial nerve.","Inside the parotid gland the trunk divides into an upper temporofacial and a lower cervicofacial branch, which can branch or form the parotid plexus. The temporofacial gives the temporal, frontal and palpebral, zygomatic and upper buccal branches. The cervicofacial gives the lower buccal, the mandibular marginal (communicating with the mental nerve, supplying the lower lip and chin) and the cervical branch (platysma).",["Temporofacial and cervicofacial; parotid plexus","Temporofacial: temporal, frontal and palpebral, zygomatic, upper buccal","Cervicofacial: lower buccal, mandibular marginal, cervical","Cervical branch supplies the platysma"]],
+["G","Which structures receive parasympathetic fibres from the facial nerve, and through which ganglion and branch?","Through the greater petrosal nerve and the pterygopalatine ganglion: the lacrimal gland and the glands of the nose, palate and pharynx. Through the chorda tympani and the submandibular ganglion: the submandibular and sublingual glands.",["Greater petrosal, pterygopalatine ganglion","Lacrimal gland and nasal, palatine, pharyngeal glands","Chorda tympani, submandibular ganglion","Submandibular and sublingual glands"]],
+["H","Describe the vestibulocochlear nerve (CN VIII).","It has two parts. The cochlear nerve arises in the spiral ganglion of the cochlea (ganglion of Corti) and is the nerve of hearing. The vestibular nerve arises in the vestibular ganglion in the internal auditory meatus (ganglion of Scarpa) and is the nerve of equilibration. It runs from the inner ear through the internal auditory meatus to the pontomedullary junction.",["Cochlear nerve: spiral ganglion, hearing","Vestibular nerve: vestibular ganglion, equilibration","Internal auditory meatus to the pontomedullary junction"]],
+["H","Describe the origin and course of the glossopharyngeal nerve (CN IX).","It arises from the brainstem between the olive and the inferior cerebellar peduncle and exits the skull through the jugular foramen. It descends deep to the styloid process, between the internal jugular vein and the internal carotid artery, wraps around the posterior border of the stylopharyngeus and runs down to the base of the tongue.",["Between the olive and the inferior cerebellar peduncle","Jugular foramen","Deep to the styloid process","Wraps the stylopharyngeus","To the base of the tongue"]],
+["H","Describe the functions of the glossopharyngeal nerve.","Motor: voluntary control of the stylopharyngeus, which elevates the pharynx in swallowing and speech (the slides also mention the constrictors). Sensory: general sensation from the skin of the external ear, the tympanic membrane and the upper pharynx, and taste from the posterior third of the tongue. Parasympathetic: the lesser petrosal nerve synapses in the otic ganglion and the fibres travel with the auriculotemporal nerve (V3) to the parotid gland.",["Motor: stylopharyngeus","General sensory: external ear, tympanic membrane, upper pharynx","Taste: posterior third of the tongue","Parasympathetic: lesser petrosal, otic ganglion, parotid gland"]],
+["I","Describe the motor branches of the vagus nerve to the pharynx and palate.","The pharyngeal branch supplies all the constrictors of the pharynx except the stylopharyngeus (CN IX), the palatoglossus and the muscles of the soft palate except the tensor veli palatini (V3).",["All constrictors except the stylopharyngeus","Palatoglossus","Soft palate muscles except the tensor veli palatini"]],
+["I","Describe the laryngeal branches of the vagus nerve.","The superior laryngeal nerve divides into an external branch (motor: inferior constrictor and cricothyroid) and an internal branch (mainly sensory, through the thyrohyoid membrane, to the laryngeal cavity down to the vocal folds). The recurrent laryngeal nerve is sensory below the vocal folds and motor to all intrinsic laryngeal muscles except the cricothyroid.",["External branch: inferior constrictor and cricothyroid","Internal branch: sensory down to the vocal folds","Recurrent laryngeal: sensory below the vocal folds","Recurrent laryngeal: motor to all intrinsic muscles except the cricothyroid"]],
+["I","Summarise the functions of the vagus nerve.","Motor to the muscles of the pharynx, soft palate and larynx. General sensory from the auricular region, the external auditory meatus and the mucosa of the pharynx and larynx. Special sensory (taste) from the epiglottic region. Visceral sensory from the thoracic and abdominal viscera and the aortic arch. Parasympathetic to the thoracic and abdominal viscera (heart, lungs, gastrointestinal tract).",["Motor: pharynx, soft palate, larynx","General sensory: auricular region, external auditory meatus, pharynx and larynx","Taste: epiglottic region","Visceral sensory","Parasympathetic to the thoracic and abdominal viscera"]],
+["J","Describe the pharyngeal plexus and the motor innervation of the pharynx.","The pharyngeal plexus lies in the outer fascia of the pharyngeal wall and is formed by the pharyngeal branch of the vagus, the external branch of the superior laryngeal nerve, the pharyngeal branches of the glossopharyngeal nerve and sympathetic fibres from the superior cervical ganglion. It gives motor innervation to all muscles of the pharynx and soft palate, mainly through the vagus, except the stylopharyngeus (CN IX directly) and the tensor veli palatini (V3).",["Formed by the vagus, the glossopharyngeal nerve and sympathetic fibres","Lies in the outer fascia of the pharynx","Motor to all pharyngeal and soft palate muscles","Exceptions: stylopharyngeus (IX) and tensor veli palatini (V3)"]],
+["J","Describe the sensory innervation of each part of the pharynx.","The nasopharynx is supplied by the pharyngeal branch of the maxillary nerve (V2), which passes through the palatovaginal canal. The oropharynx is supplied by the glossopharyngeal nerve (IX) via the pharyngeal plexus, the only part whose sensation goes through the plexus. The laryngopharynx is supplied by the vagus nerve (X) through the internal branch of the superior laryngeal nerve.",["Nasopharynx: V2, palatovaginal canal","Oropharynx: IX via the plexus","Laryngopharynx: X, internal laryngeal branch"]],
+["J","Compare the nerves involved in swallowing: V3, IX and X.","V3 supplies the tensor veli palatini. The glossopharyngeal nerve (IX) supplies the stylopharyngeus directly and gives sensation to the oropharynx. The vagus (X) supplies, through the pharyngeal plexus, the constrictors and the other palate muscles, and gives sensation to the laryngopharynx.",["V3: tensor veli palatini","IX: stylopharyngeus and oropharynx sensation","X: constrictors and palate muscles; laryngopharynx sensation"]],
+["K","Describe the accessory nerve (CN XI).","It has a cranial root and a spinal root, both motor. After emerging from the medulla the cranial root joins the spinal root and enters the jugular foramen. Within the foramen the cranial root joins the vagus nerve and leaves the skull with it. The cranial root supplies muscles of the larynx and pharynx; the spinal root supplies the trapezius and the sternocleidomastoid.",["Cranial and spinal roots, both motor","Jugular foramen; cranial root joins the vagus","Cranial root: larynx and pharynx","Spinal root: trapezius and sternocleidomastoid"]],
+["K","Describe the hypoglossal nerve (CN XII): origin, course and function.","It emerges from the brainstem in the groove between the pyramid and the olive and leaves the cranium through the hypoglossal canal. It runs down to the angle of the mandible and loops forward along the lateral surface of the hyoglossus, then divides to supply the tongue. It has only a somatic motor component and innervates all the intrinsic muscles and most of the extrinsic ones (genioglossus, styloglossus, hyoglossus). The palatoglossus is supplied by the vagus.",["Groove between pyramid and olive","Hypoglossal canal","Angle of the mandible, then forward along the hyoglossus","Somatic motor: all intrinsic and genioglossus, styloglossus, hyoglossus","Palatoglossus: vagus"]],
+["K","Describe the ansa cervicalis and the muscles it supplies.","The descending ramus of the hypoglossal nerve joins the cervical plexus (first and second cervical nerves) to form a loop, the ansa cervicalis or ansa hypoglossi. Its branches supply the sternohyoid, sternothyroid and omohyoid. The thyrohyoid and geniohyoid receive fibres from the first spinal nerve, which travel with CN XII.",["Descending ramus joins the cervical plexus","Loop: ansa cervicalis (ansa hypoglossi)","Sternohyoid, sternothyroid, omohyoid","Thyrohyoid and geniohyoid: C1 via CN XII"]],
+["K","Which cranial nerves supply the muscles of the tongue and the palate? Give the exceptions.","The hypoglossal nerve (XII) supplies all the intrinsic and most of the extrinsic muscles of the tongue; the palatoglossus is supplied by the vagus (X). The soft palate muscles are supplied by the vagus through the pharyngeal plexus, except the tensor veli palatini, supplied by V3.",["XII: intrinsic and most extrinsic tongue muscles","Palatoglossus: vagus","Soft palate: vagus, except the tensor veli palatini (V3)"]]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t4b-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 4 part 2</p>
+ <h1>Cranial Nerves Questions</h1>
+ <p class="lead">${QS.length} open questions on the Topic 4 part 2 slides: the twelve cranial nerves, with the trigeminal and facial nerves, the pharyngeal plexus, and the glossopharyngeal, vagus, accessory and hypoglossal nerves. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>

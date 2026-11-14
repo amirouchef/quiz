@@ -1,0 +1,400 @@
+<title>Cranial Nerves Fill in Blanks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* Fill-in-the-blank additions */
+.cloze{font-size:18px;line-height:2.25;margin:14px 0 18px;overflow-wrap:anywhere}
+.blank{font:inherit;font-size:16px;font-family:var(--f-body);color:var(--fg);background:var(--surface);border:0;border-bottom:2px solid var(--hema);border-radius:6px 6px 0 0;padding:2px 8px;margin:0 2px;min-width:84px;min-height:34px;text-align:center;vertical-align:baseline;cursor:pointer;max-width:100%}
+input.blank{cursor:text;min-width:0}
+.blank:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.blank.sel{background:var(--hema-soft);border-bottom-color:var(--eosin)}
+.blank.ok{background:var(--ok-bg);border-bottom-color:var(--ok);color:var(--ok)}
+.blank.bad{background:var(--bad-bg);border-bottom-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.fix{display:inline-block;margin:0 4px 0 2px;padding:1px 8px;border-radius:6px;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{font:inherit;font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--hema);background:var(--hema-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--hema)}
+.chip:disabled{opacity:.35;cursor:default}
+.chip:focus-visible{outline:3px solid var(--hema);outline-offset:2px}
+.wrap-r{flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Cranial nerves: general organisation'},
+ {k:'B',n:'Olfactory and optic nerves (I, II)'},
+ {k:'C',n:'Oculomotor, trochlear and abducens (III, IV, VI)'},
+ {k:'D',n:'Trigeminal nerve (V)'},
+ {k:'E',n:'Facial nerve: roots and functions'},
+ {k:'F',n:'Facial nerve: course'},
+ {k:'G',n:'Facial nerve: branches'},
+ {k:'H',n:'Vestibulocochlear and glossopharyngeal (VIII, IX)'},
+ {k:'I',n:'Vagus nerve (X)'},
+ {k:'J',n:'Pharyngeal plexus'},
+ {k:'K',n:'Accessory and hypoglossal (XI, XII)'}
+];
+/* [section, topic, text]. Blank = [[answer|alt]]; interchangeable blanks share a group: [[g1:answer]] */
+const RAW=[
+['A',"Cranial nerves","There are [[12|twelve]] pairs of cranial nerves, which belong to the [[peripheral]] nervous system. They are attached to the brain and leave the skull through [[foramina|openings]] in the base of the cranium."],
+['A',"Origins","The [[real]] origin of a cranial nerve is a nucleus of grey substance inside the brain, except for nerves I, II and [[VIII|8]]. The [[apparent|superficial]] origin is the area of attachment to the surface of the brainstem."],
+['A',"Sensory nerves","The purely sensory cranial nerves are the [[g1:olfactory]], the [[g1:optic]] and the [[g1:vestibulocochlear|acoustic]]."],
+['A',"Motor nerves","The purely motor cranial nerves are the [[g1:oculomotor]], the [[g1:trochlear]], the [[g1:abducens]], the [[g1:accessory]] and the [[g1:hypoglossal]]."],
+['A',"Mixed nerves","The mixed cranial nerves are the [[g1:trigeminal]], the [[g1:facial]], the [[g1:glossopharyngeal]] and the [[g1:vagus]]."],
+['B',"Olfactory nerve","The olfactory nerve arises from the olfactory cells of the nasal [[mucosa|mucous membrane]]. Its fibres pass through the [[cribriform|cribiform]] plate of the ethmoid and end in the olfactory [[bulb]]."],
+['B',"Olfactory function","The olfactory nerve has only a special [[sensory]] component: the sense of [[smell|olfaction]]."],
+['B',"Optic nerve","The optic nerve arises from the [[ganglionic|ganglion]] cells of the [[retina]] and leaves the orbit through the optic [[canal]]. At the optic [[chiasm]] there is a partial decussation of the fibres."],
+['C',"Oculomotor nerve","The oculomotor nerve emerges from the oculomotor sulcus on the medial side of the cerebral [[peduncle]]. It enters the orbit through the superior orbital [[fissure]] and divides into a [[superior]] and an [[inferior]] branch."],
+['C',"Superior division","The superior division of CN III supplies the superior [[rectus]] and the [[levator palpebrae superioris|levator palpebrae]] muscles."],
+['C',"Inferior division","The inferior division of CN III supplies the [[medial]] rectus, the [[inferior]] rectus and the inferior oblique."],
+['C',"Parasympathetic fibres","The parasympathetic fibres of CN III synapse in the [[ciliary]] ganglion and supply the ciliary muscle and the [[constrictor pupillae|sphincter pupillae]] of the iris, which constricts the pupil."],
+['C',"Trochlear nerve","The trochlear nerve runs along the lateral wall of the [[cavernous]] sinus and enters the orbit through the superior orbital fissure to innervate the superior [[oblique]] muscle."],
+['C',"Unique features of CN IV","The trochlear nerve is the only nerve that exits from the [[dorsal]] surface of the brain, the only one whose fibres [[decussate]] and the one with the [[longest]] intracranial course."],
+['C',"Abducens nerve","The abducens nerve emerges from the lower border of the [[pons]], just above the pyramid of the medulla. It innervates only the [[lateral]] rectus muscle."],
+['D',"Trigeminal nerve","The trigeminal nerve is the major general [[sensory]] nerve of the head and also innervates the muscles that move the lower [[jaw|mandible]]. It exits from the anterolateral surface of the [[pons]]."],
+['D',"Trigeminal roots","The trigeminal nerve has a large [[sensory]] root and a small [[motor]] root. In the middle cranial fossa the sensory root expands into the trigeminal [[ganglion]]."],
+['D',"Trigeminal ganglion","The trigeminal ganglion lies in the trigeminal [[cave]] on the anterior surface of the [[petrous]] part of the temporal bone. The motor root is [[below]] and separate from it."],
+['D',"Trigeminal divisions","In descending order, the three divisions are the [[ophthalmic]] nerve V1, the [[maxillary]] nerve V2 and the [[mandibular]] nerve V3."],
+['D',"Branches in the diagram","The diagram shows the supra-orbital and supratrochlear nerves in V1, the infra-[[orbital]] nerve in V2, and the auriculotemporal, [[buccal]] and [[mental]] nerves in V3."],
+['E',"Facial nerve roots","The facial nerve is a [[mixed]] nerve formed by two roots: a [[motor]] root for the muscles of facial expression and a sensitive root called the nervus [[intermedius]] (Wrisberg)."],
+['E',"Sensitive root","The sensitive fibres form the [[geniculate]] ganglion. Its parasympathetic fibres supply the nasal secretion, the [[lacrimal]] gland and the salivary glands, and it carries [[taste]] from the anterior two thirds of the tongue."],
+['E',"Parotid gland","The facial nerve passes through the parotid gland but does [[not]] innervate it."],
+['E',"Origins of the facial nerve","The motor root emerges from the [[facial]] nucleus in the pons. The sensitive root ends in the [[solitary]] nucleus. The apparent origin is the [[bulbopontine]] sulcus, also called the cerebellopontine angle."],
+['F',"Pathway","From the cerebellopontine angle, the two roots leave the cranial cavity through the internal [[auditory]] canal and enter the facial duct, or [[fallopian]] aqueduct, where they fuse. The nerve exits through the [[stylomastoid]] foramen and enters the [[parotid]] gland."],
+['F',"Facial canal","In the facial canal the nerve has [[three]] segments. The first posterior curve is the [[knee|geniculum]], in front of which the geniculate ganglion originates. The nerve then curves [[downward]] along the posterior wall of the tympanic cavity."],
+['F',"In the parotid","Inside the parotid gland the facial nerve passes between the [[digastric]] muscle on the outside and the [[stylohyoid]] on the inside, dividing the gland into a superficial and a [[deep]] lobe."],
+['F',"Branch groups","The branches of the facial nerve are [[intrapetrous]] collaterals, [[extrapetrous]] collaterals and terminal branches."],
+['G',"Intrapetrous branches","The intrapetrous branches are the greater [[petrosal]] nerve, the chorda [[tympani]], the nerve to the [[stapedius]] and the sensory branch of the external auditory canal."],
+['G',"Greater petrosal nerve","The greater petrosal nerve arises in the [[geniculate]] ganglion and joins the deep petrosal nerve to form the nerve of the [[pterygoid]] canal. It reaches the pterygopalatine fossa and the [[pterygopalatine]] ganglion."],
+['G',"Greater petrosal function","The greater petrosal nerve gives parasympathetic fibres to the [[lacrimal]] gland and to the glands of the nose and palate, and carries taste of the [[soft palate]] through the lesser palatine nerve."],
+['G',"Chorda tympani","The chorda tympani arises 2-3 mm above the [[stylomastoid]] foramen and leaves the skull through the [[petrotympanic]] fissure. It joins the [[lingual]] nerve in the infratemporal fossa."],
+['G',"Chorda tympani function","The chorda tympani gives parasympathetic fibres through the [[submandibular]] ganglion to the submandibular and [[sublingual]] glands, and carries taste from the anterior [[two thirds|2/3]] of the tongue."],
+['G',"Extrapetrous branches","The extrapetrous branches are the communicating branch with the [[glossopharyngeal]] nerve, the posterior [[auricular]] nerve and the nerves to the [[stylohyoid]] and the posterior belly of the digastric."],
+['G',"Posterior auricular nerve","The posterior auricular nerve supplies the [[occipital]] belly of the occipitofrontalis and the [[posterior auricular]] muscle."],
+['G',"Terminal branches","Inside the parotid gland the facial nerve divides into an upper [[temporofacial]] branch and a lower [[cervicofacial]] branch, which can form the parotid plexus."],
+['G',"Temporofacial","The temporofacial branch gives the temporal, frontal and [[palpebral]], [[zygomatic]] and upper buccal branches, supplying the cutaneous muscles above the oral cavity."],
+['G',"Cervicofacial","The cervicofacial branch gives the lower [[buccal]] branches, the mandibular [[marginal]] branch (communicating with the mental nerve) and the [[cervical]] branch, which supplies the platysma."],
+['H',"Vestibulocochlear nerve","The vestibulocochlear nerve has two parts. The [[cochlear]] nerve arises in the spiral ganglion (Corti) and carries [[hearing]]. The [[vestibular]] nerve arises in the ganglion of Scarpa and carries equilibration."],
+['H',"Glossopharyngeal origin","The glossopharyngeal nerve arises between the [[olive]] and the inferior cerebellar peduncle and exits the skull through the [[jugular]] foramen. It runs between the internal jugular vein and the internal [[carotid]] artery."],
+['H',"Glossopharyngeal motor","The glossopharyngeal nerve gives voluntary control of the [[stylopharyngeus]], which elevates the pharynx during swallowing and speech."],
+['H',"Glossopharyngeal sensory","The glossopharyngeal nerve carries taste from the posterior [[one third|third|1/3]] of the tongue, and general sensation from the external ear, the tympanic membrane and the upper [[pharynx]]."],
+['H',"Glossopharyngeal parasympathetic","The lesser [[petrosal]] nerve of CN IX synapses in the [[otic]] ganglion. Fibres travel with the [[auriculotemporal]] nerve (V3) to innervate the parotid gland."],
+['I',"Vagus nerve","The vagus nerve leaves the cranium through the [[jugular]] foramen and passes down the neck between the internal jugular vein and the internal [[carotid]] artery to the chest and abdomen."],
+['I',"Pharyngeal branch","The pharyngeal branch of the vagus supplies all the constrictors of the pharynx except the [[stylopharyngeus]], the [[palatoglossus]] and the soft palate muscles except the tensor veli [[palatini]]."],
+['I',"Superior laryngeal nerve","The external branch of the superior laryngeal nerve is [[motor]] and supplies the inferior constrictor and the [[cricothyroid]]. The internal branch is mainly [[sensory]] and supplies the laryngeal cavity down to the vocal folds."],
+['I',"Recurrent laryngeal nerve","The recurrent laryngeal nerve is [[sensory]] to the larynx below the vocal folds and motor to all intrinsic laryngeal muscles except the [[cricothyroid]]."],
+['I',"Vagus functions","The vagus is motor to the pharynx, soft palate and [[larynx]]. It gives parasympathetic innervation to the thoracic and [[abdominal]] viscera, such as the heart, lungs and gastrointestinal tract."],
+['J',"Pharyngeal plexus","The pharyngeal plexus is formed by the [[vagus]] nerve, the [[glossopharyngeal]] nerve and sympathetic fibres from the superior [[cervical]] ganglion. It lies in the outer fascia of the pharyngeal wall."],
+['J',"Exceptions","The pharyngeal plexus supplies all muscles of the pharynx and soft palate except the [[stylopharyngeus]], supplied by CN IX, and the tensor veli [[palatini]], supplied by V3."],
+['J',"Sensory innervation of the pharynx","The nasopharynx is supplied by the maxillary nerve [[V2]], the oropharynx by the [[glossopharyngeal|IX]] nerve through the plexus, and the laryngopharynx by the [[vagus|X]] nerve through the internal laryngeal branch."],
+['K',"Accessory nerve","The accessory nerve (CN [[XI|11]]) has a cranial root and a [[spinal]] root, both motor. In the jugular foramen the cranial root joins the [[vagus]] nerve."],
+['K',"Accessory functions","The cranial root of the accessory nerve supplies muscles of the larynx and [[pharynx]]. The spinal root supplies the [[trapezius]] and the [[sternocleidomastoid]]."],
+['K',"Hypoglossal nerve","The hypoglossal nerve emerges in the groove between the [[pyramid]] and the olive and exits through the [[hypoglossal]] canal. It then runs down to the angle of the mandible and loops forward along the [[hyoglossus]]."],
+['K',"Hypoglossal function","The hypoglossal nerve has only a somatic [[motor]] component. It supplies all the intrinsic and most of the extrinsic muscles of the tongue, but the [[palatoglossus]] is supplied by the vagus."],
+['K',"Ansa cervicalis","The descending ramus of CN XII joins the cervical plexus to form a loop, the ansa [[cervicalis|hypoglossi]]. Its branches supply the [[sternohyoid]], the sternothyroid and the [[omohyoid]]."],
+['K',"Geniohyoid and thyrohyoid","The thyrohyoid and the geniohyoid muscles receive their innervation from the [[first]] spinal nerve, which travels with CN [[XII|12]]."]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t4b-cloze-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={bank:{},type:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.bank&&o.type)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function parse(text){
+ const parts=[],blanks=[];let last=0,m;const re=/\[\[(.+?)\]\]/g;
+ while((m=re.exec(text))){
+  if(m.index>last)parts.push({t:text.slice(last,m.index)});
+  let inner=m[1],g=null;const gm=/^(g\d+):/.exec(inner);if(gm){g=gm[1];inner=inner.slice(gm[0].length)}
+  const alts=inner.split('|');
+  const b={i:blanks.length,g:g,alts:alts};blanks.push(b);parts.push({b:b});last=m.index+m[0].length;
+ }
+ if(last<text.length)parts.push({t:text.slice(last)});
+ return{parts:parts,blanks:blanks};
+}
+const QS=RAW.map((r,i)=>{const p=parse(r[2]);return{id:i+1,s:r[0],title:r[1],parts:p.parts,blanks:p.blanks}});
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[];for(let j=0;j<=n;j++)p[j]=j;
+ for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function matches(v,alts,tol){const x=norm(v);if(!x)return false;return alts.some(a=>{const y=norm(a);if(x===y)return true;if(!tol)return false;const L=y.length,d=L>=9?2:L>=5?1:0;return d>0&&lev(x,y)<=d})}
+function evaluate(q,vals,tol){
+ const res=q.blanks.map(()=>false),done={};
+ q.blanks.forEach(b=>{if(!b.g){res[b.i]=matches(vals[b.i]||'',b.alts,tol)}});
+ const groups={};q.blanks.forEach(b=>{if(b.g)(groups[b.g]=groups[b.g]||[]).push(b)});
+ Object.keys(groups).forEach(g=>{
+  const slots=groups[g].map(b=>({alts:b.alts,used:false}));
+  groups[g].forEach(b=>{const v=vals[b.i]||'';
+   for(const s of slots){if(!s.used&&matches(v,s.alts,tol)){s.used=true;res[b.i]=true;break}}
+  });
+ });
+ return res;
+}
+const lv=()=>L==='bank'?store.bank:store.type;
+const rec=q=>lv()[q.id];
+const pct=q=>{const r=rec(q);return r?Math.round(r.c/r.t*100):0};
+const weakList=()=>QS.filter(q=>rec(q)&&pct(q)<70);
+let L='bank',scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(q=>rec(q)).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(q=>rec(q)).length;
+  const sum=p.filter(q=>rec(q)).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} texts · ${d} done${d?` · ${avg}% correct`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' texts below 70%':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 4 part 2</p>
+ <h1>Fill in the Blanks</h1>
+ <p class="lead">${QS.length} short texts on the Topic 4 part 2 slides (cranial nerves) with key words removed. Step two of the path: after the multiple-choice warm-up, before the open questions.</p>
+ <p class="sec-title">Level</p>
+ <div class="scopes">
+  <label class="scope"><input type="radio" name="lvl" value="bank" ${L==='bank'?'checked':''}><span class="sc-name">Level 1 · Word bank</span><span class="sc-meta">Pick the missing words from a list that includes a few wrong ones.</span></label>
+  <label class="scope"><input type="radio" name="lvl" value="type" ${L==='type'?'checked':''}><span class="sc-name">Level 2 · Type the words</span><span class="sc-meta">No list. Small spelling slips are accepted, and you can overrule the check.</span></label>
+ </div>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} texts done at this level. Your results stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the texts</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase all results?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function makeBank(q){
+ const own=q.blanks.map(b=>b.alts[0]);
+ const ownN=new Set(q.blanks.flatMap(b=>b.alts.map(norm)));
+ const other=[];QS.forEach(o=>{if(o.s===q.s&&o.id!==q.id)o.blanks.forEach(b=>{const n=norm(b.alts[0]);if(!ownN.has(n)&&!other.some(x=>norm(x)===n))other.push(b.alts[0])})});
+ const extra=shuf(other).slice(0,Math.max(2,Math.min(4,Math.ceil(own.length/2))));
+ return shuf(own.concat(extra));
+}
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,lv:L};
+ load();question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+function load(){
+ const q=cur();
+ S.vals=q.blanks.map(()=>'');S.chipOf=q.blanks.map(()=>-1);S.sel=0;S.checked=false;S.res=null;S.over={};
+ S.bank=L==='bank'?makeBank(q):[];
+}
+function nextEmpty(){const q=cur();for(let k=0;k<q.blanks.length;k++)if(!S.vals[k])return k;return -1}
+function ok(k){return !!(S.res&&(S.res[k]||S.over[k]))}
+function question(){
+ const q=cur(),n=S.list.length,bank=S.lv==='bank';
+ const body=q.parts.map(p=>{
+  if(p.t!==undefined)return esc(p.t);
+  const b=p.b,k=b.i,v=S.vals[k];
+  const cls='blank'+(S.checked?(ok(k)?' ok':' bad'):'')+(!S.checked&&bank&&S.sel===k?' sel':'');
+  if(bank){
+   return `<button type="button" class="${cls}" data-b="${k}" ${S.checked?'disabled':''}>${v?esc(v):'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</button>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+  }
+  const w=Math.max(6,Math.min(18,b.alts[0].length+2));
+  return `<input type="text" class="${cls}" data-b="${k}" value="${esc(v)}" size="${w}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Blank ${k+1}" ${S.checked?'readonly':''}>`+(S.checked&&!ok(k)?`<span class="fix">${esc(b.alts[0])}</span>`:'');
+ }).join('');
+ const total=q.blanks.length,good=S.checked?q.blanks.filter((_,k)=>ok(k)).length:0;
+ const chips=bank&&!S.checked?`<div class="chips" role="group" aria-label="Word bank">${S.bank.map((w,k)=>`<button type="button" class="chip" data-chip="${k}" ${S.chipOf.includes(k)?'disabled':''}>${esc(w)}</button>`).join('')}</div>`:'';
+ const wrong=S.checked&&!bank?q.blanks.filter((_,k)=>!S.res[k]).map(b=>`<button type="button" class="btn ghost small" data-over="${b.i}">${S.over[b.i]?'Counted as right':'I was right'} · blank ${b.i+1}</button>`).join(''):'';
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">${bank?'Level 1':'Level 2'} · ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext">${esc(q.title)}</h2>
+ <p class="cloze">${body}</p>
+ ${chips}
+ ${S.checked?`<p class="sc-line" id="scl">${good} of ${total} blanks correct</p>${wrong?`<div class="row wrap-r">${wrong}</div>`:''}`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${S.checked?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next text'}</button>`:`<button type="button" class="btn" data-a="check">Check</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+function record(){
+ const q=cur();const good=q.blanks.filter((_,k)=>ok(k)).length;
+ (S.lv==='bank'?store.bank:store.type)[q.id]={c:good,t:q.blanks.length};save();
+}
+function results(){
+ const store_=S.lv==='bank'?store.bank:store.type;
+ const Ls=S.list.map(id=>QS[id-1]).filter(q=>store_[q.id]);
+ const tot=Ls.reduce((a,q)=>a+store_[q.id].t,0),gt=Ls.reduce((a,q)=>a+store_[q.id].c,0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=Ls.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+store_[q.id].c,0),b=l.reduce((x,q)=>x+store_[q.id].t,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=Ls.filter(q=>Math.round(store_[q.id].c/store_[q.id].t*100)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} blanks correct across ${Ls.length} text${Ls.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No text was completed in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>`<div class="item"><p class="q">${esc(q.title)}</p><p class="ex">${q.parts.map(x=>x.t!==undefined?esc(x.t):'<b>'+esc(x.b.alts[0])+'</b>').join('')}</p></div>`).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the texts to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+function check(){
+ const q=cur();
+ S.res=evaluate(q,S.vals,S.lv==='type');S.checked=true;S.over={};record();question();
+}
+app.addEventListener('input',e=>{
+ const t=e.target;if(t.dataset&&t.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){S.vals[+t.dataset.b]=t.value}
+});
+app.addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.b!==undefined&&S&&S.lv==='type'&&!S.checked){
+  e.preventDefault();const ins=[...app.querySelectorAll('input.blank')];const i=ins.indexOf(e.target);
+  if(i<ins.length-1)ins[i+1].focus();else check();
+ }
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.name==='lvl'){L=t.value;home();return}
+ if(t.id==='shuf'){shuffle=t.checked}
+});
+app.addEventListener('click',e=>{
+ const chip=e.target.closest('[data-chip]');
+ if(chip&&S&&S.lv==='bank'&&!S.checked){
+  const k=+chip.dataset.chip;let tgt=S.sel;
+  if(tgt==null||S.vals[tgt]){const ne=nextEmpty();tgt=ne;}
+  if(tgt<0)return;
+  S.vals[tgt]=S.bank[k];S.chipOf[tgt]=k;
+  const ne=nextEmpty();S.sel=ne<0?null:ne;question();return;
+ }
+ const ov=e.target.closest('[data-over]');
+ if(ov&&S&&S.checked){const k=+ov.dataset.over;S.over[k]=!S.over[k];record();question();return}
+ const bl=e.target.closest('button[data-b]');
+ if(bl&&S&&S.lv==='bank'&&!S.checked){
+  const k=+bl.dataset.b;
+  if(S.vals[k]){S.vals[k]='';S.chipOf[k]=-1}
+  S.sel=k;question();return;
+ }
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='check')check();
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;load();question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;load();question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={bank:{},type:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>

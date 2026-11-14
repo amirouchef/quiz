@@ -1,0 +1,290 @@
+<title>Brain Open Questions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column. Write first, reveal the model answer, tick the key points you covered. Same indigo and eosin palette as the multiple-choice banks. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.steps li:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 65%,var(--line))}
+.steps li:nth-child(3){border-top-color:var(--eosin)}
+.steps b{display:block;font-family:var(--f-display);font-size:15px}
+.steps span{font-size:13px;color:var(--muted)}
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+.meter i.low{background:var(--eosin)}
+.opt-line{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:15px}
+.opt-line input{width:18px;height:18px;accent-color:var(--hema)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:16px}
+textarea{display:block;width:100%;min-height:170px;resize:vertical;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea:focus-visible{border-color:var(--hema)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.foot{margin-top:18px}
+.model{margin-top:20px;background:var(--hema-soft);border:1.5px solid var(--hema);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.model .lab{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin)}
+.pts{margin-top:16px;display:grid;gap:8px}
+.pt{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;line-height:1.45}
+.pt input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--ok)}
+.pt:has(input:checked){border-color:var(--ok);background:var(--ok-bg)}
+.pt:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.sc-line{margin-top:12px;font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .ex{font-size:14.5px;color:var(--muted)}
+.item .miss b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const SECS=[
+ {k:'A',n:'Meninges: dura mater and its extensions'},
+ {k:'B',n:'Arachnoid, pia mater and choroid plexuses'},
+ {k:'C',n:'Ventricles and cerebrospinal fluid'},
+ {k:'D',n:'Brainstem: medulla oblongata'},
+ {k:'E',n:'Brainstem: pons'},
+ {k:'F',n:'Brainstem: midbrain'},
+ {k:'G',n:'Cerebellum'},
+ {k:'H',n:'Diencephalon'},
+ {k:'I',n:'Cerebrum: lobes and cortex'},
+ {k:'J',n:'Basal ganglia, limbic system and cortical areas'}
+];
+/* [section, question, model answer, key points to tick] */
+const RAW=[
+['A',"Name the three meninges and describe the dura mater.","The meninges are three layers of connective tissue that surround and protect the brain: the dura mater (outermost), the arachnoid (intermediate) and the pia mater (innermost). The dura mater is made of fibrous connective tissue and is attached to the inner periosteum of the skull bone. It is formed by two fused layers, which in some points unfold to give rise to the dural venous sinuses.",["Three meninges: dura mater, arachnoid, pia mater","Dura mater is the outermost layer","Fibrous connective tissue","Attached to the inner periosteum of the skull","Two fused layers that open into the dural venous sinuses"]],
+['A',"Describe the three extensions of the dura mater.","The dura mater has three extensions. The falx cerebri separates the two cerebral hemispheres. The falx cerebelli separates the two cerebellar hemispheres. The tentorium cerebelli separates the cerebrum from the cerebellum.",["Falx cerebri: separates the cerebral hemispheres","Falx cerebelli: separates the cerebellar hemispheres","Tentorium cerebelli: separates cerebrum and cerebellum"]],
+['A',"Why do the dural extensions matter for the organisation of the brain?","They divide the cranial cavity into compartments and keep each part of the brain in place: the falx cerebri keeps the two hemispheres apart, the tentorium cerebelli separates the cerebrum from the cerebellum, and the falx cerebelli separates the two cerebellar hemispheres.",["Falx cerebri between the hemispheres","Tentorium between cerebrum and cerebellum","Falx cerebelli between the cerebellar hemispheres"]],
+['B',"Describe the arachnoid mater.","The arachnoid is the intermediate meningeal layer. It is made of non-vascularized connective tissue. It has expansions into the dural venous sinuses called arachnoid villi, which reabsorb the cerebrospinal fluid into the bloodstream. Between the arachnoid and the pia mater is the subarachnoid space, where the CSF circulates.",["Intermediate layer","Non-vascularized connective tissue","Arachnoid villi reabsorb CSF into the blood","Subarachnoid space contains CSF"]],
+['B',"Describe the pia mater and the choroid plexuses.","The pia mater is the innermost layer. It is made of very vascularized connective tissue, is very thin and is linked to the nerve tissue. It follows the clefts, grooves and convolutions of the cerebral and cerebellar cortex and covers the entire surface of the brain. On the walls of the ventricles there are very vascular dilatations called choroid plexuses, which filter and produce CSF. They are covered by a simple cuboidal epithelium that acts as a blood-brain barrier.",["Innermost, thin, very vascularized","Linked to nerve tissue and follows grooves and convolutions","Choroid plexuses on the ventricle walls","They filter and produce CSF","Simple cuboidal epithelium acting as blood-brain barrier"]],
+['B',"Compare the three meninges.","Dura mater: outermost, fibrous connective tissue, attached to the skull periosteum, with three extensions and venous sinuses. Arachnoid: intermediate, non-vascularized, with villi that reabsorb CSF. Pia mater: innermost, very vascularized, thin, follows the brain surface; choroid plexuses produce CSF.",["Dura: outermost, fibrous, extensions","Arachnoid: intermediate, non-vascularized, villi","Pia mater: innermost, vascularized, follows the cortex"]],
+['C',"Name and locate the four ventricles of the brain.","There are four ventricles. The two lateral ventricles lie one in each cerebral hemisphere. The third ventricle is very narrow and lies in the midline between the two halves of the thalamus, above the hypothalamus. The fourth ventricle lies between the brainstem and the cerebellum and is linked to the third by the cerebral (Sylvian) aqueduct.",["Two lateral ventricles, one per hemisphere","Third ventricle: midline, between the thalami, above the hypothalamus","Fourth ventricle: between brainstem and cerebellum","Cerebral aqueduct links the third and fourth"]],
+['C',"What is the cerebrospinal fluid and what does it do?","The cerebrospinal fluid (CSF) is a clear liquid whose function is to protect and nourish the nervous tissue of the central nervous system.",["Clear liquid","Protects the nervous tissue of the CNS","Nourishes the nervous tissue of the CNS"]],
+['C',"Describe the production and circulation of the CSF.","The CSF is produced in the choroid plexuses, placed on the walls of the ventricles. It circulates through the ventricles, the cavities of the brain and spinal cord, and the subarachnoid space. It returns to the blood through the arachnoid villi.",["Produced in the choroid plexuses","Circulates in the ventricles and the subarachnoid space","Returned to the blood through the arachnoid villi"]],
+['C',"Which structures take part in the CSF pathway, from production to reabsorption?","The CSF is produced by the choroid plexuses on the ventricle walls, flows through the lateral ventricles, the third ventricle, the cerebral aqueduct and the fourth ventricle, then circulates in the subarachnoid space, and is finally reabsorbed by the arachnoid villi into the dural venous sinuses.",["Choroid plexuses produce it","Ventricles linked by the cerebral aqueduct","Subarachnoid space","Arachnoid villi reabsorb it into the venous sinuses"]],
+['D',"Describe the location and general function of the medulla oblongata.","The medulla oblongata is the lower part of the brainstem, between the spinal cord and the pons. It contains the sensory tracts going upward and the motor tracts going downward, which connect the brain and the spinal cord. It also contains nerve centres that control many vital functions, and centres related to proprioception and touch.",["Lower part of the brainstem","Between the spinal cord and the pons","Ascending sensory and descending motor tracts","Nerve centres for vital functions"]],
+['D',"Describe the pyramids, the decussation and the olives of the medulla.","In the anteroinferior area of the medulla are the pyramids, two bulges formed by the corticospinal tracts. At the junction with the spinal cord, about 90% of the fibres of each pyramid cross to the opposite side: this is the decussation of the pyramids. Lateral to each pyramid is a small bulge, the olive, which contains the inferior olivary nuclei. They receive sensations from proprioceptors and collaborate with the cerebellum to coordinate voluntary movements.",["Pyramids: corticospinal tracts","Decussation: 90% of fibres cross","Olive lateral to the pyramid","Inferior olivary nuclei: proprioception and cerebellum"]],
+['D',"List the major nerve centres of the medulla oblongata.","The major centres are: the cardiovascular centre; the bulbar rhythmicity area (breathing); the inferior olivary nuclei (proprioception); the gracile and cuneate nuclei (touch); the nuclei of cranial nerves VIII to XII; and other nuclei that control the reflexes of vomiting, coughing, swallowing, hiccups and sneezing.",["Cardiovascular centre","Bulbar rhythmicity area: breathing","Gracile and cuneate nuclei: touch","Cranial nerves VIII to XII","Reflexes: vomiting, coughing, swallowing, hiccups, sneezing"]],
+['D',"Which cranial nerves are associated with the medulla?","Cranial nerves VIII to XII: the vestibulocochlear, glossopharyngeal, vagus, accessory and hypoglossal nerves.",["VIII vestibulocochlear","IX glossopharyngeal","X vagus","XI accessory","XII hypoglossal"]],
+['E',"Describe the pons: location and main function.","The pons is the middle part of the brainstem, located above the medulla oblongata and below the midbrain. Its main function is to connect different parts of the brain: it joins the two cerebellar hemispheres, and its ascending and descending tracts connect the rest of the brain with the spinal cord.",["Middle part of the brainstem","Above the medulla, below the midbrain","Connects the two cerebellar hemispheres","Ascending and descending tracts to the spinal cord"]],
+['E',"List the major nerve centres of the pons.","The pontine nuclei handle the transmission of voluntary movements. The apneusic and pneumotaxic centres are involved in breathing. The pons is also associated with the nuclei of cranial nerves V to VIII: trigeminal, abducens, facial and vestibulocochlear.",["Pontine nuclei: voluntary movements","Apneusic and pneumotaxic centres: breathing","Cranial nerves V to VIII"]],
+['E',"Compare the cranial nerves linked to the medulla and to the pons.","The medulla is associated with cranial nerves VIII to XII (vestibulocochlear, glossopharyngeal, vagus, accessory, hypoglossal). The pons is associated with V to VIII (trigeminal, abducens, facial, vestibulocochlear). The vestibulocochlear nerve (VIII) appears in both.",["Medulla: VIII to XII","Pons: V to VIII","VIII is listed in both"]],
+['F',"Describe the location and function of the midbrain.","The midbrain is the highest part of the brainstem, located between the pons and the diencephalon, and crossed by the aqueduct of the midbrain. Its main function is to interconnect different parts of the brain, and it contains centres responsible for movements related to sight and hearing.",["Highest part of the brainstem","Between the pons and the diencephalon","Crossed by the aqueduct","Interconnects parts of the brain; sight and hearing centres"]],
+['F',"Describe the colliculi, the substantia nigra and the red nuclei.","On its back side the midbrain has four rounded elevations, the colliculi (tubercula quadrigemina): the superior ones relate to sight and the inferior ones to hearing. The substantia nigra consists of two large pigmented nuclei that control subconscious muscle activity. The red nuclei are two smaller nuclei, very vascularized and with deposits of ferric pigment, which gives them their colour.",["Colliculi: four; superior sight, inferior hearing","Substantia nigra: pigmented, subconscious muscle activity","Red nuclei: vascularized, iron pigment, muscle coordination"]],
+['F',"List the major nerve centres of the midbrain.","The cerebral peduncles; the colliculi (superior: sight, inferior: hearing); the red nuclei and the substantia nigra (subconscious muscle activity and muscle coordination); and the nuclei of cranial nerves III and IV, the oculomotor and trochlear nerves.",["Cerebral peduncles","Colliculi: sight and hearing","Red nuclei and substantia nigra","Cranial nerves III and IV"]],
+['F',"Name the three parts of the brainstem from bottom to top, with one function each.","From bottom to top: the medulla oblongata (vital functions such as breathing and cardiovascular control, pyramids and decussation), the pons (connects different parts of the brain, pontine nuclei) and the midbrain (centres for sight and hearing, subconscious muscle activity).",["Medulla: vital functions","Pons: connects parts of the brain","Midbrain: sight, hearing, muscle activity","Order: medulla, pons, midbrain"]],
+['G',"Describe the location and structure of the cerebellum.","The cerebellum is in the lower and back part of the brain. It has two hemispheres joined by the vermis. Each hemisphere has three lobes: anterior (superior), posterior (middle) and flocculus (lower). The hemispheres are separated by the falx cerebelli and the cerebellum is separated from the brain by the tentorium cerebelli. It is linked to the brainstem through the cerebellar peduncles.",["Lower and back part of the brain","Two hemispheres joined by the vermis","Three lobes: anterior, posterior, flocculus","Falx cerebelli and tentorium cerebelli","Linked to the brainstem by the peduncles"]],
+['G',"Describe the nervous tissue of the cerebellum.","The cerebellum has grey matter in the cortex, which forms folds called cerebellar lamellae separated by grooves and clefts, and white matter in the nucleus, called the arbor vitae. According to the slides, although its size is much smaller than the brain, it contains half of the neurons of the brain.",["Grey matter in the cortex","Lamellae (folds) and clefts","White matter in the arbor vitae","Half of the brain's neurons (according to the slides)"]],
+['G',"What are the functions of the cerebellum?","The cerebellum coordinates fine and complex movements, takes part in cognitive processes such as learning and in language, and controls the balance and posture of the body.",["Coordination of fine and complex movements","Cognitive processes (learning) and language","Balance and posture"]],
+['G',"Describe the cerebellar peduncles.","There are three pairs of cerebellar peduncles, which link the cerebellum with the brainstem nuclei. The superior peduncles are connected with the red nuclei of the midbrain. The middle peduncles coordinate voluntary movements. The inferior peduncles receive sensory fibres from the inner ear, related to balance.",["Three pairs","Superior: red nuclei of the midbrain","Middle: coordinate voluntary movements","Inferior: sensory fibres from the inner ear (balance)"]],
+['G',"List the major nerve centres of the cerebellum.","The anterior and posterior lobes (subconscious control of voluntary movements); the flocculus (balance and posture); the deep cerebellar nuclei, which receive fibres from different parts of the cerebellum and the brain; and the cerebellar peduncles.",["Anterior and posterior lobes: subconscious control of voluntary movements","Flocculus: balance and posture","Deep cerebellar nuclei","Cerebellar peduncles"]],
+['H',"Name the parts of the diencephalon and describe the hypothalamus.","The diencephalon has the hypothalamus, the thalamus and the epithalamus. The hypothalamus is a small portion below the thalamus, composed of twelve nuclei grouped in four regions: mamillary (posterior), tuberal (with the infundibulum), supraoptic (above the optic chiasm) and preoptic (anterior zone).",["Hypothalamus, thalamus, epithalamus","Hypothalamus below the thalamus","Twelve nuclei in four regions","Mamillary, tuberal, supraoptic, preoptic"]],
+['H',"What are the functions of the hypothalamus?","The hypothalamus controls the autonomic nervous system (heart rate, movement of the digestive tract, body temperature). With the limbic system it regulates emotional patterns. It produces hormones that control the pituitary gland, regulates hunger and thirst, and collaborates with the pineal gland to set the sleep and wakefulness pattern.",["Controls the autonomic nervous system","Regulates emotional patterns with the limbic system","Hormones for the pituitary gland","Hunger and thirst","Sleep and wakefulness with the pineal gland"]],
+['H',"Describe the thalamus: structure and functions.","The thalamus is the major part of the diencephalon and has two parts joined by the grey interthalamic commissure. Each part has seven groups of grey matter nuclei surrounded by white matter. It connects the cerebral cortex with other areas of the nervous system, transmits sensory impulses (touch, pain, temperature) and coordinates movements, and is involved in learning, memory, emotions and the degree of consciousness.",["Two parts joined by the interthalamic commissure","Seven groups of nuclei each","Links cortex with other areas; sensory impulses","Coordination of movements","Learning, memory, emotions, consciousness"]],
+['H',"Describe the epithalamus.","The epithalamus is located behind the thalamus and is small. It has two centres: the pineal gland, on the midline behind the third ventricle, which is part of the endocrine system and produces melatonin to control the biological clock; and the habenula, related to smell and the associated emotional responses.",["Behind the thalamus","Pineal gland: melatonin, biological clock","Pineal behind the third ventricle","Habenula: smell and emotional responses"]],
+['H',"Compare the hypothalamus, the thalamus and the epithalamus.","Hypothalamus: below the thalamus, controls the autonomic functions, hunger, thirst and pituitary hormones. Thalamus: the major part, relays sensory impulses to the cortex and coordinates movements. Epithalamus: behind the thalamus, with the pineal gland (melatonin) and the habenula.",["Hypothalamus: autonomic and hormonal control","Thalamus: sensory relay","Epithalamus: pineal and habenula"]],
+['I',"Describe the structure of the cerebrum.","The cerebrum is formed by two hemispheres separated by the falx cerebri. Each hemisphere is divided into four lobes: frontal, temporal, parietal and occipital, and the insula is currently considered a fifth lobe. Its surface has folds (gyri or convolutions) and fissures (sulci).",["Two hemispheres separated by the falx cerebri","Four lobes: frontal, temporal, parietal, occipital","Insula as a fifth lobe","Gyri and sulci"]],
+['I',"Name the two main fissures of the cerebrum and what they separate.","The central sulcus (fissure of Rolando) separates the frontal and parietal lobes. The lateral sulcus (fissure of Sylvius) separates the temporal lobe from the frontal and parietal lobes.",["Central sulcus: frontal and parietal","Lateral sulcus: temporal from frontal and parietal"]],
+['I',"Describe the grey and white matter of the cerebrum.","Grey matter is found in the cerebral cortex, the basal ganglia and the limbic system. White matter is found in the cerebral nucleus. The two hemispheres are joined by a broad band of white matter, the corpus callosum.",["Grey matter: cortex, basal ganglia, limbic system","White matter in the nucleus","Corpus callosum joins the hemispheres"]],
+['I',"Describe the cerebral cortex.","The cerebral cortex is made of grey matter. It contains many different types of neurons organised in six functionally specialised layers. Santiago Ramon y Cajal (1852-1934) first described the types of neurons and their organisation in nervous tissue, and received the Nobel Prize in medicine in 1906.",["Grey matter","Six functionally specialised layers","Ramon y Cajal described the neurons and organisation","Nobel Prize in medicine, 1906"]],
+['J',"Describe the basal ganglia.","The basal ganglia are located in the depth of each hemisphere. They are involved in subconscious muscle activity and the coordination of movements, and are strongly associated with the thalamus, the cerebral cortex and other brain areas. They have three main centres: the putamen and globus pallidus (lateral to the thalamus, together forming the lenticular nucleus) and the caudate nucleus (larger, surrounding the thalamus superiorly).",["Deep in each hemisphere","Subconscious muscle activity and coordination","Putamen and globus pallidus form the lenticular nucleus","Caudate nucleus surrounds the thalamus"]],
+['J',"Describe the limbic system.","The limbic system surrounds the top of the brainstem. It controls the emotions (pain, love, pleasure, anger) and is involved in smell and memory. It is composed of multiple nuclei, mainly the hippocampus and the amygdala, plus others such as the fornix and the septal nuclei. It is closely linked to some nuclei of the thalamus and the hypothalamus, and to the olfactory bulbs.",["Surrounds the top of the brainstem","Emotions, smell and memory","Hippocampus and amygdala","Fornix and septal nuclei","Linked to thalamus, hypothalamus and olfactory bulbs"]],
+['J',"Describe the functional organisation of the cerebral cortex.","The cortex is organised in specialised areas. Sensitive areas: somatosensory, visual, auditory, gustatory and olfactory. Motor areas: movement of skeletal muscles and the language area. Associative areas: they relate motor and sensory areas and connect them with other parts of the CNS.",["Sensitive areas: somatosensory, visual, auditory, gustatory, olfactory","Motor areas: skeletal muscles and language","Associative areas link the other two with the CNS"]],
+['J',"Which brain structures use grey matter, and where is it found?","Grey matter forms the cerebral cortex, the basal ganglia and the limbic system in the cerebrum; the cortex of the cerebellum; and the nuclei of the thalamus and the brainstem.",["Cerebral cortex, basal ganglia, limbic system","Cerebellar cortex","Nuclei of the thalamus and brainstem"]]
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+const KEY='anat-t4a-open-v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let store={ans:{},pts:{}};
+try{const t=localStorage.getItem(KEY);if(t){const o=JSON.parse(t);if(o&&o.ans&&o.pts)store=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],m:r[2],p:r[3]}));
+const secName=k=>(SECS.find(s=>s.k===k)||{}).n||k;
+const got=q=>(store.pts[q.id]||[]).filter(Boolean).length;
+const seen=q=>Array.isArray(store.pts[q.id]);
+const pct=q=>Math.round(got(q)/q.p.length*100);
+const weakList=()=>QS.filter(q=>seen(q)&&pct(q)<70);
+let scope='all',shuffle=false,S=null,resetAsk=false;
+function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(sc){if(sc==='all')return QS.slice();if(sc==='weak')return weakList();return QS.filter(q=>q.s===sc)}
+
+function home(){
+ S=null;
+ const weak=weakList().length;
+ if(scope==='weak'&&!weak)scope='all';
+ const done=QS.filter(seen).length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=pool(s.k),d=p.filter(seen).length;
+  const sum=p.filter(seen).reduce((a,q)=>a+pct(q),0),avg=d?Math.round(sum/d):0;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${d} answered${d?` · ${avg}% of key points`:''}</span><span class="meter"><i style="width:${Math.round(d/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">To review</span><span class="sc-meta">${weak?weak+' questions below 70% of key points':'Nothing to review yet'}</span><span class="meter"><i class="low" style="width:${weak?Math.round(weak/QS.length*100):0}%"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Anatomy of Head and Neck · Topic 4 part 1</p>
+ <h1>Brain and Meninges Questions</h1>
+ <p class="lead">${QS.length} open questions on the Topic 4 part 1 slides: meninges, ventricles and CSF, brainstem, cerebellum, diencephalon and cerebrum. You write the answer, then compare it with the model answer and tick the key points you covered.</p>
+ <ol class="steps"><li><b>Write</b><span>Answer in your own words, in English.</span></li><li><b>Compare</b><span>Read the model answer.</span></li><li><b>Tick</b><span>Mark each key point you gave.</span></li></ol>
+ <p class="cap" style="font-size:13px;color:var(--muted)">${done} of ${QS.length} questions answered so far. Your drafts and ticks stay on this device.</p>
+ <p class="sec-title">Scope</p>
+ <div class="scopes">${rows}</div>
+ <label class="opt-line" for="shuf"><input type="checkbox" id="shuf" ${shuffle?'checked':''}>Shuffle the order of the questions</label>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase answers and ticks?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+function start(){
+ const p=pool(scope);if(!p.length)return;
+ S={list:(shuffle?shuf(p):p).map(q=>q.id),i:0,shown:{}};
+ question();
+}
+function cur(){return QS[S.list[S.i]-1]}
+
+function question(){
+ const q=cur(),n=S.list.length,shown=!!S.shown[q.id];
+ if(!Array.isArray(store.pts[q.id])&&shown)store.pts[q.id]=q.p.map(()=>false);
+ const ticks=store.pts[q.id]||[];
+ const g=ticks.filter(Boolean).length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag"><b>${esc(secName(q.s))}</b></span><span class="tag">Question ${S.i+1} of ${n}</span></div>
+ <div class="bar" aria-hidden="true"><i style="width:${Math.round(S.i/n*100)}%"></i></div>
+ <h2 class="qtext" id="qh">${esc(q.q)}</h2>
+ <label for="ans" class="tag">Your answer</label>
+ <textarea id="ans" aria-describedby="qh" placeholder="Write your answer here before looking at the model answer.">${esc(store.ans[q.id]||'')}</textarea>
+ <p class="hint">Saved on this device as you type.</p>
+ ${shown?`
+ <div class="model"><span class="lab">Model answer</span><p>${esc(q.m)}</p></div>
+ <div class="pts" role="group" aria-label="Key points">${q.p.map((t,i)=>`<label class="pt"><input type="checkbox" data-pt="${i}" ${ticks[i]?'checked':''}><span>${esc(t)}</span></label>`).join('')}</div>
+ <p class="sc-line" id="scl">${g} of ${q.p.length} key points covered</p>`:''}
+ <div class="foot row between">
+  <span class="row">
+   <button type="button" class="btn ghost" data-a="prev" ${S.i?'':'disabled'}>Previous</button>
+   ${shown?`<button type="button" class="btn" data-a="next">${S.i===n-1?'Finish':'Next question'}</button>`:`<button type="button" class="btn" data-a="show">Show model answer</button>`}
+  </span>
+  <button type="button" class="linkish" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+function results(){
+ const L=S.list.map(id=>QS[id-1]).filter(seen);
+ const tot=L.reduce((a,q)=>a+q.p.length,0),gt=L.reduce((a,q)=>a+got(q),0);
+ const p=tot?Math.round(gt/tot*100):0;
+ const secs=SECS.map(s=>{const l=L.filter(q=>q.s===s.k);if(!l.length)return '';const a=l.reduce((x,q)=>x+got(q),0),b=l.reduce((x,q)=>x+q.p.length,0),r=Math.round(a/b*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${a}/${b} · ${r}%</span><span class="meter"><i class="${r<70?'low':''}" style="width:${r}%"></i></span></div>`}).join('');
+ const weak=L.filter(q=>pct(q)<70);
+ app.innerHTML=`
+ <p class="eyebrow">Session finished</p>
+ <div class="big">${p}<small>%</small></div>
+ <p class="lead">${gt} of ${tot} key points covered across ${L.length} answered question${L.length===1?'':'s'}.</p>
+ <p class="sec-title">By section</p>
+ <div class="breakdown">${secs||'<p class="lead">No question was answered in this session.</p>'}</div>
+ <p class="sec-title">${weak.length?'To review ('+weak.length+')':'Nothing below 70%'}</p>
+ <div class="rev">${weak.map(q=>{const t=store.pts[q.id]||[];return `<div class="item"><p class="q">${esc(q.q)}</p><p class="miss"><b>Missed:</b> ${q.p.filter((_,i)=>!t[i]).map(esc).join(' · ')||'none'}</p><p class="ex">${esc(q.m)}</p></div>`}).join('')}</div>
+ <div class="start row">
+  ${weakList().length?`<button type="button" class="btn" data-a="review">Redo the questions to review</button>`:''}
+  <button type="button" class="btn ghost" data-a="quit">Back to start</button>
+ </div>`;
+}
+
+app.addEventListener('input',e=>{
+ if(e.target.id==='ans'&&S){store.ans[cur().id]=e.target.value;save()}
+});
+app.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.name==='scope'){scope=t.value;return}
+ if(t.id==='shuf'){shuffle=t.checked;return}
+ if(t.dataset&&t.dataset.pt!==undefined&&S){
+  const q=cur();if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);
+  store.pts[q.id][+t.dataset.pt]=t.checked;save();
+  const g=got(q);const el=$('#scl');if(el)el.textContent=`${g} of ${q.p.length} key points covered`;
+ }
+});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a;
+ if(a==='start')start();
+ else if(a==='show'){const q=cur();S.shown[q.id]=true;if(!Array.isArray(store.pts[q.id]))store.pts[q.id]=q.p.map(()=>false);save();question();$('#ans').scrollIntoView&&0}
+ else if(a==='next'){if(S.i===S.list.length-1)results();else{S.i++;question();window.scrollTo(0,0)}}
+ else if(a==='prev'){if(S.i>0){S.i--;question();window.scrollTo(0,0)}}
+ else if(a==='quit')home();
+ else if(a==='review'){scope='weak';start();window.scrollTo(0,0)}
+ else if(a==='reset'){resetAsk=true;home()}
+ else if(a==='reset-no'){resetAsk=false;home()}
+ else if(a==='reset-yes'){store={ans:{},pts:{}};save();resetAsk=false;scope='all';home()}
+});
+home();
+})();
+
+</script>
