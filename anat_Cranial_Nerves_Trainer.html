@@ -1,0 +1,98 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cranial Nerves Trainer</title>
+<style>
+:root{--bg:#faf7f5;--surface:#fff;--fg:#1f1a1c;--muted:#6b5f64;--line:#e6dde0;--accent:#a3274f;--accent-ink:#fff;--soft:#f4ebee;--ok:#1d7a4a;--okbg:#e3f4ea;--no:#a3560e;--nobg:#fdeed9;--m0:#e6dde0;--m1:#f2c98a;--m2:#a9d9a0;--m3:#4fb36a}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17131a;--surface:#211b25;--fg:#f1eaee;--muted:#b3a6ad;--line:#382f3d;--accent:#f08aa9;--accent-ink:#2a0f19;--soft:#2b2330;--ok:#6fd59b;--okbg:#17301f;--no:#f0b36a;--nobg:#35260f;--m0:#382f3d;--m1:#8a6a2c;--m2:#3f7a45;--m3:#2e9a53}}
+:root[data-theme="dark"]{--bg:#17131a;--surface:#211b25;--fg:#f1eaee;--muted:#b3a6ad;--line:#382f3d;--accent:#f08aa9;--accent-ink:#2a0f19;--soft:#2b2330;--ok:#6fd59b;--okbg:#17301f;--no:#f0b36a;--nobg:#35260f;--m0:#382f3d;--m1:#8a6a2c;--m2:#3f7a45;--m3:#2e9a53}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:22px 16px 56px}
+.eyebrow{color:var(--accent);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px}
+h1{font-size:clamp(26px,5vw,34px);margin:0 0 8px;line-height:1.15}.lead{color:var(--muted);margin:0 0 14px}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:12px;padding:8px 12px;min-height:44px}
+button:hover{border-color:var(--accent)}button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tabs button{border-radius:999px;padding:8px 14px}
+.tabs button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:12px 0}
+.grid button{padding:6px 0;font-weight:600;border:none;color:var(--fg);min-height:44px}
+.m0{background:var(--m0)}.m1{background:var(--m1)}.m2{background:var(--m2)}.m3{background:var(--m3);color:#fff}
+.legend{color:var(--muted);font-size:13px;margin:0 0 12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.title{font-size:clamp(22px,5vw,28px);font-weight:700;margin:0 0 12px}
+.row{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;cursor:pointer;background:var(--soft);min-height:46px}
+.row b{display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.row span{display:block;color:transparent;user-select:none;background:var(--line);border-radius:6px;min-height:20px}
+.row.on{background:transparent}.row.on span{color:var(--fg);background:none;user-select:text}
+.act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.ok{background:var(--okbg);color:var(--ok);border-color:var(--ok)}.no{background:var(--nobg);color:var(--no);border-color:var(--no)}
+.q{font-size:clamp(19px,4.5vw,23px);font-weight:600;line-height:1.3;margin:0 0 12px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.opts.big{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.fb{margin-top:12px;padding:12px;border-radius:12px;display:none}.fb.on{display:block}
+.fb.good{background:var(--okbg);color:var(--ok)}.fb.bad{background:var(--nobg);color:var(--no)}
+.tip{background:var(--soft);border-radius:12px;padding:12px 14px;margin-top:18px;font-size:14px;color:var(--muted)}
+@media(max-width:420px){.grid{grid-template-columns:repeat(4,1fr)}}
+</style></head><body><div class="wrap">
+<p class="eyebrow">Anatomy of Head and Neck · Topic 4</p><h1>Cranial nerves trainer</h1>
+<p class="lead">Twelve nerves, three drills. The nerves you miss come back more often. Tap a number to study it, or let the trainer choose.</p>
+<div class="grid" id="g"></div>
+<p class="legend">Grey: new · orange: weak · light green: getting there · green: solid</p>
+<div class="tabs" id="tabs" role="group" aria-label="Drill"><button data-m="card">1 · Recall the nerve</button><button data-m="who">2 · Who am I?</button><button data-m="where">3 · Where?</button></div>
+<div id="main"></div>
+<div class="tip">Method: say the answer out loud before you reveal it. Order of the nerves along the brainstem, top to bottom: midbrain (III, IV), pons (V to VIII), medulla (VIII to XII); I and II belong to the brain itself. Progress is saved on this device. Source: Topic 4 part 2 slides; the foramina of V1, V2 and V3 are standard anatomy.</div>
+</div>
+<script>
+const R=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+const N=[
+{n:'Olfactory',t:'Sensory (special: smell)',x:'Cribriform plate of the ethmoid',l:'Not the brainstem: olfactory bulb and cortex; real origin outside the brain',s:'Olfactory mucosa of the nasal roof to the olfactory bulb: smell',f:'Real origin outside the brain'},
+{n:'Optic',t:'Sensory (special: sight)',x:'Optic canal',l:'Not the brainstem: retina and visual centres; real origin outside the brain',s:'Ganglion cells of the retina: sight',f:'Partial decussation at the optic chiasm'},
+{n:'Oculomotor',t:'Motor (+ parasympathetic)',x:'Superior orbital fissure',l:'Midbrain (medial side of the cerebral peduncle)',s:'Superior, medial and inferior rectus, inferior oblique, levator palpebrae; parasympathetic to the ciliary muscle and constrictor pupillae (ciliary ganglion)',f:'Divides into superior and inferior branches'},
+{n:'Trochlear',t:'Motor',x:'Superior orbital fissure',l:'Midbrain (dorsal surface, inferior colliculus)',s:'Superior oblique',f:'Only dorsal exit, only decussation, longest intracranial course'},
+{n:'Trigeminal',t:'Mixed',x:'V1 superior orbital fissure; V2 foramen rotundum; V3 foramen ovale',l:'Pons (anterolateral surface)',s:'Sensation of the head; muscles of mastication (V3)',f:'Large sensory root, small motor root; trigeminal ganglion in the trigeminal cave'},
+{n:'Abducens',t:'Motor',x:'Superior orbital fissure',l:'Pons (lower border, above the pyramid)',s:'Lateral rectus only',f:'Only a somatic motor component'},
+{n:'Facial',t:'Mixed',x:'Internal auditory canal, then stylomastoid foramen',l:'Pons (cerebellopontine angle)',s:'Muscles of facial expression; taste of the anterior two thirds of the tongue; lacrimal, submandibular and sublingual glands',f:'Two roots (nervus intermedius); crosses the parotid without supplying it'},
+{n:'Vestibulocochlear',t:'Sensory',x:'Internal auditory canal',l:'Pontomedullary junction (pons and medulla)',s:'Hearing (cochlear), equilibration (vestibular)',f:'Real origin outside the brain; ganglia of Corti and Scarpa'},
+{n:'Glossopharyngeal',t:'Mixed',x:'Jugular foramen',l:'Medulla (between olive and inferior cerebellar peduncle)',s:'Stylopharyngeus; taste of the posterior third of the tongue; oropharynx sensation; parotid gland (otic ganglion)',f:'Forms the pharyngeal plexus with the vagus'},
+{n:'Vagus',t:'Mixed',x:'Jugular foramen',l:'Medulla',s:'Pharynx, soft palate (not tensor veli palatini), larynx; thoracic and abdominal viscera',f:'Recurrent and superior laryngeal nerves; pharyngeal plexus'},
+{n:'Accessory',t:'Motor',x:'Jugular foramen',l:'Medulla (cranial root)',s:'Cranial root: larynx and pharynx. Spinal root: trapezius and sternocleidomastoid',f:'Cranial root joins the vagus'},
+{n:'Hypoglossal',t:'Motor',x:'Hypoglossal canal',l:'Medulla (groove between pyramid and olive)',s:'All intrinsic and most extrinsic tongue muscles (not palatoglossus)',f:'Ansa cervicalis (sternohyoid, sternothyroid, omohyoid)'}];
+const F=[['t','Type'],['x','Exit from the skull'],['l','Brainstem level'],['s','Supplies'],['f','Remember']];
+const CL=[[2,'Supplies the superior rectus, medial rectus, inferior rectus, inferior oblique and levator palpebrae'],[2,'Its parasympathetic fibres synapse in the ciliary ganglion'],[3,'The only nerve to exit from the dorsal surface of the brain'],[3,'The only nerve whose fibres decussate'],[3,'Has the longest intracranial course'],[3,'Supplies only the superior oblique'],[5,'Supplies only the lateral rectus'],[5,'Leaves the pons at its lower border, just above the pyramid of the medulla'],[0,'Its fibres cross the cribriform plate of the ethmoid'],[1,'Its fibres partly cross at the optic chiasm'],[4,'Has a large sensory root and a small motor root and a ganglion in the trigeminal cave'],[4,'Has three divisions: ophthalmic, maxillary and mandibular'],[6,'Has a nervus intermedius (Wrisberg) and a geniculate ganglion'],[6,'Gives the chorda tympani and the greater petrosal nerve'],[6,'Leaves the skull through the stylomastoid foramen and crosses the parotid gland'],[6,'Supplies the muscles of facial expression'],[7,'Has a cochlear and a vestibular part'],[7,'Its ganglia are named Corti and Scarpa'],[8,'Supplies the stylopharyngeus'],[8,'Carries taste from the posterior third of the tongue'],[8,'Parasympathetic to the parotid via the lesser petrosal nerve and the otic ganglion'],[9,'Has recurrent laryngeal and superior laryngeal branches'],[9,'Parasympathetic supply of the thoracic and abdominal viscera'],[9,'Supplies the palatoglossus and the soft palate muscles, except the tensor veli palatini'],[10,'Has a cranial root and a spinal root, both motor'],[10,'Its spinal root supplies the trapezius and the sternocleidomastoid'],[11,'Forms the ansa cervicalis through its descending ramus'],[11,'Supplies the tongue muscles, except the palatoglossus'],[11,'Emerges in the groove between the pyramid and the olive'],[[8,9],'Together they form the pharyngeal plexus'],[[2,3,5],'Runs in the lateral wall of the cavernous sinus and enters the orbit through the superior orbital fissure to move the eye (it is not V)'],[[0,1,7],'Purely sensory (it is one of three)'],[[8,9,10],'Leaves the skull through the jugular foramen (it is one of three)']];
+const LV=[[2,['Midbrain']],[3,['Midbrain']],[4,['Pons']],[5,['Pons']],[6,['Pons']],[7,['Pons','Medulla']],[8,['Medulla']],[9,['Medulla']],[10,['Medulla']],[11,['Medulla']],[0,['Outside the brainstem']],[1,['Outside the brainstem']]];
+const EX=[[0,'I','Cribriform plate'],[1,'II','Optic canal'],[2,'III','Superior orbital fissure'],[3,'IV','Superior orbital fissure'],[4,'V1','Superior orbital fissure'],[4,'V2','Foramen rotundum'],[4,'V3','Foramen ovale'],[5,'VI','Superior orbital fissure'],[6,'VII','Stylomastoid foramen'],[7,'VIII','Internal auditory canal'],[8,'IX','Jugular foramen'],[9,'X','Jugular foramen'],[10,'XI','Jugular foramen'],[11,'XII','Hypoglossal canal']];
+const EO=['Cribriform plate','Optic canal','Superior orbital fissure','Foramen rotundum','Foramen ovale','Internal auditory canal','Stylomastoid foramen','Jugular foramen','Hypoglossal canal'];
+let M=[0,0,0,0,0,0,0,0,0,0,0,0],mode='card',cur=0,last=-1,open={},qs=null;
+try{const s=JSON.parse(localStorage.getItem('cn_m')||'null');if(Array.isArray(s)&&s.length===12)M=s}catch(e){}
+const $=s=>document.querySelector(s);
+function save(){try{localStorage.setItem('cn_m',JSON.stringify(M))}catch(e){}}
+function pick(){const w=M.map((m,i)=>i===last?0:4-m);let t=w.reduce((a,b)=>a+b,0),r=Math.random()*t;for(let i=0;i<12;i++){r-=w[i];if(r<=0)return i}return 0}
+function bump(i,d){M[i]=Math.max(0,Math.min(3,M[i]+d));save();grid()}
+function grid(){$('#g').innerHTML=R.map((r,i)=>`<button class="m${M[i]}" data-i="${i}" aria-label="Nerve ${r} ${N[i].n}">${r}</button>`).join('');
+$('#g').querySelectorAll('button').forEach(b=>b.onclick=()=>{mode='card';cur=+b.dataset.i;open={};render()})}
+function tabs(){$('#tabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode))}
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function render(){tabs();qs=null;if(mode==='card')card();else if(mode==='who')who();else where()}
+function card(){const i=cur,n=N[i];
+$('#main').innerHTML=`<div class="card"><p class="title">${R[i]} · ${n.n}</p>${F.map(([k,l])=>`<div class="row ${open[k]?'on':''}" data-k="${k}" tabindex="0" role="button"><b>${l}</b><span>${n[k]}</span></div>`).join('')}
+<div class="act"><button id="sa">Show all</button><button class="ok" id="ok">✓ I knew it</button><button class="no" id="no">↻ I missed some</button></div></div>`;
+document.querySelectorAll('.row').forEach(r=>{const f=()=>{open[r.dataset.k]=true;r.classList.add('on')};r.onclick=f;r.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+$('#sa').onclick=()=>{F.forEach(([k])=>open[k]=true);card()};
+$('#ok').onclick=()=>{bump(i,1);next()};$('#no').onclick=()=>{bump(i,-1);next()}}
+function next(){last=cur;cur=pick();open={};card()}
+function opts(list,big){return `<div class="opts ${big?'big':''}">${list.map((o,k)=>`<button data-o="${k}">${o}</button>`).join('')}</div>`}
+function who(){const c=CL[Math.floor(Math.random()*CL.length)];const ans=[].concat(c[0]);
+const w=CL.filter(x=>[].concat(x[0]).some(a=>M[a]<3));const cc=w.length&&Math.random()<.7?w[Math.floor(Math.random()*w.length)]:c;
+const A=[].concat(cc[0]);
+$('#main').innerHTML=`<div class="card"><p class="q">Who am I?</p><p class="q" style="font-weight:500">${cc[1]}</p>${opts(R.map((r,i)=>r+' '+N[i].n.slice(0,4)),false)}<div class="fb" id="fb"></div><div class="act"><button class="primary" id="nx" style="display:none">Next</button></div></div>`;
+let done=false;document.querySelectorAll('.opts button').forEach((b,k)=>b.onclick=()=>{if(done)return;done=true;const ok=A.includes(k);A.forEach(a=>bump(a,ok?1:-1));
+const f=$('#fb');f.className='fb on '+(ok?'good':'bad');f.textContent=ok?'Correct: '+A.map(a=>R[a]+' '+N[a].n).join(' or '):'Not quite. The answer is '+A.map(a=>R[a]+' '+N[a].n).join(' or ')+'.';
+b.classList.add(ok?'ok':'no');if(!ok)document.querySelectorAll('.opts button')[A[0]].classList.add('ok');$('#nx').style.display='';$('#nx').onclick=who})}
+function where(){const lv=Math.random()<.5;let i=pick(),q,A,O;
+if(lv){q=`At which level of the brainstem does ${R[i]} (${N[i].n}) attach?`;A=LV.find(x=>x[0]===i)[1];O=['Midbrain','Pons','Medulla','Outside the brainstem']}
+else{const e=EX.filter(x=>x[0]===i);const x=e[Math.floor(Math.random()*e.length)];q=`Through which opening does ${x[1]} (${N[i].n}) leave the skull?`;A=[x[2]];O=EO}
+$('#main').innerHTML=`<div class="card"><p class="q">${q}</p>${opts(O,true)}<div class="fb" id="fb"></div><div class="act"><button class="primary" id="nx" style="display:none">Next</button></div></div>`;
+let done=false;document.querySelectorAll('.opts button').forEach((b,k)=>b.onclick=()=>{if(done)return;done=true;const ok=A.includes(O[k]);bump(i,ok?1:-1);last=i;
+const f=$('#fb');f.className='fb on '+(ok?'good':'bad');f.textContent=ok?'Correct: '+A.join(' or '):'Not quite. The answer is: '+A.join(' or ')+'.';
+b.classList.add(ok?'ok':'no');if(!ok)document.querySelectorAll('.opts button').forEach((x,j)=>{if(A.includes(O[j]))x.classList.add('ok')});$('#nx').style.display='';$('#nx').onclick=where})}
+$('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;render()});
+grid();cur=pick();render();
+</script></body></html>
