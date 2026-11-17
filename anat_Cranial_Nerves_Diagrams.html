@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cranial Nerve Diagrams</title>
+<style>
+:root{--bg:#faf7f5;--surface:#fff;--fg:#1f1a1c;--muted:#6b5f64;--line:#e6dde0;--accent:#a3274f;--accent-ink:#fff;--soft:#f4ebee;--s:#2f6fd1;--m:#c8620f;--b:#7b3fb5}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17131a;--surface:#211b25;--fg:#f1eaee;--muted:#b3a6ad;--line:#382f3d;--accent:#f08aa9;--accent-ink:#2a0f19;--soft:#2b2330;--s:#7fb0ff;--m:#ffae66;--b:#c79bff}}
+:root[data-theme="dark"]{--bg:#17131a;--surface:#211b25;--fg:#f1eaee;--muted:#b3a6ad;--line:#382f3d;--accent:#f08aa9;--accent-ink:#2a0f19;--soft:#2b2330;--s:#7fb0ff;--m:#ffae66;--b:#c79bff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 56px}
+.eyebrow{color:var(--accent);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px}
+h1{font-size:clamp(26px,5vw,34px);margin:0 0 8px;line-height:1.15}h2{font-size:20px;margin:0 0 6px}.lead{color:var(--muted);margin:0 0 12px}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:8px 14px;min-height:44px}
+button:hover{border-color:var(--accent)}button:focus-visible,.tap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar .sp{flex:1}
+button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.panel{display:none}.panel.on{display:block}
+.note{color:var(--muted);font-size:14px;margin:0 0 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 12px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:6px 0 8px}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+svg{width:100%;height:auto;display:block}
+.stem{fill:var(--soft);stroke:var(--line);stroke-width:1.5}.lvl{fill:var(--muted);font-size:11px;text-anchor:middle}.rng{fill:var(--muted);font-size:10px}
+.box{fill:var(--surface);stroke:var(--line)}.hg{cursor:pointer}.hg:focus-visible .box{stroke:var(--accent);stroke-width:2}
+.num{font-weight:700;font-size:12px}.nm{font-size:12px;fill:var(--fg)}.sub{font-size:10.5px;fill:var(--muted)}.ph{font-size:10.5px;fill:var(--muted);display:none;font-style:italic}
+.t-s{fill:var(--s);stroke:var(--s)}.t-m{fill:var(--m);stroke:var(--m)}.t-b{fill:var(--b);stroke:var(--b)}
+.num.t-s,.num.t-m,.num.t-b{stroke:none}
+.lead-line{fill:none;stroke-width:1.5;opacity:.8}.dot{stroke:none}
+body.test .hg:not(.show) .nm,body.test .hg:not(.show) .sub{fill:transparent}
+body.test .hg:not(.show) .ph{display:block}
+.flow{list-style:none;margin:0;padding:0}
+.node{position:relative;padding:0 0 12px 30px}
+.node:before{content:"";position:absolute;left:9px;top:22px;bottom:-2px;width:2px;background:var(--line)}
+.node:last-child:before{display:none}
+.node:after{content:"";position:absolute;left:2px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--accent)}
+.node.br:after{background:var(--surface);border:3px solid var(--b)}
+.node.br{margin-left:26px}.node.br:before{display:none}
+.node b{display:block}.node small{display:block;color:var(--muted)}
+.tap{display:block}
+body.test .tap:not(.show){color:transparent;background:var(--line);border-radius:6px;min-height:20px;cursor:pointer;user-select:none}
+body.test .tap:not(.show) *{color:transparent}
+.clue{color:var(--muted);font-size:14px}
+.row{display:grid;grid-template-columns:110px 1fr;gap:6px 10px;align-items:start;padding:8px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:none}.row .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+.chip{display:inline-block;border-radius:999px;padding:1px 9px;font-size:13px;font-weight:600;color:#fff;background:var(--b);margin-right:4px}
+.fossa{border-left:4px solid var(--accent);padding-left:12px;margin:0 0 14px}.fossa h3{margin:0 0 6px;font-size:16px}
+.fo{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;border-top:1px solid var(--line);padding:8px 0}
+.foot{background:var(--soft);border-radius:12px;padding:12px 14px;margin-top:16px;font-size:14px;color:var(--muted)}
+@media(max-width:430px){.row{grid-template-columns:1fr}}
+@media print{.bar,.tabs{display:none}.panel{display:block!important;break-inside:avoid;margin-bottom:12px}}
+</style></head><body><div class="wrap">
+<p class="eyebrow">Anatomy of Head and Neck · Topic 4</p><h1>Cranial nerve diagrams</h1>
+<p class="lead">Five simplified diagrams, drawn to be remembered rather than to be exact. Look first, then switch on <b>Test myself</b> and recall what is hidden.</p>
+<div class="bar"><button id="tm" aria-pressed="false">Test myself</button><button id="ra">Reveal all</button><span class="sp"></span></div>
+<div class="tabs" id="tabs" role="group" aria-label="Diagram"></div>
+<div id="p1" class="panel"></div><div id="p2" class="panel"></div><div id="p3" class="panel"></div><div id="p4" class="panel"></div><div id="p5" class="panel"></div>
+<div class="foot">Source: Topic 4 slides. Simplified: positions on the brainstem are schematic, nerves are drawn in numerical order. The foramina of V1, V2 and V3 and the CSF exit from the fourth ventricle are standard anatomy added to complete the picture. Slide errors are corrected (accessory nerve is XI, the vagus is X).</div>
+</div>
+<script>
+const T=[['p1','1 · Brainstem'],['p2','2 · Facial nerve path'],['p3','3 · Parasympathetic'],['p4','4 · Skull base'],['p5','5 · CSF flow']];
+const NV=[
+['I','Olfactory','s','Cribriform plate · smell',168,40],
+['II','Optic','s','Optic canal · sight',150,62],
+['III','Oculomotor','m','SOF · eye muscles, pupil',130,120],
+['IV','Trochlear','m','SOF · sup. oblique · dorsal exit',130,145],
+['V','Trigeminal','b','V1 SOF · V2 rotundum · V3 ovale',145,190],
+['VI','Abducens','m','SOF · lateral rectus',145,225],
+['VII','Facial','b','IAC, stylomastoid · expression',145,250],
+['VIII','Vestibulococh.','s','IAC · hearing, balance',145,275],
+['IX','Glossopharyngeal','b','Jugular · stylophar., taste back',126,305],
+['X','Vagus','b','Jugular · pharynx, larynx, viscera',126,330],
+['XI','Accessory','m','Jugular · trapezius, SCM',123,355],
+['XII','Hypoglossal','m','Hypoglossal canal · tongue',120,385]];
+function p1(){let s='<svg viewBox="0 0 400 450" role="img" aria-label="Brainstem with the twelve cranial nerves"><ellipse class="stem" cx="100" cy="45" rx="70" ry="38"/><rect class="stem" x="70" y="100" width="60" height="70" rx="8"/><path class="stem" d="M55 178 Q55 170 70 170 L130 170 Q145 170 145 178 L145 282 Q145 290 130 290 L70 290 Q55 290 55 282Z"/><path class="stem" d="M72 296 L128 296 L116 408 L84 408Z"/><rect class="stem" x="88" y="408" width="24" height="34" rx="6"/>';
+s+='<text class="lvl" x="100" y="49">Brain</text><text class="lvl" x="100" y="139">Midbrain</text><text class="lvl" x="100" y="234">Pons</text><text class="lvl" x="100" y="352">Medulla</text>';
+s+='<text class="rng" x="4" y="116">III, IV</text><text class="rng" x="2" y="206">V to VIII</text><text class="rng" x="2" y="318">VIII to XII</text><text class="rng" x="4" y="70">I, II</text>';
+NV.forEach((n,i)=>{const ly=20+i*36,[r,nm,t,sub,ax,ay]=n;
+s+=`<path class="lead-line t-${t}" d="M${ax} ${ay} L190 ${ly}"${r==='IV'?' stroke-dasharray="4 3"':''}/><circle class="dot t-${t}" cx="${ax}" cy="${ay}" r="3.5"/>`;
+s+=`<g class="hg" tabindex="0" role="button" aria-label="Nerve ${r}" data-h><rect class="box" x="190" y="${ly-14}" width="208" height="32" rx="8"/><text x="198" y="${ly+1}"><tspan class="num t-${t}">${r}</tspan><tspan class="nm" dx="6">${nm}</tspan></text><text class="sub" x="198" y="${ly+13}">${sub}</text><text class="ph" x="198" y="${ly+13}">tap to reveal</text></g>`});
+s+='</svg>';
+$('#p1').innerHTML=`<div class="card"><h2>The twelve nerves along the brainstem</h2><p class="note">Midbrain: III, IV. Pons: V to VIII. Medulla: VIII to XII (as in the slides). I and II belong to the brain itself. IV leaves from the back (dashed). SOF = superior orbital fissure; IAC = internal auditory canal.</p><div class="legend"><span><i style="background:var(--s)"></i>Sensory</span><span><i style="background:var(--m)"></i>Motor</span><span><i style="background:var(--b)"></i>Mixed</span></div>${s}<p class="note" style="margin-top:8px">Sensory, motor, both: <b>S S M M B M B S B B M M</b> (Some Say Marry Money But My Brother Says Big Brains Matter Most). Eyes: <b>LR6 SO4, all others 3</b>. Jugular foramen: <b>IX, X, XI</b>.</p></div>`}
+const FA=[
+['s','Pons: cerebellopontine angle','Two roots leave: motor root and sensitive root (nervus intermedius of Wrisberg)',''],
+['s','Internal auditory canal','Both roots cross the posterior cranial fossa and enter the petrous bone',''],
+['s','Facial canal, segment 1','Runs perpendicular to the long axis of the temporal bone; the roots fuse in the facial duct',''],
+['b','Geniculate ganglion (the knee)','Gives the GREATER PETROSAL nerve: joins the deep petrosal into the nerve of the pterygoid canal, then the pterygopalatine ganglion. Supplies the lacrimal gland, nasal and palate glands; taste of the soft palate','Leaves the ganglion at the knee'],
+['s','Facial canal, segment 2 and 3','After the knee it runs back, then curves down the posterior wall of the tympanic cavity',''],
+['b','Nerve to the stapedius','Motor to the stapedius muscle (the other intrapetrous branch is a sensory branch to the external auditory canal)','Small branch inside the canal'],
+['b','Chorda tympani','Leaves 2-3 mm above the stylomastoid foramen, exits by the petrotympanic fissure, joins the LINGUAL nerve, submandibular ganglion. Submandibular and sublingual glands; taste of the anterior two thirds of the tongue','Leaves just above the exit'],
+['s','Stylomastoid foramen','The nerve leaves the skull and enters the parotid gland (it does not supply it)',''],
+['b','Extrapetrous branches','Communication with IX; posterior auricular nerve (occipital belly, posterior auricular muscle); nerves to stylohyoid and posterior belly of the digastric','Leave below the stylomastoid foramen'],
+['s','Parotid gland','Passes between the digastric (outside) and stylohyoid (inside); divides the gland into two lobes; the plexus forms',''],
+['b','Temporofacial (upper)','Temporal, frontal and palpebral, zygomatic, upper buccal','Upper terminal branch'],
+['b','Cervicofacial (lower)','Lower buccal, mandibular marginal (joins the mental nerve), cervical (platysma)','Lower terminal branch']];
+function p2(){$('#p2').innerHTML=`<div class="card"><h2>Facial nerve (VII): from the pons to the face</h2><p class="note">The spine (filled dots) is the path. The branches (open dots) leave it at the point shown. Rebuild the path in order, then the branches.</p><ul class="flow">${FA.map(x=>x[0]==='s'?`<li class="node"><b>${x[1]}</b><span class="tap" data-h tabindex="0" role="button"><small>${x[2]}</small></span></li>`:`<li class="node br"><span class="clue">${x[3]}</span><span class="tap" data-h tabindex="0" role="button"><b>${x[1]}</b><small>${x[2]}</small></span></li>`).join('')}</ul></div>`}
+const PA=[
+['III Oculomotor','#2f6fd1','Inferior division','Ciliary ganglion','Short ciliary nerves','Ciliary muscle (lens), constrictor pupillae (pupil)'],
+['VII Facial','#c8620f','Greater petrosal nerve (+ deep petrosal = nerve of the pterygoid canal)','Pterygopalatine ganglion','Branches of the maxillary nerve V2 (palatine, nasal, pharyngeal; zygomatic then lacrimal)','Lacrimal gland; glands of nose, palate, pharynx'],
+['VII Facial','#c8620f','Chorda tympani','Submandibular ganglion','Lingual nerve','Submandibular and sublingual glands'],
+['IX Glossopharyngeal','#7b3fb5','Lesser petrosal nerve','Otic ganglion','Auriculotemporal nerve (V3)','Parotid gland'],
+['X Vagus','#2a8f5b','Vagus nerve itself','Near the organs (not named in the slides)','Neck, chest, abdomen','Heart, lungs, gastrointestinal tract']];
+function p3(){$('#p3').innerHTML=`<div class="card"><h2>Parasympathetic pathways of the head</h2><p class="note">Pattern: nerve, branch, ganglion, travels with, target. Four ganglia to remember: <b>C</b>iliary, <b>P</b>terygopalatine, <b>S</b>ubmandibular, <b>O</b>tic (Cats Prefer Soft Oats).</p>${PA.map(p=>`<div class="card" style="border-left:5px solid ${p[1]}"><b>${p[0]}</b>${[['Branch',p[2]],['Ganglion',p[3]],['Travels with',p[4]],['Target',p[5]]].map(r=>`<div class="row"><span class="k">${r[0]}</span><span class="tap" data-h tabindex="0" role="button">${r[1]}</span></div>`).join('')}</div>`).join('')}<p class="note">The autonomic system as a whole is not in these slides: only the parasympathetic fibres of the cranial nerves.</p></div>`}
+const SK=[
+['Anterior cranial fossa',[['Cribriform plate','I olfactory']]],
+['Middle cranial fossa',[['Optic canal','II optic'],['Superior orbital fissure','III, IV, V1, VI (eye nerves + ophthalmic)'],['Foramen rotundum','V2 maxillary'],['Foramen ovale','V3 mandibular']]],
+['Posterior cranial fossa',[['Internal auditory canal','VII facial, VIII vestibulocochlear'],['Jugular foramen','IX, X, XI'],['Hypoglossal canal','XII hypoglossal']]],
+['Outside the skull',[['Stylomastoid foramen','VII facial leaves the skull here and enters the parotid']]]];
+function p4(){$('#p4').innerHTML=`<div class="card"><h2>Skull base: which foramen for which nerve</h2><p class="note">Front to back: anterior, middle, posterior cranial fossa. Eyes and V in the middle fossa, the ear nerves and the last four in the posterior fossa. Links with Topic 3 (sphenoid, temporal, occipital).</p>${SK.map(f=>`<div class="fossa"><h3>${f[0]}</h3>${f[1].map(r=>`<div class="fo"><b>${r[0]}</b><span class="tap" data-h tabindex="0" role="button">${r[1]}</span></div>`).join('')}</div>`).join('')}<p class="note">Slides: V1, V2 and V3 foramina are shown on a diagram; the foramen spinosum is not a nerve foramen (middle meningeal artery).</p></div>`}
+const CF=[['Choroid plexuses','Produce the CSF, on the walls of the ventricles (blood-brain barrier epithelium)'],['Lateral ventricles (2)','One in each cerebral hemisphere'],['Third ventricle','Midline, between the two halves of the thalamus, above the hypothalamus'],['Cerebral (Sylvian) aqueduct','Links the third and fourth ventricles; crosses the midbrain'],['Fourth ventricle','Between the brainstem and the cerebellum'],['Subarachnoid space','Between the arachnoid and the pia mater, around brain and spinal cord (standard anatomy for the exit of the fourth ventricle)'],['Arachnoid villi','Reabsorb the CSF into the dural venous sinuses'],['Blood','The CSF returns to the bloodstream']];
+function p5(){$('#p5').innerHTML=`<div class="card"><h2>Path of the cerebrospinal fluid</h2><p class="note">Follow the arrow, from production to the blood.</p><ol class="flow" style="counter-reset:n">${CF.map((c,i)=>`<li class="node"><b>${i+1}. ${c[0]}</b><span class="tap" data-h tabindex="0" role="button"><small>${c[1]}</small></span></li>`).join('')}</ol></div>`}
+const $=s=>document.querySelector(s);
+p1();p2();p3();p4();p5();
+$('#tabs').innerHTML=T.map(t=>`<button data-p="${t[0]}">${t[1]}</button>`).join('');
+function show(id){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id===id));document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===id))}
+$('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.p));show('p1');
+function tog(e){e.classList.add('show')}
+document.addEventListener('click',e=>{const h=e.target.closest('[data-h]');if(h)tog(h)});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-h]')){e.preventDefault();tog(e.target)}});
+$('#tm').onclick=()=>{const on=document.body.classList.toggle('test');$('#tm').setAttribute('aria-pressed',on);if(on)document.querySelectorAll('[data-h].show').forEach(x=>x.classList.remove('show'))};
+$('#ra').onclick=()=>document.querySelectorAll('[data-h]').forEach(x=>x.classList.add('show'));
+</script></body></html>
