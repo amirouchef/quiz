@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Biomaterials Revision Hub</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1c2530;--mut:#66727f;--line:#ddd8cc;--acc:#0f766e;--accbg:#d8f0ec}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10161c;--card:#19212a;--ink:#e8edf2;--mut:#93a0ad;--line:#2b3641;--acc:#4fd1c2;--accbg:#12332f}}
+:root[data-theme="dark"]{--bg:#10161c;--card:#19212a;--ink:#e8edf2;--mut:#93a0ad;--line:#2b3641;--acc:#4fd1c2;--accbg:#12332f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 56px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700;margin:0}
+.lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.lang button{border:0;background:transparent;color:var(--mut);padding:6px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--accbg);color:var(--acc)}
+h1{font-size:28px;line-height:1.2;margin:10px 0 6px}
+.lead{color:var(--mut);margin:0 0 20px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.card:active{transform:scale(.995)}
+.card h2{margin:0 0 4px;font-size:20px}
+.tag{display:inline-block;background:var(--accbg);color:var(--acc);font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px;margin-bottom:8px}
+.card p{margin:0 0 10px;color:var(--mut)}
+.card ul{margin:0 0 12px;padding-left:20px}
+.go{display:inline-block;background:var(--acc);color:#fff;font-weight:700;border-radius:10px;padding:10px 16px}
+:root:not([data-theme="light"]) .go{color:#07211e}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:26px 0 8px}
+ol{margin:0;padding-left:22px}ol li{margin-bottom:6px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--mut);font-size:15px}
+[lang-fr]{display:none}
+body.fr [lang-en]{display:none}body.fr [lang-fr]{display:revert}
+</style></head><body><main>
+<div class="top"><p class="eyebrow">Dental Biomaterials · Lessons 1 to 5</p>
+<div class="lang" role="group" aria-label="Language"><button id="en" aria-pressed="true">EN</button><button id="fr" aria-pressed="false">FR</button></div></div>
+
+<h1><span lang-en>Biomaterials revision hub</span><span lang-fr>Révisions de biomatériaux</span></h1>
+<p class="lead"><span lang-en>Two tools built from the five lessons (materials in dentistry, properties, impressions and alginate, gypsum, waxes). 315 closed questions, the same ones in both tools.</span><span lang-fr>Deux outils créés à partir des cinq cours (matériaux en dentisterie, propriétés, empreintes et alginate, gypse, cires). 315 questions fermées, les mêmes dans les deux outils.</span></p>
+
+<a class="card" href="bio_Question_Bank.html">
+<span class="tag"><span lang-en>Step 1 · Learn and test</span><span lang-fr>Étape 1 · Apprendre et tester</span></span>
+<h2>Question Bank</h2>
+<p><span lang-en>Multiple-choice questions with one correct answer and an explanation after each one.</span><span lang-fr>QCM à une seule bonne réponse, avec une explication après chaque question.</span></p>
+<ul>
+<li><span lang-en><b>Practice</b>: instant feedback, one question at a time.</span><span lang-fr><b>Pratique</b> : correction immédiate, une question à la fois.</span></li>
+<li><span lang-en><b>Exam</b>: timed, no feedback until the end, like the real thing.</span><span lang-fr><b>Examen</b> : chronométré, correction à la fin, comme le jour J.</span></li>
+<li><span lang-en><b>Flashcards</b>: a quick last pass.</span><span lang-fr><b>Cartes</b> : un dernier passage rapide.</span></li>
+<li><span lang-en>12 sections, one per part of each lesson, plus a <b>My mistakes</b> filter.</span><span lang-fr>12 sections, une par partie de cours, plus un filtre <b>Mes erreurs</b>.</span></li>
+</ul>
+<span class="go"><span lang-en>Open the Question Bank</span><span lang-fr>Ouvrir la banque de questions</span></span>
+</a>
+
+<a class="card" href="bio_Arena.html">
+<span class="tag"><span lang-en>Step 2 · Train fast</span><span lang-fr>Étape 2 · S'entraîner vite</span></span>
+<h2>Arena</h2>
+<p><span lang-en>A quick game on the same questions, made for short breaks and the night before.</span><span lang-fr>Un jeu rapide sur les mêmes questions, pensé pour les petites pauses et la veille.</span></p>
+<ul>
+<li><span lang-en><b>Blitz</b>: 90 seconds, streaks give bonus points.</span><span lang-fr><b>Blitz</b> : 90 secondes, les séries donnent des points bonus.</span></li>
+<li><span lang-en><b>Survival</b>: 3 lives, how far can you go?</span><span lang-fr><b>Survie</b> : 3 vies, jusqu'où peux-tu aller ?</span></li>
+<li><span lang-en><b>Run of 20</b>: a short round with a score.</span><span lang-fr><b>Série de 20</b> : une manche courte avec un score.</span></li>
+<li><span lang-en>Pick a topic: properties, impressions, gypsum, waxes. At the end, replay only your misses.</span><span lang-fr>Choix du thème : propriétés, empreintes, gypse, cires. À la fin, on rejoue seulement ses erreurs.</span></li>
+</ul>
+<span class="go"><span lang-en>Open the Arena</span><span lang-fr>Ouvrir l'arène</span></span>
+</a>
+
+<h3><span lang-en>Suggested routine</span><span lang-fr>Routine conseillée</span></h3>
+<ol>
+<li><span lang-en>Question Bank, Practice mode, one section at a time.</span><span lang-fr>Banque de questions, mode Pratique, une section à la fois.</span></li>
+<li><span lang-en>Redo <b>My mistakes</b> until it is empty.</span><span lang-fr>Refaire <b>Mes erreurs</b> jusqu'à ce que la liste soit vide.</span></li>
+<li><span lang-en>Arena for short sessions, and to fix the numbers (temperatures, ratios, percentages).</span><span lang-fr>Arène pour les sessions courtes, et pour fixer les chiffres (températures, rapports, pourcentages).</span></li>
+<li><span lang-en>The day before: one Exam-mode round.</span><span lang-fr>La veille : une série en mode Examen.</span></li>
+</ol>
+
+<h3><span lang-en>Good to know</span><span lang-fr>Bon à savoir</span></h3>
+<p class="note"><span lang-en>Questions follow the slides. Where two slides disagree (for example the water/powder ratio of plaster and stone), the explanation points it out. Progress is saved in your browser on this device only.</span><span lang-fr>Les questions suivent les slides. Quand deux slides se contredisent (par exemple le rapport eau/poudre du plâtre et du stone), l'explication le signale. La progression est enregistrée dans le navigateur de cet appareil uniquement.</span></p>
+</main>
+<script>
+(function(){var b=document.body;function set(f){b.classList.toggle('fr',f);document.documentElement.lang=f?'fr':'en';document.getElementById('en').setAttribute('aria-pressed',!f);document.getElementById('fr').setAttribute('aria-pressed',f);try{localStorage.setItem('bio-lang',f?'fr':'en')}catch(e){}}
+var s=null;try{s=localStorage.getItem('bio-lang')}catch(e){}
+set(s?s==='fr':false);
+document.getElementById('en').onclick=function(){set(false)};document.getElementById('fr').onclick=function(){set(true)};})();
+</script></body></html>
