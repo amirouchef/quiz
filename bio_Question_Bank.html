@@ -1,0 +1,697 @@
+<title>Dental Biomaterials Question Bank</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column, like a stained-slide study sheet. Hematoxylin indigo for structure, eosin pink for emphasis. */
+:root{
+  --bg:#FAF6FA; --surface:#FFFFFF; --fg:#241B35; --muted:#6B5F7E; --line:#E4DBEA;
+  --hema:#3A2E8C; --hema-ink:#FFFFFF; --hema-soft:#ECE8F8; --eosin:#C42E79;
+  --ok:#17694A; --ok-bg:#E1F3EA; --bad:#A8231B; --bad-bg:#FBE6E3;
+  --f-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+    --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+    --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#130F1D; --surface:#1D1830; --fg:#EEE9F7; --muted:#A79BBD; --line:#352C4E;
+  --hema:#A99BFF; --hema-ink:#150F2E; --hema-soft:#2A2350; --eosin:#F26CA9;
+  --ok:#5CD6A0; --ok-bg:#123628; --bad:#FF8A80; --bad-bg:#3A1A1E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font:16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px;
+}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6.4vw,42px);line-height:1.08;letter-spacing:-.01em;margin:6px 0 10px}
+h2{font-size:clamp(19px,4.4vw,24px);line-height:1.3;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--eosin)}
+.lead{color:var(--muted);max-width:60ch}
+.mono{font-family:var(--f-mono)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--eosin);outline-offset:2px}
+
+/* stage ribbon */
+.ribbon{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:22px 0 6px}
+.ribbon div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--hema);border-radius:8px;padding:8px 10px;min-width:0}
+.ribbon div:nth-child(1){border-top-color:color-mix(in srgb,var(--hema) 40%,var(--line))}
+.ribbon div:nth-child(2){border-top-color:color-mix(in srgb,var(--hema) 55%,var(--line))}
+.ribbon div:nth-child(3){border-top-color:color-mix(in srgb,var(--hema) 72%,var(--line))}
+.ribbon div:nth-child(5){border-top-color:var(--eosin)}
+.ribbon b{display:block;font-family:var(--f-display);font-size:15px}
+.ribbon span{font:500 12px var(--f-mono);color:var(--muted)}
+.cap{font-size:13px;color:var(--muted);margin-bottom:26px}
+
+.sec-title{margin:26px 0 10px;font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--hema-soft);padding:5px;border-radius:12px}
+.seg button{border:0;background:transparent;padding:10px 8px;border-radius:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--hema);color:var(--hema-ink)}
+.mode-note{margin-top:10px;color:var(--muted);font-size:14.5px;min-height:2.9em}
+
+.scopes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.scope{display:block;position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;min-width:0}
+.scope input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.scope:has(input:checked){border-color:var(--hema);background:var(--hema-soft)}
+.scope:has(input:focus-visible){outline:3px solid var(--eosin);outline-offset:2px}
+.scope:has(input:disabled){opacity:.5;cursor:not-allowed}
+.sc-name{display:block;font-weight:600;line-height:1.3}
+.sc-meta{display:block;font-size:13px;color:var(--muted);margin:2px 0 7px}
+.meter{display:block;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--hema);border-radius:3px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--hema);background:var(--hema);color:var(--hema-ink);border-radius:11px;padding:12px 20px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--hema)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.flagged{border-color:var(--eosin);color:var(--eosin)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row.between{justify-content:space-between}
+.start{margin-top:24px}
+.linkish{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:14px}
+
+/* quiz */
+.topbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tag{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tag b{color:var(--eosin);font-weight:500}
+.clock{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.score{font:500 14px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--hema);transition:width .25s}
+.qtext{margin-bottom:18px}
+.lvl{display:inline-block;margin-top:8px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.opts{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.opt{width:100%;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--hema)}
+.opt .l{font:500 13px var(--f-mono);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);color:var(--muted)}
+.opt.sel{border-color:var(--hema);background:var(--hema-soft)}
+.opt.sel .l{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .l{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.62}
+.opt[disabled]{cursor:default}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.fb.good{background:var(--ok-bg)}
+.fb.miss{background:var(--bad-bg)}
+.fb strong{font-family:var(--f-display);font-size:17px}
+.fb.good strong{color:var(--ok)}
+.fb.miss strong{color:var(--bad)}
+.foot{margin-top:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font:500 12px var(--f-mono);font-variant-numeric:tabular-nums;padding:0}
+.nav button.a{background:var(--hema-soft);border-color:var(--hema)}
+.nav button.f{border-color:var(--eosin);box-shadow:inset 0 -3px 0 var(--eosin)}
+.nav button.c{background:var(--hema);color:var(--hema-ink);border-color:var(--hema)}
+.warn{margin-top:16px;background:var(--hema-soft);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+
+/* results */
+.big{font-family:var(--f-display);font-size:clamp(54px,16vw,88px);line-height:1;font-weight:700;color:var(--hema);font-variant-numeric:tabular-nums}
+.big small{font-size:.4em;color:var(--muted);font-weight:600}
+.breakdown{display:grid;gap:10px;margin-top:6px}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.brow .meter{grid-column:1/-1;height:7px}
+.brow .meter i.low{background:var(--eosin)}
+.num{font:500 13px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.rev{display:grid;gap:12px;margin-top:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.item .q{font-weight:600}
+.item .yours,.item .right{font-size:15px}
+.item .yours b{color:var(--bad)}
+.item .right b{color:var(--ok)}
+.item .ex{font-size:14.5px;color:var(--muted)}
+
+/* flashcards */
+.card{display:block;width:100%;min-height:260px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:24px 22px;position:relative}
+.card.back{background:var(--hema-soft);border-color:var(--hema)}
+.card .side{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--eosin);margin-bottom:12px;display:block}
+.card .ans{font-family:var(--f-display);font-size:clamp(19px,4.6vw,24px);line-height:1.3;font-weight:600;display:block;margin-bottom:12px}
+.card .ex{color:var(--muted);display:block}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+
+
+<script>
+const SECS=[
+ {k:'A',n:'Lesson 1 · Dental biomaterials: concepts and requirements'},
+ {k:'B',n:'Lesson 2 · Forces and tension'},
+ {k:'C',n:'Lesson 2 · Tension-deformation curve'},
+ {k:'D',n:'Lesson 2 · Dynamic properties'},
+ {k:'E',n:'Lesson 2 · Biological properties and biocompatibility'},
+ {k:'F',n:'Lesson 3 · Impressions: concept and techniques'},
+ {k:'G',n:'Lesson 3 · Viscosities, classification and requirements'},
+ {k:'H',n:'Lesson 3 · Hydrocolloids and alginate'},
+ {k:'I',n:'Lesson 4 · Gypsum: types, composition and setting'},
+ {k:'J',n:'Lesson 4 · Gypsum: properties and handling'},
+ {k:'K',n:'Lesson 5 · Waxes: composition and classification'},
+ {k:'L',n:'Lesson 5 · Wax properties and modelling compounds'}
+];
+const RAW=[
+['A',"According to Jimenez Planas, dental biomaterials are products that are manipulated by dental professionals to:","Prevent, diagnose and/or treat oral diseases","Only restore lost tooth structure","Only replace missing teeth","Only take impressions of the oral tissues","This is the definition given on the slide: prevent, diagnose and/or treat oral diseases.",1],
+['A',"Which author defines an 'Accepted Dental Material' as one approved, assessed and certified by an official organism?","Friedenthal","Anusavice","Toledano","Vega del Barrio","The slide credits Friedenthal (with Macchi) for this definition.",2],
+['A',"Why must a dental professional know the interactions between materials?","Because one or more materials can be used at the same time","Because materials never interact","Because only one material is used per patient","Because interactions only matter for impression materials","The slides state that one or more materials can be used simultaneously, so their interactions must be known.",1],
+['A',"What is the aim of standardization and normalization?","To obtain dental instruments and materials of optimal quality and properties","To lower the price of every material","To forbid new materials","To reserve materials for specialists","Norms created by national or international organisms aim for quality materials, both marketed and about to be launched.",1],
+['A',"Which of these is NOT listed as a requirement of a dental material?","High cost","Biocompatibility","Reasonable cost","Cleanable and autoclavable","The slides ask for a reasonable cost, not a high one.",1],
+['A',"A material that shows minimal dimensional change in fillings and impressions meets which requirement?","Accuracy and precision for each indication","Radiopacity","Pleasant smell and taste","Easy polishing","Minimal dimensional change belongs to accuracy and precision.",2],
+['A',"Radiopacity of a material is useful because it allows:","Better control in X-rays under fillings and in interproximal areas","Easier polishing","A pleasant taste","A shorter handling time","The slides link radiopacity with better X-ray control.",2],
+['A',"Which of these is a polymer according to the classification by nature and origin?","Silicones","Gypsum","Gold","Porcelain","Polymers: silicones, polyethers, polysulfides, BisGMA. Gypsum and porcelain are ceramics, gold is a metal.",1],
+['A',"Gypsum, investments and porcelain are classified as:","Ceramics","Polymers","Metals","Biological materials","They are the ceramics of the non-biological group.",1],
+['A',"Pure gold and titanium belong to which group?","Metals","Ceramics","Polymers","Biological materials","Metals include pure metals (gold, titanium) and metallic alloys.",1],
+['A',"Hydrocolloids and waxes of vegetal origin are classified as:","Biological materials of the vegetable kingdom","Non-biological polymers","Ceramics","Metallic alloys","Vegetable kingdom: hydrocolloids, waxes. Animal kingdom: waxes, silk, catgut.",2],
+['A',"Silk and catgut belong to:","The animal kingdom (biological materials)","The vegetable kingdom","The ceramics","The polymers","They are the biological materials of animal origin, with waxes.",2],
+['A',"Classifying materials as impression and pouring materials, fillings, or luting materials is a classification according to:","Clinical use","Nature and origin","Tissue of contact","Price","Clinical use: impression and pouring, fillings and restorative, luting materials.",1],
+['A',"Classifying materials as restorative, endodontic, orthodontic or surgical is a classification according to:","Purpose","Origin","Clinical use","Mechanical resistance","According to its purpose: restorative, prosthesis, endodontics, periodontics, orthodontics, surgery, prevention.",2],
+['A',"Mucosa, bone and enamel are examples of classification according to:","The tissue the material comes in contact with","Origin","Purpose","Cost","This classification depends on the tissue of contact.",2],
+['A',"Which requirement is part of 'acceptable organoleptic properties'?","Pleasant smell and taste","Radiopacity","Resistance to shear","Autoclavability","Organoleptic means smell, taste and aspect.",2],
+['B',"What is a force, according to the slides?","The influence or ability to act on a body, modifying its state of rest or motion","The force applied per area unit","The deformation of a material","The energy stored by a material","Force is the ability to act on a body and change its rest or motion. Tension is force per unit area.",1],
+['B',"Two opposite forces acting away from each other in a straight line describe:","Traction","Compression","Shear","Torsion","Traction (tensile force) pulls apart along a straight line.",1],
+['B',"Elongation (stretching %) is expressed as:","Final length / initial length, as a percentage","Force / area","Initial length / final length","Energy absorbed until fracture","The slide gives final length over initial length as %.",2],
+['B',"An orthodontic wire being stretched is an example of:","Traction","Compression","Torsion","Shear","The slide uses the orthodontic wire as the traction example.",1],
+['B',"Two opposite forces acting toward each other in a straight line describe:","Compression","Traction","Shear","Flexion","Compression pushes the material along a line.",1],
+['B',"The compression of an antagonist tooth on a dental filling is an example of:","Compression","Traction","Shear","Torsion","The slide's compression example.",1],
+['B',"The diametrical compression test is also called the:","Brazilian test or indirect traction test","Vickers test","Charpy test","Fatigue test","Diametrical compression = indirect traction trial = Brazilian trial.",2],
+['B',"The Brazilian test is mainly used for:","Fragile materials","Ductile wires","Elastomers","Waxes only","It is used for brittle materials, compressing a cylinder along its diameter until it fails.",2],
+['B',"Shear is also called:","Cutting or tangential force","Torsion","Diametrical compression","Fatigue","Shear = cutting = tangential.",1],
+['B',"Shear forces act:","In opposite directions on two parallel lines very close together","Toward each other in a straight line","Away from each other in a straight line","Rotating around the long axis","Two opposite forces on two close parallel lines.",2],
+['B',"Flexion is a complex phenomenon combining:","Traction and compression","Torsion and shear","Fatigue and creep","Elasticity and plasticity","Flexion = traction + compression.",1],
+['B',"In a long metal-ceramic bridge, the compression on the pontic generates:","Traction over the pillars","Compression over the pillars","Torsion of the pontic","No stress","The slide: compression on the pontic generates traction over the abutments (pillars).",3],
+['B',"Torsion is produced by:","Two forces that rotate in opposite directions, creating helical deformations","Two forces acting toward each other","A sudden force","A cyclic force","Torsion twists the material.",1],
+['B',"Tension (stress) is defined as:","Force per unit area","Change in length divided by initial length","Energy per volume","Force multiplied by time","Tension = force / area, expressed in pascals.",1],
+['B',"1 Pascal equals:","1 Newton per square metre","1 Newton per square centimetre","1 kilogram per metre","1 Joule","Pa = N/m².",1],
+['B',"1000 kPa equals:","1 MPa","1 GPa","10 MPa","100 Pa","1000 Pa = 1 kPa and 1000 kPa = 1 MPa.",1],
+['B',"1 psi is approximately:","6.9 kPa","69 kPa","0.69 kPa","6.9 MPa","1 psi = 6894.75 Pa, about 6.9 kPa.",2],
+['B',"Which material in the slide's table has the highest traction resistance?","Gold alloys (448 MPa)","Amalgam alloy","Enamel","Porcelain","Gold alloys: 448 MPa, far above the others.",2],
+['B',"Which material in the table has the highest elastic modulus?","Porcelain (140)","Gold alloys (77)","Amalgam (34)","Enamel (4.6)","Porcelain has the highest elastic modulus of the table (140), so it is the most rigid.",3],
+['B',"According to the table, which has the higher compressive resistance?","Enamel (384 MPa) compared with dentine (297 MPa)","Dentine compared with enamel","Gypsum compared with enamel","Calcium hydroxide compared with dentine","Enamel 384 MPa, dentine 297 MPa.",3],
+['B',"Which material in the table has the lowest compressive strength (10.3 MPa)?","Calcium hydroxide","Gypsum","Zinc phosphate cement","Glass ionomer","Calcium hydroxide: 1.0 MPa in traction and 10.3 MPa in compression.",3],
+['C',"Elastic deformation is:","Reversible: the material recovers its dimensions when the force is removed","Irreversible","Permanent","Produced only above the yield point","Elastic = reversible. Plastic = irreversible.",1],
+['C',"Plastic deformation is:","Permanent: the material does not recover its dimensions","Fully reversible","Only produced by fatigue","Equal to the elastic modulus","Plastic strain remains after the force is removed.",1],
+['C',"Deformation is calculated as:","ΔL / L0","L0 / ΔL","Force / area","Area under the curve","Dimensional change over the initial length.",1],
+['C',"The elastic limit (EL) is:","The maximum force the material can withstand without permanent deformation","The stress at fracture","The slope of the curve","The area under the curve","Beyond EL the deformation becomes permanent.",1],
+['C',"The proportional limit (PL) is:","The elastic limit expressed in tension units","The maximum energy absorbed","The final resistance","The angle of the line","PL = elastic limit in stress units. It indicates the elasticity of a material.",2],
+['C',"The proportional limit indicates the ______ of a material.","Elasticity","Rigidity","Ductility","Toughness","The slides: PL indicates elasticity; elastic modulus indicates rigidity/flexibility.",2],
+['C',"The elastic modulus (Young's modulus) is the relation between:","Tension and deformation","Force and time","Length and temperature","Energy and area","EM = stress / strain in the elastic region.",1],
+['C',"The elastic modulus indicates the:","Rigidity or flexibility of a material","Ductility","Fatigue life","Impact resistance","The higher EM, the more rigid.",1],
+['C',"A material with a higher elastic modulus is:","More rigid","More flexible","More ductile","More resilient","Higher EM means more rigid; lower EM means more flexible.",1],
+['C',"A material with a lower elastic modulus is:","More flexible","More rigid","More brittle","Harder","Lower EM: more flexible.",1],
+['C',"Hooke's law states that, in the elastic region:","Deformation is directly proportional to tension","Deformation is inversely proportional to tension","Deformation is constant","Tension is independent of deformation","Hooke's law applies in the elastic area.",1],
+['C',"Which statement about enamel and dentine is correct according to the slides?","Enamel is more rigid and fragile; dentine is more flexible and resistant","Enamel is more flexible than dentine","Dentine is more rigid than enamel","Both are equally rigid","Slide 27 says exactly this.",2],
+['C',"On a stress-strain graph, material B has a greater elastic modulus than material A. Which is correct?","B is more rigid and A is more flexible","A is more rigid","Both are equally rigid","B is more ductile","ME B > ME A: B is more rigid.",2],
+['C',"Resilience is:","The capacity to store energy when elastically deformed","The energy absorbed until fracture","The plastic deformation in traction","The tendency to break","Resilience = area under the elastic part of the curve.",1],
+['C',"Resilience is represented on the curve by:","The area below the elastic section","The slope of the line","The area below the plastic section","The final point of the curve","Area below the elastic portion.",2],
+['C',"The yield point corresponds to the stress that produces a deformation of:","0.2% of the initial length","2% of the initial length","20% of the initial length","0.02% of the final length","Yield strength is the tension that generates a 0.2% deformation.",2],
+['C',"Final (ultimate) resistance is:","The maximum tension the material can withstand until it fractures","The stress at the elastic limit","The area of the elastic zone","The slope of the curve","Final resistance = maximum stress before fracture.",1],
+['C',"Ductility is the plastic deformation obtained by:","Traction forces","Compression forces","Shear forces","Torsion","Ductility = traction. Malleability = compression.",1],
+['C',"Malleability is the plastic deformation obtained by:","Compressive forces","Traction forces","Cyclic forces","Heat","Example: gold-rich alloys for inlays and onlays.",1],
+['C',"An example of a ductile material given in the slides is:","An orthodontic wire","A gypsum cast","Enamel","Porcelain","Orthodontic wire for ductility; gold alloys for malleability.",1],
+['C',"Brittleness (fragility) is characterised by:","A short plastic zone and a tendency to break","A long plastic zone","A high resilience","A low elastic modulus","Fragility is the opposite of ductility/malleability.",1],
+['C',"Toughness is:","The quantity of energy absorbed until fracture occurs","The energy stored elastically","The elastic modulus","The proportional limit","Toughness = resistance to fracture = energy absorbed until fracture.",1],
+['C',"On a graph, a rigid and resistant material shows:","A steep line and a high final resistance","A flat line","A very long plastic zone with low stress","A line below the others","Rigid: high elastic modulus (steep). Resistant: high final stress.",2],
+['C',"On a graph, a flexible, malleable and low-resistance material shows:","A shallow slope, a long plastic zone and a low final stress","A steep slope and a short plastic zone","A very high final stress","No plastic zone","Low EM (flexible), long plastic zone (malleable), low final stress.",3],
+['D',"The rate of loading is:","The speed at which a force is applied to a material","The number of cycles before fracture","The temperature of the test","The area of the sample","It can change the mechanical properties.",1],
+['D',"The faster a material is loaded:","The higher its proportional limit and final resistance to fracture","The lower its proportional limit","The more plastic it becomes","The lower its elastic modulus","Faster loading raises PL and final resistance.",2],
+['D',"Which clinical situation illustrates rate of loading?","Impression material removed from the mouth by a quick pull","A filling worn by chewing for years","A denture dropped on the sink","An orthodontic wire kept in place","Impression materials are removed by quick traction, which improves elastic recovery.",2],
+['D',"Impact resistance is:","The highest resistance a material shows after a sudden force","The loss of strength with cycles","Deformation over time","The energy stored elastically","Example: an acrylic denture dropped over the sink.",1],
+['D',"Fatigue is:","A substantial loss of resistance to fracture under repetitive or cyclic forces","Permanent deformation over time","The tendency to break","A sudden force","Fatigue relates to cyclic loads.",1],
+['D',"The fatigue life is:","The number of cycles needed to produce a fracture","The cyclic tension needed to fracture","The force below which no fracture occurs","The speed of loading","Fatigue life = number of cycles to failure.",2],
+['D',"The fatigue limit is:","The amount of cyclic tension that produces fracture in a determined number of cycles","The number of cycles to failure","The force below which no fracture occurs","The 0.2% offset stress","Do not confuse it with the limit of tolerance.",3],
+['D',"The limit of tolerance is:","The force limit below which there is no fracture","The number of cycles to failure","The stress at fracture","The speed of loading","Below this limit the material does not fracture.",3],
+['D',"Creep is:","Permanent deformation over time under constant stress lower than the yield strength","Elastic recovery","Sudden fracture","Loss of strength by cyclic forces","Creep occurs even in the elastic range under constant load.",1],
+['D',"Which filling material is used as the creep example in the slides?","Amalgam","Gold","Composite","Glass ionomer","Amalgam margins deteriorate over time under repetitive mastication forces.",1],
+['D',"What do manufacturers add to amalgam to reduce creep?","Copper","Mercury","Silver","Tin","The slides say copper is added to diminish creep.",2],
+['D',"The Spanish word 'escurrimiento' corresponds to:","Creep","Fatigue","Toughness","Resilience","The slide gives escurrimiento as creep.",3],
+['E',"ADA Type I materials are those:","Used outside the mouth, in contact with other body parts, or accidentally swallowed or inhaled","In contact with mucous membranes","That may compromise the pulp","Used as root fillings","Type I examples: gypsum, base resin, casting metals.",1],
+['E',"Which material is ADA Type I?","Gypsum","Gutta-percha","Acrylic resin","Dental implants","Type I: gypsum, base resin, casting metals.",1],
+['E',"ADA Type II materials are those in contact with:","Mucous membranes or other soft tissues of the oral cavity","The pulp","The root canal","Bone","Examples: hydrocolloid and polyether impressions, acrylic resins, metallic alloys.",1],
+['E',"Hydrocolloid and polyether impression materials are ADA Type:","II","I","III","IV","They contact oral mucosa.",2],
+['E',"ADA Type III materials are those capable of:","Compromising the integrity or vitality of the pulp, saliva or adjacent soft tissues","Being swallowed","Replacing bone","Filling root canals","Examples: thermal and electrical insulation of amalgam, trauma of cohesive gold, microleakage from composite contraction.",2],
+['E',"Microleakage caused by polymerization contraction of composites is an example of ADA Type:","III","I","II","V","It threatens the pulp and adjacent tissues.",3],
+['E',"ADA Type IV materials are:","Root filling materials","Implants","Impression materials","Casting metals","Type IV: gutta-percha and endodontic sealing cement.",1],
+['E',"Gutta-percha and endodontic sealer are ADA Type:","IV","V","III","I","Root filling materials are Type IV.",1],
+['E',"ADA Type V materials are those that may compromise:","The integrity of hard tissues: implants, membranes, bone fillers","The pulp only","Mucous membranes only","Saliva only","Type V: implants, membranes, bone filling materials.",1],
+['E',"Which material belongs to ADA Type V?","Bone filling material","Gypsum","Alginate","Amalgam insulation","Implants, membranes and bone fillers are Type V.",1],
+['E',"Materials to rebuild or restore, such as fillings, are classified as:","Non-implanted dental materials","Implanted materials","Non-dental auxiliary materials","Type I only","Non-implanted: to rebuild, to replace, to align, for surgery, for prevention.",2],
+['E',"Topical fluoride gel is a material used for:","Prevention and prophylaxis","Surgical interventions","Aligning teeth","Replacing teeth","The slide's example for prevention and prophylaxis.",1],
+['E',"Sutures are an example of materials used for:","Surgical interventions","Prevention","Restoration","Orthodontics","Surgical interventions: sutures.",1],
+['E',"An implant is defined as a device made of artificial materials that are:","Non-metabolizable, in contact with the internal environment, to restore a missing function","Resorbable within days","Placed only on the mucosa","Always metallic","The slide definition: non-metabolizable, with suitable reactivity, temporary or permanent contact with the internal environment.",2],
+['E',"Biocompatibility according to Vega del Barrio is:","The ability of a material to provoke an appropriate response in the host for a specific application","The absence of any reaction","The toxicity of a material","The resistance to corrosion","The slide quotes this definition.",2],
+['E',"Which is NOT a factor of biocompatibility?","Price of the material","Nature, structure and characteristics of the material","Tissue type, host and psychological tolerance","Instrumental handling or placement technique","The three factors: material, host/tissue, handling technique.",1],
+['E',"A toxic agent is one that:","In small amounts can cause death or serious injury","Causes allergies","Causes tumours","Causes mutations","Toxic = poison.",1],
+['E',"A cytotoxic material is one that, at low concentrations, may cause:","Serious cell damage or cell death","Tumours","Allergy","Mutations only","Cytotoxicity concerns cells.",1],
+['E',"Mutagenicity is the ability of an agent to:","Cause mutations in genes","Produce tumours","Cause allergy","Kill cells","Carcinogenicity is the ability to produce tumours.",1],
+['E',"Carcinogenicity is the ability to:","Produce tumours","Cause mutations","Cause hypersensitivity","Kill cells","Carcinogenesis = tumour production.",1],
+['E',"Hypersensitivity is:","An exaggerated, strong or broad response to an agent","A tumour","Cell death","A mutation","Allergy is an altered capacity to react to certain substances.",2],
+['E',"Adverse reactions to biomaterials are classified as:","Non-allergic and allergic","Toxic and psychological only","Type I and type II only","Local and general only","Non-allergic: toxicity, psychological. Allergic: immune mechanism.",2],
+['E',"Type I allergic reaction involves:","IgE","IgG","T cells","IgM","Type I (IgE), type II/III (IgG), type IV (T cells).",2],
+['E',"Type IV allergic reaction involves:","T cells","IgE","IgG","Complement only","Delayed type IV: T cells.",2],
+['E',"Which substance is cited as a main toxic substance in dentistry?","Methyl methacrylate (MMA)","Gypsum","Alginate","Beeswax","Main toxics: MMA, formaldehyde, mercury, arsenic, barium, chrome, silver, lead, selenium.",1],
+['E',"Which is a major allergen in dentistry according to the slides?","Latex","Gypsum","Water","Paraffin","Allergens: latex, rubber dam components, benzoyl peroxide, disinfectants, anaesthetics, metals, eugenol, impression materials, glutaraldehyde.",2],
+['E',"Which metal most frequently causes allergy?","Nickel, together with palladium","Gold","Titanium","Silver","Nickel and palladium are the most frequent.",1],
+['E',"Nickel allergy in the slides' table affects:","39% of women and 3% of men","3% of women and 39% of men","10% of both","1% of both","Nickel: 39% women, 3% men. Probably related to piercings.",2],
+['E',"Which treatment generates most allergic reactions (85%)?","Orthodontics, especially with extraoral traction","Silver amalgam fillings","Prosthesis with non-noble metals","Composite fillings","Orthodontics 85%, non-noble prostheses 27%, amalgam 2%.",2],
+['E',"Prostheses with non-noble metals cause allergic reactions in about:","27%","85%","2%","1.4%","Slide 70 percentages.",3],
+['E',"Allergy to silver amalgam (mercury) is:","Rare: about 2% of treatments","The most frequent: 85%","About 27%","Impossible","The slide gives 2% and a rarity of 1.4 per thousand patients.",3],
+['E',"ISO 7405 is a document about:","Biological evaluation of dental materials","Impression material setting times","Gypsum types","Fatigue limits","ISO 7405 and ANSI/ADA 41 cover biological evaluation.",2],
+['E',"ANSI/ADA Specification 41 covers:","Recommended standard practices for biological evaluation of dental materials","Alginate setting times","Wax classification","Gypsum expansion","Specification 41, biological evaluation.",2],
+['F',"An impression material is used to:","Record the shape and relation of oral tissues as a negative reproduction","Make a positive cast directly","Fill root canals","Restore teeth","Concept slide: negative reproduction with precision and detail.",1],
+['F',"A dental impression is a:","Negative register of one or several teeth","Positive reproduction of the jaw","Model of one tooth","Cast in plaster","Impression = negative. Model = positive.",1],
+['F',"A stump or die is:","A model of a single tooth","A negative copy of the arch","A tray","A wax pattern","Stump (muñón) or die (troquel) = model of a single tooth.",1],
+['F',"A dental model is:","A positive reproduction or cast of the upper or lower jaw","A negative reproduction","A single tooth","A tray","Poured from the impression.",1],
+['F',"Elastic recovery of an impression material is linked to:","Precision and dimensional accuracy","Setting time","Colour","Radiopacity","Better elastic recovery means higher accuracy.",1],
+['F',"Impression materials behave in practice as:","Viscoelastic","Perfectly elastic","Perfectly plastic","Rigid","They do not recover fully and keep a small permanent deformation.",1],
+['F',"The permanent deformation of a viscoelastic impression material affects its:","Accuracy","Colour","Setting temperature","Radiopacity","Residual deformation reduces precision.",1],
+['F',"Materials with good elastic recovery are called:","Elastic and more accurate","Non-elastic and more accurate","Non-elastic and less accurate","Plastic and more accurate","Elastic materials recover better and are more accurate.",1],
+['F',"Why is an impression pulled out quickly?","Elastic recovery is improved when it is removed quickly","To reduce setting time","To avoid contamination","To increase viscosity","Fast removal improves elastic recovery.",2],
+['F',"In the single impression technique, the material is applied:","In one layer on the tray","In two phases with different viscosities","Directly in the mouth without tray","Only on the die","One layer, usually alginate.",1],
+['F',"Which material is the example of the single impression technique?","Alginate","Silicone","Polyether","Wax","Single: alginate. Double: silicones.",1],
+['F',"A customized tray is made of:","Wax or modelling compound","Metal only","Alginate","Gypsum only","It is adapted to the patient's anatomy and reduces material thickness and quantity.",2],
+['F',"A customized tray allows:","Reduced thickness and quantity of impression material","Higher cost only","More material","No setting reaction","The thickness is reduced.",2],
+['F',"The double impression technique is used mainly in:","Fixed prosthesis","Complete dentures","Orthodontic study casts","Bite registration","The slide places it in fixed prosthesis.",2],
+['F',"In the double impression technique, the first material used is:","Heavy viscosity (putty)","Light viscosity","Medium viscosity applied on the tooth","Alginate","First heavy putty in the tray, then medium plus light.",1],
+['F',"In the second phase, the light viscosity material is applied:","Directly on the tooth preparation in the mouth","Only in the tray","Only on the cast","On the putty in the laboratory","The light material is placed on the preparation and the tray is repositioned.",2],
+['F',"The double technique uses:","The same type of material with different viscosities","Two different materials","Only putty","Only light body","Silicone or polyether in several viscosities.",2],
+['F',"Which materials are used for the double impression technique?","Silicone and polyether","Alginate and agar","Gypsum and wax","Zinc oxide and alginate","Silicones and polyethers.",1],
+['F',"Using several viscosities allows better:","Accuracy, dimensional stability and detail reproduction","Price only","Taste","Radiopacity","As stated on slide 24.",1],
+['F',"An optical impression is made by:","A sensor or small camera that captures an image of the prepared tooth","Alginate in a tray","A polyether tray","Wax","The image is processed by computer, the restoration designed, then milled.",1],
+['F',"After an optical impression, the restoration is:","Milled from a ceramic or resin block","Poured in gypsum","Cast in wax","Cured in the mouth","The computer orders the milling machine.",2],
+['G',"In an impression material, the filler is dispersed in a:","Matrix (the elastic impression material)","Solvent only","Gypsum","Wax","Filler material + matrix.",2],
+['G',"Increasing the filler content increases the:","Viscosity","Setting contraction","Thermal contraction","Detail reproduction","Heavy materials have more filler and higher viscosity.",1],
+['G',"Increasing the filler content ______ the setting and thermal contraction.","Decreases","Increases","Does not change","Doubles","More filler gives less contraction.",2],
+['G',"Increasing the filler content ______ dimensional accuracy and stability.","Increases","Decreases","Does not change","Eliminates","More filler, more dimensional accuracy and stability.",2],
+['G',"Heavy viscosity materials show:","Greater accuracy and stability, less detail reproduction","Less accuracy, more detail","Excellent detail and low stability","The same as light","Heavy: less dimensional change.",1],
+['G',"Low (light) viscosity materials show:","Excellent detail reproduction but less accuracy and stability","Greater accuracy","Less detail","The least contraction","Light: more dimensional changes, excellent detail.",1],
+['G',"Medium viscosity materials show:","Intermediate accuracy, stability and detail reproduction","The highest accuracy","The lowest detail","No stability","Intermediate.",1],
+['G',"Which of these is a non-elastic impression material?","Zinc oxide eugenol paste","Alginate","Polyether","Silicone","Non-elastic: gypsum, thermoplastics, zinquenolic pastes.",1],
+['G',"Which of these is a non-elastic impression material?","Impression plaster","Agar","Polysulfide","Addition silicone","Gypsum or plaster is non-elastic.",1],
+['G',"Agar-agar is classified as:","A reversible hydrocolloid","An irreversible hydrocolloid","An elastomer","A thermoplastic","Agar = reversible. Alginate = irreversible.",1],
+['G',"Which are elastomeric materials?","Polysulfides, polyethers and silicones","Agar and alginate","Gypsum and wax","Zinc oxide and wax","Elastomers: polysulfides, polyethers, silicones.",1],
+['G',"Condensation and addition silicones are classified as:","Non-aqueous elastomers","Hydrocolloids","Thermoplastics","Zinquenolic pastes","Slide 35.",2],
+['G',"Requirements affecting PRECISION concern:","The accuracy to reproduce the cast","Capacity to maintain accuracy until pouring","Ease of handling","Price","Precision = accuracy of the reproduction.",1],
+['G',"Dimensional stability is the capacity to maintain precision:","From setting to pouring","From mixing to setting","From pouring to storage","From pouring to setting","Slide 37.",1],
+['G',"Which factor affects accuracy?","Adhesion to the tray","Price","Storage life","Wide acceptance","Others: elastic recovery, fine detail, tear resistance, saliva interaction, setting contraction, thermal contraction, thickness, time of removal.",2],
+['G',"Thermal contraction depends on the difference between:","Oral cavity (37 °C) and room temperature","Setting and pouring time","Mixing and setting","Tray and tooth only","Temperature difference between mouth and environment.",2],
+['G',"Which factor affects dimensional stability?","Elimination of volatile by-products or water loss","Taste","Colour","Price","Also: setting reaction beyond the apparent time, thermal contraction.",2],
+['G',"Which factor affects manipulation?","Relationship between working and setting time","Elastic recovery","Tear resistance","Detail reproduction","Manipulation: presentation, mixture, handling, setting characteristics, temperature, working/setting time.",2],
+['G',"Which is an additional requirement?","Long storage life","Elastic recovery","Tear resistance","Thermal contraction","Additional: non-toxic, non-irritant, clean, organoleptic, storage life, affordable, acceptance.",1],
+['H',"Hydrocolloids are elastic impression materials of:","Natural origin, formed by a colloidal suspension of polysaccharide chains in water","Synthetic origin","Mineral origin","Metallic origin","Slide 44.",1],
+['H',"In the sol state, a hydrocolloid is:","A low viscosity liquid with randomly distributed polysaccharide chains","A rigid gel","A solid","A powder","Sol = liquid.",1],
+['H',"In the gel state, a hydrocolloid is:","More viscous and able to develop elastic properties","A low-viscosity liquid","A powder","A wax","Gel = viscous, elastic.",1],
+['H',"Why is the material placed in sol state?","So it fully adapts to the oral structures","To save time","To lower cost","To avoid bubbles","Then it becomes a gel and records the details.",2],
+['H',"Reversible hydrocolloids change from sol to gel by:","Cooling","Heating","Adding water","Adding calcium","Sol → gel when cooled; gel → sol when heated.",1],
+['H',"In agar, the bonds between chains are:","Weak (van der Waals and hydrogen bonds)","Strong covalent cross-links","Ionic only","None","Weak bonds allow the gel to revert to sol with heat.",2],
+['H',"In alginate, the sol-gel transformation occurs through:","Strong cross-linked intermolecular bonds","Weak hydrogen bonds","Cooling","Heating","The alginate gel does not revert.",1],
+['H',"Alginate is mostly used to take impressions for:","Study casts","Fixed prosthesis dies","Crowns","Implants","Total or partial impressions for study or working casts; orthodontic casts.",1],
+['H',"Alginate comes from:","Alginic acid from seaweed","Petroleum","Gypsum","Beeswax","Organic polymer from seaweed.",1],
+['H',"The main reagent of alginate powder is:","Sodium or potassium alginate (12-15%)","Calcium sulphate dihydrate","Diatomaceous earth","Sodium phosphate","Main reagent, reacts with Ca²⁺.",2],
+['H',"Calcium sulphate dihydrate (8-12%) in alginate:","Provides Ca²⁺ for cross-linking","Acts as a retarder","Acts as filler","Gives colour","It supplies calcium ions to form the insoluble gel.",2],
+['H',"Sodium phosphate or carbonate (2%) in alginate acts as a:","Retarder","Accelerator","Filler","Colourant","Controls the working time.",2],
+['H',"Diatomaceous earth in alginate (about 70%) is the:","Inert filler that provides viscosity","Retarder","Reagent","Indicator","Inert filler.",2],
+['H',"Potassium sulphate, silicates and borates in alginate (10%) serve to:","Protect the gypsum from the colloidal effect","Retard the setting","Give viscosity","Provide calcium","They avoid interference with the gypsum cast surface.",3],
+['H',"The setting reaction of alginate is:","Na alginate + CaSO₄ + H₂O → Ca alginate (gel) + Na₂SO₄","Hemihydrate + water → dihydrate","Gel → sol by heat","Polymerisation by peroxide","Slide 53.",2],
+['H',"Increasing the powder/water ratio:","Increases mechanical resistance, consistency and tear resistance, and reduces working and setting time and flexibility","Increases flexibility","Increases working time","Has no effect","Slide 56.",3],
+['H',"Mixing time for fast set alginate is:","45 seconds","60 seconds","2 minutes","30 seconds","45 s fast set, 60 s regular set.",2],
+['H',"Mixing time for regular set alginate is:","60 seconds","45 seconds","2 minutes","90 seconds","Slide 58.",2],
+['H',"A correct alginate mix is:","Smooth, creamy, with few bubbles","Lumpy","Porous","Dry","A lumpy mix does not reproduce details.",1],
+['H',"Alginate sets:","From inside out, so the impression must not be moved","From outside in","Only on the surface","By heating","Slide 59.",2],
+['H',"Impression trays for alginate:","Require retentive edges; no adhesive is used","Always require adhesive","Must be heated","Must be lubricated","Retentive edges are used instead of adhesive.",2],
+['H',"ADA specification no. 18 defines type I alginate as:","Fast setting (60-120 seconds)","Regular setting (2-4.5 minutes)","Setting over 10 minutes","Setting in 30 s","Type I = fast, type II = regular.",2],
+['H',"ADA type II alginate has a setting time of:","2-4.5 minutes","60-120 seconds","10 minutes","30 seconds","Regular set.",2],
+['H',"Which is a manipulation problem of alginate?","Lumpy or porous mixture, distortion, irregular surface","High price","Radiopacity","Colour","Slide 61.",2],
+['H',"Alginate viscosity is very low (50) compared with putty silicone:","800","80","8000","5","Slide 62.",3],
+['H',"The mechanical properties of alginate are:","Poor, because it tears easily","Excellent","Equal to silicone","Unlimited","It tears easily.",1],
+['H',"Alginate is dimensionally:","Unstable, like agar","Perfectly stable","Stable for days","Expands in air only","Hydrocolloids lose water and contract.",1],
+['H',"Elastic recovery of agar and alginate:","98.8% and 97.3%","97.3% and 98.8%","50% and 60%","100% both","Slide 63: agar 98.8, alginate 97.3.",3],
+['H',"Limit of reproduction of agar and alginate:","25 µm and 75 µm","75 µm and 25 µm","10 µm and 20 µm","50 µm both","Agar reproduces finer detail.",3],
+['H',"Flexibility of agar and alginate:","11% and 12%","12% and 11%","50% and 60%","1% and 2%","Slide 63.",3],
+['I',"A pouring material is used to:","Make a positive copy of the tissues from an impression","Make a negative copy of the tissues","Fill root canals","Restore teeth","Pouring gives a positive register of the jaws from an impression.",1],
+['I',"When should viscoelastic synthetic impression materials be poured?","Only after they have fully recovered elastically","Immediately","Never","After a week","Their setting reaction continues beyond the apparent setting time.",2],
+['I',"Why must hydrocolloid impressions be poured immediately?","Risk of rapid desiccation and contraction","They set slowly","They expand in air","They dissolve","Water loss causes contraction.",1],
+['I',"Which is a use of pouring materials?","Models, dies, mounting casts in an articulator","Root fillings","Sutures","Fluoride application","Also polymer processing and flasking, and binding investment for casting.",1],
+['I',"Which is a property of a pouring material?","Compatibility with the impression material","Radiopacity","Allergenicity","Taste","Properties: detail, accuracy, stability, compatibility, colour contrast, low cost, mechanical properties.",1],
+['I',"Which is an alternative to gypsum for pouring?","Resins reinforced with metal","Alginate","Wax","Agar","Alternatives: reinforced resins, electroplated metals, low-fusion alloys.",1],
+['I',"The chemical formula of gypsum (calcium sulfate dihydrate) is:","CaSO₄ · 2H₂O","(CaSO₄)₂ · H₂O","CaCO₃","Ca(OH)₂","The natural mineral is the dihydrate.",1],
+['I',"When heated, gypsum dihydrate loses water and becomes:","Calcium sulfate hemihydrate","Calcium carbonate","Anhydrous silica","Calcium oxide","(CaSO₄)₂·H₂O.",1],
+['I',"Impression plaster is gypsum type:","I","II","III","IV","I impression plaster, II plaster of Paris, III dental stone, IV and V die stone.",1],
+['I',"Plaster of Paris (dental plaster) is gypsum type:","II","I","III","V","Type II.",1],
+['I',"Dental stone is gypsum type:","III","II","I","IV","Type III.",1],
+['I',"Die stone is gypsum type:","IV and V","I and II","III only","II","High-strength dental stone.",1],
+['I',"Impression plaster (type I) is obtained by calcination plus:","Potassium sulfate, borax and dyes","Calcium chloride","Autoclave","Water vapour","Slide 15.",2],
+['I',"Plaster of Paris is manufactured by:","Calcination in an open kettle at 110-120 °C","Autoclave at 125 °C","Boiling in CaCl₂","Electrolysis","β hemihydrate.",1],
+['I',"The hemihydrate in plaster of Paris is:","β hemihydrate: irregular, porous, white particles","α hemihydrate: dense particles","Dihydrate","Anhydrite","Calcination gives β hemihydrate.",1],
+['I',"Dental stone is manufactured by:","Autoclave: gypsum heated in water steam under pressure at 125 °C","Calcination in open kettle","Boiling in CaCl₂","Cooling","α hemihydrate.",1],
+['I',"The α hemihydrate has particles that are:","Uniformly shaped and denser","Irregular and porous","Large and irregular","Absent","Compared with β.",2],
+['I',"Die stone (types IV and V) is obtained by:","Boiling in a 30% aqueous solution of calcium chloride","Calcination","Autoclave","Drying","Slide 15.",2],
+['I',"ISO type IV die stone has a setting expansion of:","0-0.15%","0.16-0.30%","1-2%","3-4%","Type IV low expansion; type V high expansion.",3],
+['I',"ISO type V die stone has a setting expansion of:","0.16-0.30%","0-0.15%","0.5-1%","2%","Type V high setting expansion.",3],
+['I',"Terra alba in gypsum:","Produces crystallisation nuclei","Retards setting","Reduces water","Gives colour","Terra alba is CaSO₄·2H₂O.",2],
+['I',"Potassium sulfate in gypsum:","Reduces expansion and accelerates setting","Retards setting","Increases expansion","Increases porosity","Slide 17.",2],
+['I',"Sodium chloride in gypsum:","Accelerates setting but increases setting expansion","Retards setting","Reduces expansion","Has no effect","Slide 17.",2],
+['I',"Borax in gypsum:","Retards the setting reaction","Accelerates setting","Increases expansion","Reduces porosity","Borax is a retarder.",1],
+['I',"Which is a retarder of gypsum setting?","Sodium citrate","Potassium sulfate","Terra alba","Sodium chloride","Retarders: sodium citrate, borax.",1],
+['I',"Which are accelerators of gypsum setting?","Potassium sulfate, terra alba, sodium chloride","Borax and sodium citrate","Water only","Pigments","Slide 26.",1],
+['I',"The setting reaction of gypsum is:","(CaSO₄)₂·H₂O + 3H₂O → 2(CaSO₄·2H₂O) + heat","CaSO₄·2H₂O → hemihydrate + water","Na alginate + CaSO₄","Polymerisation","Hemihydrate + water gives dihydrate plus heat.",1],
+['I',"The setting reaction of gypsum is:","Exothermic","Endothermic","Neutral","Cold","Heat is released.",2],
+['I',"According to Le Chatelier and Van't Hoff, the saturated solution:","Precipitates and acts as crystallisation nuclei","Forms hemihydrate","Evaporates","Remains liquid","Dihydrate crystallises while the remaining hemihydrate dissolves.",3],
+['I',"Water/powder ratio for plaster of Paris (slide 22):","40-50 ml / 100 g","25-30 ml / 100 g","19-24 ml / 100 g","60-70 ml / 100 g","According to slide 22. Slide 36 says 50-60 ml/100 g: slides are inconsistent.",3],
+['I',"Water/powder ratio for dental stone (slide 22):","25-30 ml / 100 g","40-50 ml / 100 g","19-24 ml / 100 g","5 ml / 100 g","According to slide 22. Slide 36 says 22-25.",3],
+['I',"Water/powder ratio for die stone:","19-24 ml / 100 g","25-30 ml / 100 g","40-50 ml / 100 g","50-60 ml / 100 g","The lowest ratio of the three.",2],
+['I',"Which gypsum needs the MOST water per 100 g of powder?","Plaster of Paris","Dental stone","Die stone","They are equal","β hemihydrate has irregular porous particles needing more water.",2],
+['I',"A higher water/powder ratio leads to:","Thinner mix, slower setting, more porosity, a less resistant cast","Stiffer mix and faster setting","Greater resistance","Less porosity","Slide 23.",1],
+['I',"A lower water/powder ratio leads to:","Stiffer mix, faster setting, less porosity, greater resistance","Thin mix","Slower setting","More porosity","Harder to mix but more resistant.",1],
+['I',"Mechanical spatulation:","Reduces setting time, increases resistance, decreases viscosity and expansion","Increases setting time","Decreases resistance","Increases expansion","Slide 24.",2],
+['I',"Initial setting of gypsum is reached when the mixture:","Loses its gloss and becomes matte","Becomes hard","Reaches final strength","Becomes liquid","Initial set: rigid but not hard, no longer mouldable.",2],
+['I',"Final setting of gypsum is checked with:","Vicat and Gilmore needles","A thermometer","A micrometer","An X-ray","Resistance to needle penetration.",2],
+['I',"High temperature has what effect on setting time?","Accelerates it","Retards it","No effect","Prevents setting","Slide 26.",1],
+['J',"Intrinsic porosity of gypsum is due to:","Microporosity from rejected crystals and spherical cavities with unreacted water","Manipulation","Vibration","Heat","Slide 28.",2],
+['J',"Extrinsic porosity is due to:","Manipulation (air trapped, vibrator use)","Excess water in the structure","Crystals","Heating","Extrinsic = manipulation.",2],
+['J',"Setting expansion of gypsum is due to:","Crystals pushing outward","Water loss","Heat","Air bubbles","Slide 29.",1],
+['J',"Setting expansion of Paris gypsum is:","0.3-0.4%","0.05-0.3%","3-4%","0%","Dental stone 0.05-0.3%.",2],
+['J',"Setting expansion of dental stone is:","0.05-0.3%","0.3-0.4%","1%","0%","Less than plaster of Paris.",2],
+['J',"Hygroscopic expansion occurs when:","Water is added during the initial setting","The gypsum dries","The gypsum is heated","The gypsum is vibrated","Significant setting expansion occurs.",2],
+['J',"Which additives increase expansion?","Calcium acetate and sodium chloride","Potassium sulfate","Borax","Sodium citrate","Potassium sulfate decreases expansion.",3],
+['J',"Which additive decreases expansion?","Potassium sulfate","Sodium chloride","Calcium acetate","Water","Slide 29.",2],
+['J',"Compressive strength of gypsum is proportional to:","Dryness","Wetness","Porosity","Water/powder ratio","Dry gypsum is stronger.",1],
+['J',"Set gypsum needs how long to lose excess water and reach adequate strength?","At least 24 hours, usually 7 days","30 minutes","1 hour","1 month","Slide 32.",2],
+['J',"Porosity in the set mass:","Decreases strength","Increases strength","Has no effect","Increases hardness","More pores, less strength.",1],
+['J',"Gypsum is brittle so it tends to:","Fracture rather than bend","Bend","Flow","Stretch","Weak in tension.",1],
+['J',"Surface hardness of gypsum can be increased by:","Impregnating with resin monomers or colloidal silica","Adding water","Heating","Vibrating","Slide 33.",2],
+['J',"Abrasion resistance is directly related to:","Hardness","Porosity","Water/powder ratio","Setting time","Slide 34.",1],
+['J',"The relationship of water/powder ratio with mechanical properties is:","Inverse","Direct","None","Parabolic","Higher W/P, lower strength.",1],
+['J',"Vibration and drying relate to mechanical properties:","Directly","Inversely","Not at all","Only for plaster","Slide 35: vibrated and drying are direct, additives inverse.",2],
+['J',"Dental stone has ______ than dental plaster.","More hardness and resistance, less porosity","Less hardness","More porosity","Bigger particles","Slide 36.",1],
+['J',"Dental plaster particles are:","Big, irregular and porous","Small, uniform, dense","Spherical","Absent","Plaster vs stone.",1],
+['J',"Dental plaster is used mainly for:","Study models and mounting models on the articulator","Dies and investment","Root canals","Casting","Slide 36.",1],
+['J',"Dental stone is used mainly for:","Dies and investment","Study models","Boxing","Bite registration","Slide 36.",2],
+['J',"Dental plaster is manufactured by:","Calcination","Autoclave","Boiling in CaCl₂","Sintering","Slide 36.",1],
+['J',"The structure of set gypsum is:","Acicular crystals of dihydrate, crossed in three dimensions, with microporosity","Amorphous","Cubic crystals","Spherical","Slide 37.",2],
+['J',"Which is a rule of correct manipulation?","Correct storage, correct W/P ratio, avoid air entrapment, suitable mixing time","Add water at will","Mix as long as possible","Store in a damp place","Slide 39.",1],
+['J',"Air entrapment is avoided by:","Vibration and/or surfactants","Adding water","Heating","Cooling","Slide 39.",2],
+['J',"A disadvantage of gypsum as a pouring material is:","Poor physical properties (fracture, wear)","Poor detail","Incompatibility with impression materials","High cost","Slide 41.",1],
+['J',"An advantage of gypsum as a pouring material is:","Good detail, dimensional accuracy and stability","Excellent strength","Resistance to wear","Radiopacity","Slide 41.",1],
+['K',"Waxes are:","Thermoplastic, polymeric, organic materials of hydrocarbon chains derived from esters","Inorganic ceramics","Hydrocolloids","Metals","Slide 4.",1],
+['K',"Waxes are usually:","Mixtures of natural and synthetic components","A single component","Only natural","Only synthetic","The mixture seeks the ideal properties for each use.",1],
+['K',"Mineral waxes are derived from:","Distilled petroleum","Plants","Insects","Bees","Slide 7.",1],
+['K',"Which is NOT a mineral wax?","Beeswax","Paraffin","Ceresin","Montan wax","Beeswax is animal.",1],
+['K',"Paraffin wax has chains of:","26-30 carbon atoms (straight)","41-45 carbon atoms","10 carbons","100 carbons","Slide 8.",2],
+['K',"Microcrystalline wax has:","Branched chains of 41-45 carbons","Straight chains of 26-30 carbons","Short chains","No chains","Slide 8.",2],
+['K',"Paraffin wax at room temperature is:","Fragile, tending to flake off","Soft","Elastic","Liquid","Slide 8.",1],
+['K',"Softening temperature of paraffin:","37-55 °C","48-70 °C","65-90 °C","80-85 °C","Melting range is 48-70 °C.",3],
+['K',"Fusion range of paraffin:","48-70 °C","37-55 °C","65-90 °C","63-70 °C","Slide 8.",3],
+['K',"Fusion temperature of microcrystalline wax:","65-90 °C","48-70 °C","63-70 °C","80-85 °C","It raises the fusion temperature of paraffin mixtures.",3],
+['K',"Microcrystalline wax compared with paraffin is:","Less fragile and more flexible","More fragile","Harder","Liquid","Slide 8.",2],
+['K',"Barnsdahl wax:","Increases melting range and hardness and reduces flow","Decreases hardness","Increases flow","Is vegetal","Slide 9.",2],
+['K',"Ceresin wax:","Modifies paraffin rigidity, increasing melting range and hardness","Reduces hardness","Is animal","Is synthetic","Slide 9.",2],
+['K',"Montan wax:","Increases fusion temperature and hardness of paraffin waxes","Reduces them","Is vegetal","Is animal","Slide 9.",2],
+['K',"Beeswax is:","Brittle at room temperature, plastic at oral temperature","Hard","Liquid","Elastic","Slide 10.",2],
+['K',"Fusion temperature of beeswax:","63-70 °C","80-85 °C","48-70 °C","25-30 °C","Slide 10.",3],
+['K',"Beeswax is added to other waxes to improve:","Their properties, due to its good flow at room temperature","Colour","Odour","Price only","Slide 10.",2],
+['K',"Carnauba wax comes from:","Leaves of the carnauba palm","Insects","Petroleum","Bees","Slide 12.",1],
+['K',"Carnauba wax is:","Hard, resistant and tough, fusion 80-85 °C","Soft and low fusion","Liquid","Animal","Slide 12.",2],
+['K',"Mixed with paraffin, carnauba:","Hardens it, reduces flow and raises the solid-solid transition temperature","Softens it","Increases flow","Has no effect","Slide 12.",3],
+['K',"Candelilla wax is:","Similar to carnauba but less hard with a lower fusion temperature","Harder than carnauba","Mineral","Animal","Slide 13.",2],
+['K',"Cocoa butter is used to:","Reduce or prevent tissue dehydration","Harden wax","Colour wax","Increase flow","Slide 13.",2],
+['K',"Dammar resin is added to waxes to:","Increase adhesive properties, smoothness, toughness and flaking resistance","Reduce hardness","Raise fusion","Lower price","Slide 14.",2],
+['K',"Which are synthetic components added to paraffin?","Polystyrene, polyethylene, vinyl resin","Beeswax","Shellac","Carnauba","Slide 15.",1],
+['K',"Natural resins are used to:","Harden natural waxes","Soften them","Colour them","Reduce fusion","Slide 17.",2],
+['K',"Shellac comes from:","Insects (animal)","Trees","Petroleum","Seaweed","Shellac is animal; colophony, copal, kauri are vegetal.",2],
+['K',"Oils, greases and fatty acid esters in wax:","Diminish the fusion temperature","Increase it","Harden","Colour","Slide 16.",2],
+['K',"Waxes classified by composition include:","Mineral, vegetal and animal","Pattern, processing, impression","Type I, II, III","Hard, medium, soft","Classification based on composition.",1],
+['K',"Spermaceti is a wax of:","Animal origin","Vegetal origin","Mineral origin","Synthetic origin","Slide 22.",3],
+['K',"Pattern waxes include:","Baseplates, tooth set-ups, inlays, casting","Boxing, sticky, utility","Bite and orthodontic","Alginate","Slide 23.",1],
+['K',"Processing waxes include:","Boxing, sticky and utility wax","Baseplate","Inlay wax","Bite wax","Slide 23.",1],
+['K',"Impression waxes include:","Bite wax and orthodontic wax","Boxing","Casting","Baseplate","Slide 23.",1],
+['K',"For wax patterns over the natural tooth, the wax is heated at:","42-44 °C","60 °C","100 °C","25 °C","Slide 24.",2],
+['K',"Casting wax is a mixture of:","Paraffin and beeswax","Carnauba only","Shellac","Polystyrene","Slide 28.",2],
+['K',"Casting wax fusion point:","49-58 °C","80-85 °C","25 °C","120 °C","Slide 28.",3],
+['K',"Casting wax must:","Evaporate completely without remnants","Stay in the mould","Harden","Colour","Slide 28.",1],
+['K',"In the lost wax technique, the wax pattern is:","Melted in an oven and replaced by the casting alloy","Hardened","Polished","Poured with gypsum","Slide 26.",1],
+['K',"Baseplate wax is used to establish:","Initial form of the dental arch, vertical dimension and occlusal plane","Impression of teeth","Casting","Boxing","Slide 29.",2],
+['K',"Baseplate wax is composed of ______ paraffin or ceresin wax, beeswax and other waxes or resins.","75%","25%","50%","10%","Slide 29.",3],
+['K',"ADA divides baseplate waxes into types I, II and III:","Soft, medium and hard","Fast, regular, slow","Low, high","Light, heavy","Depending on flow at room temperature, oral temperature and 45 °C.",2],
+['K',"Boxing wax is used to:","Establish the perimeter of impression trays during pouring","Make bites","Cast crowns","Fill canals","Slide 31.",1],
+['K',"Wax used to obtain interocclusal records is:","Bite (impression) wax","Boxing wax","Casting wax","Utility wax","Slide 33.",1],
+['L',"Thermoplasticity is:","Softening when heated and hardening on cooling","Permanent hardening on heating","Water absorption","Expansion only","Slide 36.",1],
+['L',"The fusion temperature range of waxes is:","Between 3 and 30 °C wide","Exactly 1 °C","100 °C","0 °C","Due to crystalline and amorphous components.",3],
+['L',"The solid-solid transition temperature is when:","The wax begins to soften and flow","The wax melts","The wax evaporates","The wax hardens","Slide 38.",1],
+['L',"At the solid-solid transition the crystal structure changes from:","Orthorhombic to hexagonal","Hexagonal to orthorhombic","Cubic to hexagonal","Amorphous to crystalline","Rigid fragile to soft solid.",3],
+['L',"Waxes are used:","Above the solid-solid transition and below the fusion temperature","Below the transition","Above fusion","At 0 °C","Slide 38.",2],
+['L',"The coefficient of thermal expansion of waxes is:","The highest of all materials","The lowest","Zero","Similar to metal","Slide 39.",1],
+['L',"From mouth to room temperature, wax can contract:","4-6%","0.3-0.4%","40%","None","Slide 39.",2],
+['L',"The low thermal conductivity of wax means:","Heating must be uniform to avoid tension and permanent deformation","Heats very quickly","Cools very quickly","No manipulation","Slide 40.",2],
+['L',"Uniform heating can be achieved by:","Hot water, oven with thermostat, or on top of a Bunsen flame","Inside the flame","A microwave","A freezer","Slide 41.",2],
+['L',"With a Bunsen burner, the wax is placed:","On top of the flame, not inside it","Inside the flame","Far away","In water","Slide 41.",2],
+['L',"Heating in hot water is:","More uniform but the wax can be partially dissolved","Slow","Faster","Not possible","Slide 41.",3],
+['L',"Heating in a thermostat oven is:","Slow but with controlled temperature","Fast","Uncontrolled","Impossible","Slide 41.",2],
+['L',"Creep (flow) of wax is:","The capacity to deform under light pressure (plastic deformation)","Elastic recovery","Hardening","Contraction","Slide 42.",1],
+['L',"Elastic memory of wax is:","The capacity to recover its initial shape after manipulation","Permanent deformation","Hardness","Flow","Slide 43.",2],
+['L',"Distortion of wax is:","The degree of permanent deformation due to residual tension","Elastic recovery","Flow","Strength","Slide 43.",1],
+['L',"Distortion is due to residual tensions from:","Thermal changes and dimensional changes","Humidity only","Colour","Setting","Slide 43.",2],
+['L',"How to minimize wax distortion?","Uniform heating, fast coating, cold storage","Slow coating","Warm storage","Uneven heating","Slide 45.",1],
+['L',"Fast coating of a wax pattern prevents:","Contraction of the pattern","Expansion","Colouring","Hardening","Coating rigidity prevents contraction.",2],
+['L',"The mechanical properties of waxes (strength, PL, EM) are:","Low, and they decrease when temperature rises","High","Constant","Increase with temperature","Slide 46.",1],
+['L',"Paraffin EM decreases by:","91% from 24 to 30 °C","58% from 23 to 37 °C","10%","0%","Slide 46.",3],
+['L',"Carnauba EM decreases by:","58% from 23 to 37 °C","91% from 24 to 30 °C","10%","0%","Slide 46.",3],
+['L',"Modelling compounds are:","Thermoplastic material plus filler, also called Godiva","Pure wax","Hydrocolloids","Cement","Slide 48.",1],
+['L',"Fillers in modelling compounds include:","Talc, chalk, barium sulfate","Beeswax","Shellac","Water","They increase resistance and consistency and reduce flow.",1],
+['L',"Plasticizers such as stearic acid:","Help disperse the fillers","Colour","Harden","Reduce flow","Slide 49.",2],
+['L',"Lubricants such as glycerine:","Provide suitable working consistency at intraoral temperature","Harden","Colour","Disperse filler","Slide 49.",2],
+['L',"High-fusion modelling compounds soften at:","More than 60 °C and are used for individual trays","50-60 °C","Less than 50 °C","Room temperature","Slide 50.",2],
+['L',"Medium-fusion modelling compounds soften at:","50-60 °C, used for impressions","More than 60 °C","Less than 50 °C","80 °C","Slide 50.",2],
+['L',"ADA Type I modelling compound is:","Low fusion (55-65 °C), edentulous impressions, bars or sheets","High fusion","For trays","Hard","Slide 51. Note: it overlaps with the 'medium fusion' range of slide 50.",3],
+['L',"ADA Type II modelling compound is:","High fusion (70 °C or more), for individualized trays","Low fusion","For edentulous impressions","Soft","Slide 51.",2],
+['L',"Linear thermal expansion coefficient of modelling compounds:","0.3-0.4% from mouth to room temperature","4-6%","40%","None","Slide 52.",3],
+['L',"Modelling compounds are manipulated with:","Dry heating at the right temperature to avoid burns, and poured immediately","Wet heating","A freezer","No heat","Slide 54.",2],
+['L',"Modelling compounds are presented as:","Bars and tablets","Powder","Liquid","Paste","Slide 53.",1]
+];
+const QS=RAW.map((r,i)=>({id:i+1,s:r[0],q:r[1],c:r[2],w:[r[3],r[4],r[5]],e:r[6],l:r[7]}));
+
+</script>
+<script>
+
+(function(){
+const LET=['A','B','C','D'];
+const LVL={1:'Recall',2:'Understand',3:'Tricky'};
+const STAGES=[['Lesson 1-2','Concepts, mechanical and biological properties'],['Lesson 3','Impressions, hydrocolloids, alginate'],['Lesson 4','Dental gypsum'],['Lesson 5','Waxes and modelling compounds']];
+const KEY='bio-qb-v1';
+const app=document.getElementById('app');
+let store={done:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done)store=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function secName(k){return SECS.find(s=>s.k===k).n}
+function fmt(ms){const t=Math.floor(ms/1000);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+const isOk=it=>it.pick!==null&&it.opts[it.pick].ok;
+
+let mode='practice',scope='all',S=null,C=null,timer=null,resetAsk=false;
+
+const MODE_NOTE={
+ practice:'One question at a time. You see right away whether you were correct and read the explanation.',
+ exam:'No feedback until you finish. Move back and forth, flag questions, and watch the clock.',
+ cards:'The question on the front, the answer and its explanation on the back. Good for a last pass.'
+};
+
+function poolFor(sc){
+ if(sc==='all')return QS.slice();
+ if(sc==='weak')return QS.filter(q=>store.done[q.id]==='w');
+ return QS.filter(q=>q.s===sc);
+}
+
+/* ---------- HOME ---------- */
+function home(){
+ clearInterval(timer);S=null;C=null;
+ const weak=poolFor('weak').length;
+ if(scope==='weak'&&!weak)scope='all';
+ const tried=QS.filter(q=>store.done[q.id]).length;
+ const right=QS.filter(q=>store.done[q.id]==='c').length;
+ const rows=[{k:'all',n:'All sections'}].concat(SECS).map(s=>{
+  const p=poolFor(s.k),c=p.filter(q=>store.done[q.id]==='c').length;
+  return `<label class="scope"><input type="radio" name="scope" value="${s.k}" ${scope===s.k?'checked':''}><span class="sc-name">${esc(s.n)}</span><span class="sc-meta">${p.length} questions · ${c} answered correctly</span><span class="meter"><i style="width:${Math.round(c/p.length*100)}%"></i></span></label>`;
+ }).join('')+`<label class="scope"><input type="radio" name="scope" value="weak" ${scope==='weak'?'checked':''} ${weak?'':'disabled'}><span class="sc-name">My mistakes</span><span class="sc-meta">${weak?weak+' questions you last got wrong':'Nothing to review yet'}</span><span class="meter"><i style="width:${weak?Math.round(weak/QS.length*100):0}%;background:var(--eosin)"></i></span></label>`;
+ app.innerHTML=`
+ <p class="eyebrow">Dental Biomaterials · Lessons 1 to 5</p>
+ <h1>Dental Biomaterials Question Bank</h1>
+ <p class="lead">${QS.length} single-answer questions with an explanation for each one, built from the five biomaterials lessons: properties, impressions and alginate, gypsum, waxes. Where the slides disagree with each other, the explanation says so. Use Exam mode to rehearse the real format.</p>
+ <div class="ribbon" aria-label="Regions covered">${STAGES.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <p class="cap">The lessons covered. Progress so far: ${right} of ${QS.length} answered correctly${tried?`, ${tried} attempted`:''}.</p>
+ <p class="sec-title">1 · Mode</p>
+ <div class="seg" role="group" aria-label="Mode">
+  ${[['practice','Practice'],['exam','Exam'],['cards','Flashcards']].map(m=>`<button type="button" data-a="mode" data-v="${m[0]}" aria-pressed="${mode===m[0]}">${m[1]}</button>`).join('')}
+ </div>
+ <p class="mode-note" id="mnote">${MODE_NOTE[mode]}</p>
+ <p class="sec-title">2 · Scope</p>
+ <div class="scopes">${rows}</div>
+ <div class="start row between">
+  <button type="button" class="btn" data-a="start">Start</button>
+  ${resetAsk?`<span class="row"><span class="tag">Erase saved progress?</span><button type="button" class="btn ghost small" data-a="reset-yes">Erase</button><button type="button" class="btn ghost small" data-a="reset-no">Keep</button></span>`:`<button type="button" class="linkish" data-a="reset">Reset progress</button>`}
+ </div>`;
+}
+
+/* ---------- SESSION ---------- */
+function startSession(m,pool){
+ if(!pool.length)return;
+ S={mode:m,i:0,t0:Date.now(),ask:false,over:false,rf:'wrong',
+  list:shuffle(pool).map(q=>({q,opts:shuffle([{t:q.c,ok:true}].concat(q.w.map(t=>({t,ok:false})))),pick:null,flag:false}))};
+ clearInterval(timer);
+ if(m==='exam'){timer=setInterval(()=>{const e=$('#clock');if(e)e.textContent=fmt(Date.now()-S.t0)},1000)}
+ quiz();
+}
+
+function quiz(){
+ const ex=S.mode==='exam',it=S.list[S.i],q=it.q,n=S.list.length;
+ const ans=it.pick!==null,reveal=!ex&&ans;
+ const nDone=S.list.filter(x=>x.pick!==null).length;
+ const good=S.list.filter(isOk).length,bad=nDone-good;
+ const opts=it.opts.map((o,k)=>{
+  let cls='opt';
+  if(ex&&it.pick===k)cls+=' sel';
+  if(reveal){if(o.ok)cls+=' ok';else if(it.pick===k)cls+=' bad';else cls+=' dim'}
+  return `<li><button type="button" class="${cls}" data-a="pick" data-i="${k}" ${reveal?'disabled':''}><span class="l">${LET[k]}</span><span>${esc(o.t)}</span></button></li>`;
+ }).join('');
+ let fb='';
+ if(reveal){
+  const ok=isOk(it);
+  fb=`<div class="fb ${ok?'good':'miss'}" role="status"><strong>${ok?'Correct':'Not quite'}</strong>${ok?'':`<p><b>Answer:</b> ${esc(q.c)}</p>`}<p>${esc(q.e)}</p></div>`;
+ }
+ const last=S.i===n-1;
+ let foot;
+ if(ex){
+  const un=n-nDone;
+  foot=`<div class="row between foot">
+   <span class="row"><button type="button" class="btn ghost" data-a="prev" ${S.i===0?'disabled':''}>Previous</button><button type="button" class="btn ghost" data-a="next" ${last?'disabled':''}>Next</button></span>
+   <span class="row"><button type="button" class="btn ghost small ${it.flag?'flagged':''}" data-a="flag" aria-pressed="${it.flag}">${it.flag?'Flagged':'Flag'}</button><button type="button" class="btn small" data-a="finish">Finish exam</button></span>
+  </div>
+  ${S.ask?`<div class="warn" role="alert"><p>${un?`You left ${un} question${un>1?'s':''} unanswered. They will count as wrong.`:'All questions answered.'} Finish and see your results?</p><div class="row"><button type="button" class="btn small" data-a="finish-yes">Finish</button><button type="button" class="btn ghost small" data-a="finish-no">Keep going</button></div></div>`:''}
+  <div class="nav" aria-label="Question navigator">${S.list.map((x,k)=>`<button type="button" data-a="jump" data-i="${k}" class="${x.pick!==null?'a':''} ${x.flag?'f':''} ${k===S.i?'c':''}" aria-label="Question ${k+1}${x.flag?', flagged':''}${x.pick!==null?', answered':''}">${k+1}</button>`).join('')}</div>`;
+ }else{
+  foot=`<div class="row between foot"><button type="button" class="linkish" data-a="home">Quit</button><button type="button" class="btn" data-a="${last?'finish-yes':'next'}" ${ans?'':'disabled'}>${last?'See results':'Next question'}</button></div>`;
+ }
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Question ${S.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span>
+  ${ex?`<span class="clock" id="clock">${fmt(Date.now()-S.t0)}</span>`:`<span class="score" aria-label="Score so far">✓ ${good} · ✗ ${bad}</span>`}</div>
+ <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${ex?nDone:S.i+(ans?1:0)}"><i style="width:${(ex?nDone:S.i+(ans?1:0))/n*100}%"></i></div>
+ <div class="qtext" id="q"><h2>${esc(q.q)}</h2><span class="lvl">${LVL[q.l]}</span></div>
+ <ul class="opts">${opts}</ul>${fb}${foot}`;
+ window.scrollTo(0,0);
+}
+
+function pick(k){
+ const it=S.list[S.i];
+ if(S.mode==='practice'){
+  if(it.pick!==null)return;
+  it.pick=k;store.done[it.q.id]=it.opts[k].ok?'c':'w';save();
+ }else{it.pick=k}
+ quiz();
+}
+
+function finish(){
+ clearInterval(timer);
+ S.list.forEach(it=>{if(S.mode==='exam'){store.done[it.q.id]=isOk(it)?'c':'w'}});
+ save();S.end=Date.now();S.over=true;results();
+}
+
+/* ---------- RESULTS ---------- */
+function results(){
+ const L=S.list,n=L.length,ok=L.filter(isOk).length,pct=Math.round(ok/n*100);
+ const verdict=pct>=85?'Exam-ready on this set. Keep the weak spots fresh.':pct>=70?'Solid base. Tighten the sections marked in pink.':'Keep drilling. Redo your mistakes, then try again.';
+ const secs=SECS.map(s=>{const l=L.filter(x=>x.q.s===s.k);if(!l.length)return '';const c=l.filter(isOk).length,p=Math.round(c/l.length*100);
+  return `<div class="brow"><span>${esc(s.n)}</span><span class="num">${c}/${l.length}</span><span class="meter"><i class="${p<70?'low':''}" style="width:${p}%"></i></span></div>`}).join('');
+ const wrong=L.filter(x=>!isOk(x));
+ const shown=S.rf==='wrong'?wrong:L;
+ const rev=shown.map(it=>{const k=L.indexOf(it);
+  const yours=it.pick===null?'<b>No answer</b>':`<b>${esc(it.opts[it.pick].t)}</b>`;
+  return `<article class="item"><span class="tag">Question ${k+1} · ${esc(secName(it.q.s))}</span><p class="q">${esc(it.q.q)}</p>
+  ${isOk(it)?'':`<p class="yours">Your answer: ${yours}</p>`}<p class="right">Correct: <b>${esc(it.q.c)}</b></p><p class="ex">${esc(it.q.e)}</p></article>`}).join('');
+ app.innerHTML=`
+ <p class="eyebrow">${S.mode==='exam'?'Exam':'Practice'} complete · ${fmt(S.end-S.t0)}</p>
+ <div class="big">${ok}<small> / ${n}</small></div>
+ <h2 style="margin-top:8px">${pct}% · ${verdict}</h2>
+ <div class="row start"><button type="button" class="btn" data-a="retry" ${wrong.length?'':'disabled'}>Redo my ${wrong.length} mistake${wrong.length===1?'':'s'}</button><button type="button" class="btn ghost" data-a="home">Back to start</button></div>
+ <p class="sec-title">By section</p><div class="breakdown">${secs}</div>
+ <p class="sec-title">Review</p>
+ <div class="row"><button type="button" class="btn small ${S.rf==='wrong'?'':'ghost'}" data-a="rf" data-v="wrong">Mistakes (${wrong.length})</button><button type="button" class="btn small ${S.rf==='all'?'':'ghost'}" data-a="rf" data-v="all">All questions</button></div>
+ <div class="rev">${rev||'<p class="lead">No mistakes in this run.</p>'}</div>`;
+ window.scrollTo(0,0);
+}
+
+/* ---------- FLASHCARDS ---------- */
+function cards(pool){
+ if(!pool.length)return;
+ C={list:shuffle(pool),i:0,f:false};renderCard();
+}
+function renderCard(){
+ const q=C.list[C.i],n=C.list.length;
+ app.innerHTML=`
+ <div class="topbar"><span class="tag">Card ${C.i+1} of ${n} · <b>${esc(secName(q.s))}</b></span><button type="button" class="linkish" data-a="home">Back to start</button></div>
+ <div class="bar"><i style="width:${(C.i+1)/n*100}%"></i></div>
+ <button type="button" class="card ${C.f?'back':''}" id="card" data-a="flip" aria-live="polite">
+  ${C.f?`<span class="side">Answer</span><span class="ans">${esc(q.c)}</span><span class="ex">${esc(q.e)}</span>`:`<span class="side">Question</span><h2>${esc(q.q)}</h2>`}
+ </button>
+ <p class="hint">Tap the card or press Space to flip. Arrow keys move between cards.</p>
+ <div class="row between foot"><button type="button" class="btn ghost" data-a="cprev" ${C.i===0?'disabled':''}>Previous</button><button type="button" class="btn" data-a="cnext" ${C.i===n-1?'disabled':''}>Next card</button></div>`;
+}
+
+/* ---------- EVENTS ---------- */
+app.addEventListener('change',e=>{if(e.target.name==='scope')scope=e.target.value});
+app.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+ const a=b.dataset.a,v=b.dataset.v,i=b.dataset.i!==undefined?+b.dataset.i:null;
+ switch(a){
+  case 'mode':mode=v;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===mode)));$('#mnote').textContent=MODE_NOTE[mode];break;
+  case 'start':{const p=poolFor(scope);if(mode==='cards')cards(p);else startSession(mode,p);break}
+  case 'reset':resetAsk=true;home();break;
+  case 'reset-no':resetAsk=false;home();break;
+  case 'reset-yes':store={done:{}};save();resetAsk=false;home();break;
+  case 'pick':pick(i);break;
+  case 'next':if(S.i<S.list.length-1){S.i++;S.ask=false;quiz()}break;
+  case 'prev':if(S.i>0){S.i--;S.ask=false;quiz()}break;
+  case 'jump':S.i=i;S.ask=false;quiz();break;
+  case 'flag':S.list[S.i].flag=!S.list[S.i].flag;quiz();break;
+  case 'finish':S.ask=true;quiz();break;
+  case 'finish-no':S.ask=false;quiz();break;
+  case 'finish-yes':finish();break;
+  case 'home':home();break;
+  case 'rf':S.rf=v;results();break;
+  case 'retry':startSession('practice',S.list.filter(x=>!isOk(x)).map(x=>x.q));break;
+  case 'flip':C.f=!C.f;renderCard();break;
+  case 'cnext':if(C.i<C.list.length-1){C.i++;C.f=false;renderCard()}break;
+  case 'cprev':if(C.i>0){C.i--;C.f=false;renderCard()}break;
+ }
+});
+document.addEventListener('keydown',e=>{
+ if(e.metaKey||e.ctrlKey||e.altKey)return;
+ if(S&&!S.over&&$('#q')){
+  const k='1234'.indexOf(e.key),k2='abcd'.indexOf(e.key.toLowerCase());
+  const idx=k>-1?k:k2;
+  if(idx>-1&&idx<4){pick(idx);return}
+  if(e.key==='ArrowRight'){const nx=S.list[S.i].pick!==null||S.mode==='exam';if(nx&&S.i<S.list.length-1){S.i++;S.ask=false;quiz()}}
+  if(e.key==='ArrowLeft'&&S.mode==='exam'&&S.i>0){S.i--;S.ask=false;quiz()}
+ }else if(C&&$('#card')){
+  if(e.key===' '&&document.activeElement===document.body){e.preventDefault();C.f=!C.f;renderCard()}
+  if(e.key==='ArrowRight'&&C.i<C.list.length-1){C.i++;C.f=false;renderCard()}
+  if(e.key==='ArrowLeft'&&C.i>0){C.i--;C.f=false;renderCard()}
+ }
+});
+home();
+})();
+
+
+</script>
